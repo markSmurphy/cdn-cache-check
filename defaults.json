@@ -1,0 +1,24 @@
+{
+    "method": "head",
+    "iterations": 1,
+    "interval": 0,
+    "headersCollection": "cloudfront",
+    "headersCollections": [
+        {
+            "verbose": [
+                "*"
+            ]
+        },
+        {
+            "cloudfront": [
+                "x-cache",
+                "age",
+                "server",
+                "x-amz-*"
+            ]
+        }
+    ],
+    "cloudfrontApexDomains": [
+        "cloudfront.net"
+    ]
+}

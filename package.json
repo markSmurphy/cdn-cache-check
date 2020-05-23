@@ -1,0 +1,42 @@
+{
+  "name": "cloudfront-cache-check",
+  "version": "1.0.0",
+  "description": "Issues requests to URLs and parses resposnes headers to determine AWS CloudFront's behaviour",
+  "main": "ccc.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "private": false,
+  "preferGlobal": true,
+  "bin": {
+    "ccc": "./ccc.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MarkSMurphy/cloudfront-cache-check.git"
+  },
+  "bugs": {
+    "url": "https://github.com/MarkSMurphy/cloudfront-cache-check/issues"
+  },
+  "homepage": "https://github.com/MarkSMurphy/cloudfront-cache-check#readme",
+  "keywords": [
+    "aws",
+    "cloudfront",
+    "cache",
+    "check",
+    "test",
+    "cdn",
+    "http",
+    "offload"
+  ],
+  "author": "Mark Murphy",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^4.0.0",
+    "columnify": "^1.5.4",
+    "debug": "^4.1.1",
+    "is-valid-domain": "0.0.14",
+    "matcher": "^3.0.0",
+    "yargs": "^15.3.1"
+  }
+}

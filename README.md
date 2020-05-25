@@ -1,7 +1,7 @@
 # cloudfront-cache-check
 
 ![Version](https://img.shields.io/npm/v/cloudfront-cache-check.svg?style=plastic)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/acf4ae9001a0486497a4b12c4ccbbd44)](https://www.codacy.com?utm_source=bitbucket.org&amp;utm_medium=referral&amp;utm_content=MarkSMurphy/cloudfront-cache-check&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/cc31d7b0b6274073a6181b3e7442d1a3)](https://www.codacy.com?utm_source=bitbucket.org&amp;utm_medium=referral&amp;utm_content=MarkSMurphy/cloudfront-cache-check&amp;utm_campaign=Badge_Grade)
 [![Known Vulnerabilities](https://snyk.io/test/npm/cloudfront-cache-check/1.0.0/badge.svg)](https://snyk.io/test/npm/cloudfront-cache-check/1.0.0)
 ![Libraries.io dependency status for latest release](https://img.shields.io/librariesio/release/npm/cloudfront-cache-check.svg?style=plastic)
 ![Downloads](https://img.shields.io/npm/dm/cloudfront-cache-check.svg?style=plastic)

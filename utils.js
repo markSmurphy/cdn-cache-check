@@ -1,4 +1,4 @@
-const debug = require('debug')('codename-generator');
+const debug = require('debug')('cloudfront-cache-check');
 debug('Entry: [%s]', __filename);
 
 module.exports = {

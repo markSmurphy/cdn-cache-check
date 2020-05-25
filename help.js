@@ -1,3 +1,5 @@
+const debug = require('debug')('cloudfront-cache-check');
+
 module.exports = {
     helpScreen: function (verbose) {
         // Platform independent end-of-line character

@@ -33,10 +33,12 @@
   "license": "MIT",
   "dependencies": {
     "chalk": "^4.0.0",
+    "cli-progress": "^3.8.2",
     "columnify": "^1.5.4",
     "debug": "^4.1.1",
     "is-valid-domain": "0.0.14",
     "matcher": "^3.0.0",
+    "valid-url": "^1.0.9",
     "yargs": "^15.3.1"
   }
 }

@@ -57,3 +57,28 @@ Display the version number.
 Display the help screen.
 
 ![`ccc --help`](https://marksmurphy.github.io/img/ccc-help.png)
+
+## Future support
+
+### Request header amending
+
+* User-Agent
+* Cookie
+* Authorization
+* Accept-Encoding
+* Range
+* From
+* Origin
+* Referer
+
+### CORS
+
+Allowing inclusion of CORS request headers and analysis of response
+
+### Entity Tags
+
+Allowing conditional `GET` requests such as `If-None-Match`
+
+### HTTP/2
+
+Allowing HTTP/2 requests could be useful.

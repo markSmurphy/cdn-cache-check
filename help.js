@@ -21,13 +21,13 @@ module.exports = {
         console.log('   ' + package.version);
         console.log(endOfLine);
         console.log(chalk.grey('USAGE:'));
-        console.log('   ' + 'node ccc [<url> | --file <filename>] [options]');
+        console.log('   ' + 'node ccc [<url> <url> … | <filename> <filename> …] [options]');
         console.log(endOfLine);
         console.log(chalk.grey('OPTIONS:'));
-        console.log('   ' + '<url>                         ' + chalk.grey('The URL to query'));
-        console.log('   ' + '--file <filename>             ' + chalk.grey('Specify a file containing a list of URLs to query'));
+        console.log('   ' + '<url>                         ' + chalk.grey('A URL to query'));
+        console.log('   ' + '<filename>                    ' + chalk.grey('Specify a file containing a list of URLs to query'));
         console.log('   ' + '--method <head|get|options>   ' + chalk.grey('Specify the HTTP method.  Default: HEAD'));
-        console.log('   ' + '--header <collection>         ' + chalk.grey('Select which collection of headers to output. Default: cloudfront'));
+        console.log('   ' + '--headers <collection>        ' + chalk.grey('Select which collection of headers to output. Default: cloudfront'));
         console.log('   ' + '--iterations <integer>        ' + chalk.grey('The number of times to request each URL. Default: 1'));
         console.log('   ' + '--interval <integer>          ' + chalk.grey('The number of milliseconds in-between multiple http requests. Default: 0'));
         console.log('   ' + '--header-collections          ' + chalk.grey('Lists all Header Collections and the response headers they contain'));
@@ -36,7 +36,7 @@ module.exports = {
         console.log('   ' + '--help                        ' + chalk.grey('Display this help'));
         console.log(endOfLine);
         console.log(chalk.grey('EXAMPLES:'));
-        console.log('   node ccc');
+        console.log('   node ccc https://example.com');
         console.log('   **** TBC ****');
         // Display more information if `verbose` is enabled
         if (verbose) {

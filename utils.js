@@ -41,6 +41,44 @@ module.exports = {
         }
     },
 
+    millisecondsToHms(milliseconds) {
+        if (milliseconds) {
+            try {
+                let seconds = Number(milliseconds/1000);
+
+                let h = Math.floor(seconds / 3600);
+                let m = Math.floor(seconds % 3600 / 60);
+                let s = Math.floor(seconds % 3600 % 60);
+
+                let returnString = '';
+
+                if (h > 0) {
+                    returnString = ('0' + h).slice(-2) + ' hours, ';
+                }
+
+                if (m > 0) {
+                    returnString = returnString + ('0' + m).slice(-2) + ' minutes, ';
+                }
+
+                if (s > 0) {
+                    if (s ===1) {
+                        returnString = returnString + ('0' + s).slice(-2) + ' second';
+                    } else {
+                        returnString = returnString + ('0' + s).slice(-2) + ' seconds';
+                    }
+                }
+
+                return returnString;
+            } catch (error) {
+                debug('millisecondsToHms() caught an exception: %O', error);
+                // an unexpected error occurred; return the original value
+                return('%d milliseconds', milliseconds);
+            }
+        } else {
+            return('<invalid>');
+        }
+    },
+
     getColourLevelDesc() {
         const colourLevel = ['Colours Disabled', '16 Colours (Basic)', '256 Colours', '16 Million Colours (True Colour)'];
 
@@ -53,5 +91,24 @@ module.exports = {
         }
 
         return (colourLevel[level]);
+    },
+
+    getHeadersCollections(settings) {
+        debug('getHeadersCollections()');
+        try {
+            let collections = [];
+            //console.log('settings.headerCollections: %O', settings.headersCollections);
+            console.log(settings.headersCollections.length);
+            //console.log(Object.keys(JSON.parse(settings.headersCollections[0])));
+            for (let i =0; i < settings.headersCollections.length; i++) {
+                collections.push(Object.keys(settings.headersCollections[i]).toString());
+            }
+
+            return collections;
+
+        } catch (error) {
+            debug('Error caught in getHeadersCollections(): %O', error);
+            return [];
+        }
     }
 };

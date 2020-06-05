@@ -1,6 +1,6 @@
 {
   "name": "cloudfront-cache-check",
-  "version": "1.0.0",
+  "version": "0.9.0",
   "description": "Issues requests to URLs and parses resposnes headers to determine AWS CloudFront's behaviour",
   "main": "ccc.js",
   "scripts": {
@@ -38,6 +38,7 @@
     "debug": "^4.1.1",
     "is-valid-domain": "0.0.14",
     "matcher": "^3.0.0",
+    "sync-request": "^6.1.0",
     "valid-url": "^1.0.9",
     "yargs": "^15.3.1"
   }

@@ -27,6 +27,9 @@ const validUrl = require('valid-url');
 // Initialise progress bar
 const cliProgress = require('cli-progress');
 
+// Initialise HTTP synchronous requester
+const request = require('sync-request');
+
 // Initialise configuration
 var settings = require('./configuration').getSettings();
 
@@ -95,24 +98,32 @@ try {
         debug('Testing %i URLs %i times: %O', urls.length, settings.iterations, urls);
         let totalRequests = urls.length * settings.iterations;
         let requestCounter = 0;
-
         // create a new progress bar instance
         const progressBar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_grey);
 
         // Start the progress bar with a starting value of 0 and a total equal to the number of requests we're going to make
         progressBar.start(totalRequests, 0);
 
-        sleep(settings.interval).then(() => {
-            // Increment counter
-            requestCounter++;
+        // Loop around the number of iterations
+        for (let iterationCounter = 1; iterationCounter <= settings.iterations; iterationCounter++) {
 
-            // Move the progress bar on
-            progressBar.update(requestCounter);
+            // Loop around the list of URLs
+            urls.forEach(function (url) {
 
-            // Construct HTTP request
-            
-        });
+                sleep(settings.interval).then(() => {
+                    // Move the progress bar on
+                    progressBar.update(requestCounter);
 
+                    // Construct HTTP request
+                    var res = request(settings.method, url, settings.headings);
+
+                    // ** process response here **
+                    console.log(res.getHeaders);
+                });
+
+            });
+
+        }
 
         // Stop the progress bar
         progressBar.stop();

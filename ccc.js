@@ -111,6 +111,9 @@ try {
             urls.forEach(function (url) {
 
                 sleep(settings.interval).then(() => {
+                    // Increment the request counter
+                    requestCounter++;
+                    
                     // Move the progress bar on
                     progressBar.update(requestCounter);
 
@@ -118,7 +121,8 @@ try {
                     var res = request(settings.method, url, settings.headings);
 
                     // ** process response here **
-                    console.log(res.getHeaders);
+                    console.log('%s - %s', res.statusCode, url);
+                    console.log('%O', res.headers);
                 });
 
             });

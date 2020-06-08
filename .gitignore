@@ -9,7 +9,10 @@ auth.edgerc
 .vscode/*
 
 # Local batch file emulating shebang
-ddig.cmd
+ccc.cmd
+
+# Test URLs
+url*.txt
 
 # Screenshots folder
 screenshots/*

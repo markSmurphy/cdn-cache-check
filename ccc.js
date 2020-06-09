@@ -3,6 +3,7 @@
 const debug = require('debug')('cloudfront-cache-check');
 debug('Entry: [%s]', __filename);
 
+debug('Initialising all external modules...');
 // Command line options parser
 var argv = require('yargs')
 .help(false)
@@ -33,6 +34,8 @@ const request = require('sync-request');
 // Initialise configuration
 var settings = require('./configuration').getSettings();
 
+debug('External modules initialised.');
+
 try {
     // Check for 'help' command line parameters
     if (argv.help) {
@@ -43,6 +46,7 @@ try {
         return;
     }
 
+    debug('Looking for URLs to check...');
     // Initialise array of URLs to check
     var urls = [];
 
@@ -70,6 +74,8 @@ try {
                         if (validUrl.isWebUri(lines[i])) {
                             debug('Found [%s]', lines[i]);
                             urls.push(lines[i]);
+                        } else{
+                            debug('Ignoring [%s]', lines[i]);
                         }
                     }
                 } catch (err) {
@@ -94,8 +100,9 @@ try {
         console.log(chalk.red('Error: No URL(s) provided.'));
     } else {
         // The main work starts here
-        debug('Setting: %O', settings);
-        debug('Testing %i URLs %i times: %O', urls.length, settings.iterations, urls);
+        debug('Using settings: %O', settings);
+        console.log('Checking %i URLs %i times', urls.length, settings.iterations);
+        debug('Checking %i URLs %i times: %O', urls.length, settings.iterations, urls);
         let totalRequests = urls.length * settings.iterations;
         let requestCounter = 0;
         // create a new progress bar instance
@@ -109,18 +116,20 @@ try {
 
             // Loop around the list of URLs
             urls.forEach(function (url) {
-
+                debug('Checking: %1', url);
                 sleep(settings.interval).then(() => {
                     // Increment the request counter
                     requestCounter++;
-                    
+
                     // Move the progress bar on
                     progressBar.update(requestCounter);
 
+                    debug('Issuing HTTP request');
                     // Construct HTTP request
                     var res = request(settings.method, url, settings.headings);
 
                     // ** process response here **
+                    debug('Response [%s] headers: %O', res.statusCode, res.headers);
                     console.log('%s - %s', res.statusCode, url);
                     console.log('%O', res.headers);
                 });

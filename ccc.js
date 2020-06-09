@@ -74,7 +74,7 @@ try {
                         if (validUrl.isWebUri(lines[i])) {
                             debug('Found [%s]', lines[i]);
                             urls.push(lines[i]);
-                        } else{
+                        } else if (lines[i].length > 0) {
                             debug('Ignoring [%s]', lines[i]);
                         }
                     }
@@ -116,13 +116,13 @@ try {
 
             // Loop around the list of URLs
             urls.forEach(function (url) {
-                debug('Checking: %1', url);
+                debug('Checking: %s', url);
                 sleep(settings.interval).then(() => {
                     // Increment the request counter & update process bar
                     requestCounter++;
                     progressBar.update(requestCounter);
 
-                    debug('Issuing HTTP request...');
+                    debug('Issuing HTTP %s request to [%s]...', settings.method.toUpperCase(), url);
                     // Construct HTTP request
                     var res = request(settings.method, url, settings.headings);
 

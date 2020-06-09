@@ -1,5 +1,5 @@
 {
-    "method": "head",
+    "method": "GET",
     "iterations": 1,
     "interval": 0,
     "headersCollection": "cloudfront",

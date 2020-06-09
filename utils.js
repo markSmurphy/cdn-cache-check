@@ -1,4 +1,4 @@
-const debug = require('debug')('cloudfront-cache-check');
+const debug = require('debug')('cloudfront-cache-check-utils');
 debug('Entry: [%s]', __filename);
 
 module.exports = {

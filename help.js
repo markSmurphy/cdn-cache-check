@@ -1,4 +1,4 @@
-const debug = require('debug')('cloudfront-cache-check');
+const debug = require('debug')('cloudfront-cache-check-help');
 
 module.exports = {
     helpScreen: function (verbose) {

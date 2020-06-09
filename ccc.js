@@ -118,13 +118,11 @@ try {
             urls.forEach(function (url) {
                 debug('Checking: %1', url);
                 sleep(settings.interval).then(() => {
-                    // Increment the request counter
+                    // Increment the request counter & update process bar
                     requestCounter++;
-
-                    // Move the progress bar on
                     progressBar.update(requestCounter);
 
-                    debug('Issuing HTTP request');
+                    debug('Issuing HTTP request...');
                     // Construct HTTP request
                     var res = request(settings.method, url, settings.headings);
 

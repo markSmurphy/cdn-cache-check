@@ -1,4 +1,4 @@
-const debug = require('debug')('cloudfront-cache-check');
+const debug = require('debug')('cloudfront-cache-check-configuration');
 debug('Entry: [%s]', __filename);
 
 // Command line options parser

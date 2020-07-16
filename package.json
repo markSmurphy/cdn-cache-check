@@ -38,10 +38,11 @@
     "debug": "^4.1.1",
     "is-valid-domain": "0.0.14",
     "matcher": "^3.0.0",
+    "needle": "^2.5.0",
     "pretty-error": "^2.1.1",
     "supports-color": "^7.1.0",
     "sync-request": "^6.1.0",
     "valid-url": "^1.0.9",
-    "yargs": "^15.3.1"
+    "yargs": "^15.4.1"
   }
 }

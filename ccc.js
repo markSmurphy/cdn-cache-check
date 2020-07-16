@@ -96,7 +96,7 @@ try {
         }
     }
 
-    if (urls.length==0) {
+    if (urls.length === 0) {
         console.log(chalk.red('Error: No URL(s) provided.'));
     } else {
         // The main work starts here

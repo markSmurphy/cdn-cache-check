@@ -1,24 +1,24 @@
 
-const urls = ["https://assets.fuseuniversal.com/assets/ckeditor/config.js",
-    "https://assets.fuseuniversal.com/assets/ckeditor/contents.css",
-    "https://assets.fuseuniversal.com/assets/ckeditor/lang/en-gb.js",
-    "https://assets.fuseuniversal.com/assets/ckeditor/plugins/siupload/plugin.js",
-    "https://assets.fuseuniversal.com/assets/ckeditor/plugins/upload/plugin.js",
-    "https://assets.fuseuniversal.com/assets/ckeditor/skins/moono/editor.css",
-    "https://assets.fuseuniversal.com/assets/ckeditor/skins/moono/icons.png",
-    "https://assets.fuseuniversal.com/assets/ckeditor/styles.js"
+const urls = ['https://assets.fuseuniversal.com/assets/ckeditor/config.js',
+    'https://assets.fuseuniversal.com/assets/ckeditor/contents.css',
+    'https://assets.fuseuniversal.com/assets/ckeditor/lang/en-gb.js',
+    'https://assets.fuseuniversal.com/assets/ckeditor/plugins/siupload/plugin.js',
+    'https://assets.fuseuniversal.com/assets/ckeditor/plugins/upload/plugin.js',
+    'https://assets.fuseuniversal.com/assets/ckeditor/skins/moono/editor.css',
+    'https://assets.fuseuniversal.com/assets/ckeditor/skins/moono/icons.png',
+    'https://assets.fuseuniversal.com/assets/ckeditor/styles.js'
 ];
 var responses = [];
-var completed_requests = 0;
+var Completed_requests = 0;
 
 // Native
 const http = require('https');
 for (let i in urls) {
-    http.get(urls[i], res => {
+    http.get(urls[i], (res) => {
         responses.push(res.headers);
 
-        completed_requests++;
-        if (completed_requests == urls.length) {
+        Completed_requests++;
+        if (Completed_requests === urls.length) {
             // All download done, process responses array
             console.log(responses);
         }
@@ -33,8 +33,8 @@ for (let i in urls) {
     needle.head(urls[i], function(error, response) {
         responses.push(response.headers);
 
-        completed_requests++;
-        if (completed_requests == urls.length) {
+        Completed_requests++;
+        if (Completed_requests == urls.length) {
             // All download done, process responses array
             console.log(responses);
         }

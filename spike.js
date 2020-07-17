@@ -12,7 +12,7 @@ var responses = [];
 var Completed_requests = 0;
 
 // Native
-const http = require('https');
+/* const http = require('https');
 for (let i in urls) {
     http.get(urls[i], (res) => {
         responses.push(res.headers);
@@ -24,17 +24,17 @@ for (let i in urls) {
         }
     });
 }
-
+ */
 
 // Needle with callbacks
 var needle = require('needle');
-
+var options = {};
 for (let i in urls) {
-    needle.head(urls[i], function(error, response) {
-        responses.push(response.headers);
+    needle.request('head', urls[i], options, function(error, response) {
+        responses.push(response.rawHeaders);
 
         Completed_requests++;
-        if (Completed_requests == urls.length) {
+        if (Completed_requests === urls.length) {
             // All download done, process responses array
             console.log(responses);
         }

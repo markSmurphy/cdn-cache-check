@@ -29,7 +29,13 @@ const validUrl = require('valid-url');
 const cliProgress = require('cli-progress');
 
 // Initialise HTTP synchronous requester
-const request = require('sync-request');
+//const request = require('sync-request');
+
+// Initialise 'needle' HTTP client
+const needle = require('needle');
+
+// Initialise HTTP request options object
+var options = {};
 
 // Initialise configuration
 var settings = require('./configuration').getSettings();
@@ -114,26 +120,37 @@ try {
         // Loop around the number of iterations
         for (let iterationCounter = 1; iterationCounter <= settings.iterations; iterationCounter++) {
 
-            // Loop around the list of URLs
-            urls.forEach(function (url) {
-                debug('Checking: %s', url);
-                sleep(settings.interval).then(() => {
-                    // Increment the request counter & update process bar
-                    requestCounter++;
-                    progressBar.update(requestCounter);
+            for (let i in urls) {
+                // Initialise variables scoped within the loop
+                let responses = [];
+                let Completed_requests = 0;
 
-                    debug('Issuing HTTP %s request to [%s]...', settings.method.toUpperCase(), url);
-                    // Construct HTTP request
-                    var res = request(settings.method, url, settings.headings);
+                // Increment the request counter & update process bar
+                requestCounter++;
+                progressBar.update(requestCounter);
 
-                    // ** process response here **
-                    debug('Response [%s] headers: %O', res.statusCode, res.headers);
-                    console.log('%s - %s', res.statusCode, url);
-                    console.log('%O', res.headers);
+                debug('Issuing HTTP %s request to [%s]...', settings.method.toUpperCase(), urls[i]);
+
+                // Send HTTP request for current URL
+                needle.request(settings.method, urls[i], options, function(error, response) {
+                    debug('Response [%s] headers: %O', response.statusCode, response.headers);
+                    console.log('%s - %s', response.statusCode, urls[i]);
+
+                    // Save HTTP response headers
+                    responses.push(response.headers);
+
+                    // Increment responses counter
+                    Completed_requests++;
+
+                    if (Completed_requests === urls.length) {
+                        // A response for each request has been received; process responses
+                        // ** Process response here **
+                        console.log(responses);
+                    }
                 });
+            }
 
-            });
-
+            // ** pause for configured interval here
         }
 
         // Stop the progress bar

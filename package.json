@@ -41,7 +41,6 @@
     "needle": "^2.5.0",
     "pretty-error": "^2.1.1",
     "supports-color": "^7.1.0",
-    "sync-request": "^6.1.0",
     "valid-url": "^1.0.9",
     "yargs": "^15.4.1"
   }

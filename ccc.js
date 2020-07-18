@@ -132,7 +132,7 @@ try {
                 debug('Issuing HTTP %s request to [%s]...', settings.method.toUpperCase(), urls[i]);
 
                 // Send HTTP request for current URL
-                needle.request(settings.method, urls[i], options, function(error, response) {
+                needle.request(settings.method, urls[i], settings.options, function(error, response) {
                     debug('Response [%s] headers: %O', response.statusCode, response.headers);
                     console.log('%s - %s', response.statusCode, urls[i]);
 

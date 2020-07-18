@@ -52,8 +52,15 @@
     "cloudfrontApexDomains": [
         "cloudfront.net"
     ],
-    "headers": {
-          "user-agent": "ccc/0.9",
-          "Connection": "close"
+    "options" : {
+        "timeout": 10000,
+        "response_timeout": 0,
+        "read_timeout": 0,
+        "follow": 5,
+        "export": true,
+        "headers": {
+            "user-agent": "ccc/{version} {OS}/{OSRelease}",
+            "Connection": "close"
+        }
     }
 }

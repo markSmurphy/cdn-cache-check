@@ -122,8 +122,8 @@ try {
 
             for (let i in urls) {
                 // Initialise variables scoped within the loop
-                let responses = [];
-                let Completed_requests = 0;
+                var responses = [];
+                var Completed_requests = 0;
 
                 // Increment the request counter & update process bar
                 requestCounter++;
@@ -137,15 +137,25 @@ try {
                     console.log('%s - %s', response.statusCode, urls[i]);
 
                     // Save HTTP response headers
-                    responses.push(response.headers);
+                    let result = {'request': {
+                        'protocol': response.req.protocol,
+                        'host': response.req.host,
+                        'path': response.req.path
+                        },
+                        'response': {
+                            'headers': response.headers
+                        }
+                    };
+                    responses.push(result);
 
                     // Increment responses counter
                     Completed_requests++;
 
+                    console.log('send %s of %s', Completed_requests, urls.length);
                     if (Completed_requests === urls.length) {
                         // A response for each request has been received; process responses
                         // ** Process response here **
-                        console.log(responses);
+                        console.log('Responses: %O',responses);
                     }
                 });
             }

@@ -33,7 +33,6 @@
   "license": "MIT",
   "dependencies": {
     "chalk": "^4.1.0",
-    "cli-progress": "^3.8.2",
     "columnify": "^1.5.4",
     "debug": "^4.1.1",
     "is-valid-domain": "0.0.14",

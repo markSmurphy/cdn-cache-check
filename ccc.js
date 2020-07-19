@@ -25,9 +25,6 @@ const EOL = require('os').EOL;
 // Initialise URL validation object
 const validUrl = require('valid-url');
 
-// Initialise progress bar
-const cliProgress = require('cli-progress');
-
 // Initialise 'needle' HTTP client
 const needle = require('needle');
 
@@ -105,13 +102,10 @@ try {
         debug('Using settings: %O', settings);
         console.log('Checking %i URLs %i times', urls.length, settings.iterations);
         debug('Checking %i URLs %i times: %O', urls.length, settings.iterations, urls);
+
+        // Initialise variables to keep track of progress
         let totalRequests = urls.length * settings.iterations;
         let requestCounter = 0;
-        // create a new progress bar instance
-        const progressBar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_grey);
-
-        // Start the progress bar with a starting value of 0 and a total equal to the number of requests we're going to make
-        progressBar.start(totalRequests, 0);
 
         // Loop around the number of iterations
         for (let iterationCounter = 1; iterationCounter <= settings.iterations; iterationCounter++) {
@@ -121,9 +115,8 @@ try {
                 var responses = [];
                 var Completed_requests = 0;
 
-                // Increment the request counter & update process bar
+                // Increment the request counter and update process
                 requestCounter++;
-                progressBar.update(requestCounter);
 
                 debug('Issuing HTTP %s request to [%s]...', settings.method.toUpperCase(), urls[i]);
 
@@ -176,9 +169,6 @@ try {
             // ** pause for configured interval here
 
         }
-
-        // Stop the progress bar
-        progressBar.stop();
     }
 } catch (error) {
     console.error('An error occurred: %O', error);

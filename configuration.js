@@ -14,9 +14,19 @@ const utils = require('./utils');
 
 module.exports = {
     getSettings() {
+        // Load the defaults
         let settings = this.getDefaults();
-        // Check command line parameters for overrides
 
+        try {
+            // Parse the headers collections to select the correct one
+            let headerCollection = this.getHeaderCollection(settings.headersCollection, settings);
+            settings.headerCollection = headerCollection;
+
+        } catch (error) {
+            console.log(error);
+        }
+
+        // Check command line parameters for overrides...
         // HTTP Method
         if (argv.method) {
             // ** We should valid the specified method **
@@ -46,14 +56,27 @@ module.exports = {
 
         // Header Collection
         if (argv.headers) {
-            // ** We should validate the supplied collection nme exists **
+            // ** We should validate the supplied collection name exists **
             settings.headersCollection = argv.headers;
-            // utils.getHeadersCollections(settings);
         }
         return settings;
     },
     getDefaults() {
         let defaultSettings = require('./defaults.json');
         return defaultSettings;
+    },
+    getHeaderCollection(collectionName, settings) {
+        // Iterate through each header collection definition
+        for (let i = 0; i < settings.headersCollections.length; i++) {
+            // Check if its name matches the supplied one
+            if (settings.headersCollections[i][collectionName]) {
+                // Return the array of headers
+                return (settings.headersCollections[i][collectionName]);
+
+            }
+        }
+
+        // If we get here then no matches were found
+        return ([]);
     }
 };

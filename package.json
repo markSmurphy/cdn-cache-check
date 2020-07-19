@@ -37,7 +37,7 @@
     "columnify": "^1.5.4",
     "debug": "^4.1.1",
     "is-valid-domain": "0.0.14",
-    "matcher": "^3.0.0",
+    "multimatch": "^4.0.0",
     "needle": "^2.5.0",
     "pretty-error": "^2.1.1",
     "supports-color": "^7.1.0",

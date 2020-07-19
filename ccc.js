@@ -28,19 +28,15 @@ const validUrl = require('valid-url');
 // Initialise progress bar
 const cliProgress = require('cli-progress');
 
-// Initialise HTTP synchronous requester
-//const request = require('sync-request');
-
 // Initialise 'needle' HTTP client
 const needle = require('needle');
-
-// Initialise HTTP request options object
-var options = {};
 
 // Initialise configuration
 var settings = require('./configuration').getSettings();
 
-debug('External modules initialised.');
+const matcher = require('multimatch');
+
+debug('External modules have been initialised.');
 
 try {
     // Check for 'help' command line parameters
@@ -140,7 +136,8 @@ try {
                     let result = {'request': {
                         'protocol': response.req.protocol,
                         'host': response.req.host,
-                        'path': response.req.path
+                        'path': response.req.path,
+                        'url' : urls[i]
                         },
                         'response': {
                             'headers': response.headers
@@ -151,16 +148,33 @@ try {
                     // Increment responses counter
                     Completed_requests++;
 
-                    console.log('send %s of %s', Completed_requests, urls.length);
+                    console.log('*** sent %s of %s', Completed_requests, urls.length);
+
+                    // Check if response for each request has been received
                     if (Completed_requests === urls.length) {
-                        // A response for each request has been received; process responses
-                        // ** Process response here **
-                        console.log('Responses: %O',responses);
+
+                        // Iterate through Responses array
+                        for (let i = 0; i < responses.length; i++) {
+                            console.log(chalk.blueBright(responses[i].request.url));
+
+                            for(let attributeName in responses[i].response.headers){
+                                debug('Examining header %s : %s', attributeName, responses[i].response.headers[attributeName]);
+                                // Check if the response header's name matches one in the header collection
+                                if (matcher(attributeName, settings.headerCollection, {nocase: true}).length > 0) {
+                                    console.log('%s : %s', attributeName, responses[i].response.headers[attributeName]);
+                                } else {
+                                    debug('IGNORING %s : %s', attributeName, responses[i].response.headers[attributeName]);
+                                }
+
+                            }
+                        }
+
                     }
                 });
             }
 
             // ** pause for configured interval here
+
         }
 
         // Stop the progress bar

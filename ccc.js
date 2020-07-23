@@ -12,12 +12,15 @@ var argv = require('yargs')
 // Initialise console colours
 const chalk = require('chalk');
 
+// Console output formatting for columns and colours
+const columnify = require('columnify');
+
 // Initialise File System object
 const fs = require('fs');
 
 // Initialise Promisify object, used to sleep the thread when injecting intervals
-const { promisify } = require('util');
-const sleep = promisify(setTimeout);
+// const { promisify } = require('util');
+// const sleep = promisify(setTimeout);
 
 // Platform independent new line character
 const EOL = require('os').EOL;
@@ -84,7 +87,7 @@ try {
                 debug('Checking if it is a valid URL...');
                 if (validUrl.isWebUri(process.argv[i])) {
                     // It's a valid URL.  Add it to the urls array
-                    debug('It looks like a URL');
+                    debug('√ It looks like a URL.  Adding it to the list');
                     urls.push(process.argv[i]);
                 } else {
                     debug('It is not a URL.');
@@ -104,7 +107,9 @@ try {
         debug('Checking %i URLs %i times: %O', urls.length, settings.iterations, urls);
 
         // Initialise variables to keep track of progress
-        let totalRequests = urls.length * settings.iterations;
+        const totalRequests = urls.length * settings.iterations;
+        debug('This run comprises of %s URLs checked %s times (%s requests in total)', urls.length, settings.iterations, totalRequests);
+
         let requestCounter = 0;
 
         // Loop around the number of iterations
@@ -112,61 +117,97 @@ try {
 
             for (let i in urls) {
                 // Initialise variables scoped within the loop
-                var responses = [];
-                var Completed_requests = 0;
+                let responses = [];
+                let Completed_requests = 0;
 
                 // Increment the request counter and update process
                 requestCounter++;
 
-                debug('Issuing HTTP %s request to [%s]...', settings.method.toUpperCase(), urls[i]);
+                debug('(%s of %s) Issuing HTTP %s request to [%s]...', requestCounter, urls.length, settings.method.toUpperCase(), urls[i]);
 
                 // Send HTTP request for current URL
+                console.log(chalk.green(urls[i]));
                 needle.request(settings.method, urls[i], {}, function(error, response) {
                     debug('Response [%s] headers: %O', response.statusCode, response.headers);
                     console.log('%s - %s', response.statusCode, urls[i]);
 
-                    // Save HTTP response headers
+                    // Save request details and HTTP response headers as JSON
                     let result = {'request': {
                         'protocol': response.req.protocol,
                         'host': response.req.host,
                         'path': response.req.path,
-                        'url' : urls[i]
+                        'url' : urls[i],
+                        'statusCode': response.statusCode
                         },
                         'response': {
                             'headers': response.headers
                         }
                     };
+                    // Add request/response result to array (for later parsing once we have them all)
                     responses.push(result);
 
-                    // Increment responses counter
+                    // Increment counter
                     Completed_requests++;
-
-                    console.log('*** sent %s of %s', Completed_requests, urls.length);
 
                     // Check if response for each request has been received
                     if (Completed_requests === urls.length) {
 
-                        // Iterate through Responses array
-                        for (let i = 0; i < responses.length; i++) {
-                            console.log(chalk.blueBright(responses[i].request.url));
+                        // We'll collate the parsed results into an output array
+                        let outputTable = [];
 
+                        // Iterate through Responses array (we now have all the responses in this iteration)
+                        for (let i = 0; i < responses.length; i++) {
+                            console.log(chalk.yellow(responses[i].request.url));
+
+                            // Each request/response will constitute a row in the output table
+                            let row = {};
+
+                            // Populate response status code, with colour indicator of success or failure
+                            if (responses[i].statusCode >= 400) {
+                                // Failure response code, 4xx & 5xx
+                                row = {
+                                    'Status': chalk.red(responses[i].statusCode)
+                                }
+
+                            } else {
+                                // Success response code
+                                row = {
+                                    'Status': chalk.green(responses[i].statusCode)
+                                }
+                            }
+
+                            // Populate basic request details
+                            row['host'] = responses[i].host;
+                            row['path'] = responses[i].path;
+
+                            // Pull out select response headers
                             for(let attributeName in responses[i].response.headers){
                                 debug('Examining header %s : %s', attributeName, responses[i].response.headers[attributeName]);
                                 // Check if the response header's name matches one in the header collection
                                 if (matcher(attributeName, settings.headerCollection, {nocase: true}).length > 0) {
-                                    console.log('%s : %s', attributeName, responses[i].response.headers[attributeName]);
+                                    console.log('Extracting ==> %s : %s', attributeName, responses[i].response.headers[attributeName]);
+                                    row[attributeName] = responses[i].response.headers[attributeName];
                                 } else {
-                                    debug('IGNORING %s : %s', attributeName, responses[i].response.headers[attributeName]);
+                                    debug('Ignoring ==> %s : %s', attributeName, responses[i].response.headers[attributeName]);
                                 }
 
                             }
+
+                            outputTable.push(row);
                         }
 
+                        // Send output results to console, formatted into columns
+                        let columns = columnify(outputTable, {
+                            showHeaders: true,
+                            preserveNewLines: true,
+                        });
+                        console.log(columns);
                     }
                 });
             }
 
-            // ** pause for configured interval here
+            debug('Completed iteration %s of %s', iterationCounter, settings.iterations);
+        // ** pause for configured interval here
 
         }
     }

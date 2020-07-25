@@ -1,4 +1,5 @@
 const debug = require('debug')('cloudfront-cache-check-help');
+debug('Entry: [%s]', __filename);
 
 module.exports = {
     helpScreen: function (verbose) {

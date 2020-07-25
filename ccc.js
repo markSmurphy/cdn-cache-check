@@ -35,7 +35,7 @@ const matcher = require('multimatch');
 
 // Error formatting
 const prettyError = require('pretty-error');
-const pe = new prettyError();
+const PrettyErr = new prettyError();
 
 
 // Initialise configuration
@@ -92,7 +92,7 @@ try {
                 }
             }
         } catch(err) {
-            console.log(pe.render(err));
+            console.log(PrettyErr.render(err));
         }
     }
 
@@ -164,13 +164,13 @@ try {
                                 // Failure response code, 4xx & 5xx
                                 row = {
                                     'Status': chalk.red(responses[i].statusCode)
-                                }
+                                };
 
                             } else {
                                 // Success response code
                                 row = {
                                     'Status': chalk.green(responses[i].statusCode)
-                                }
+                                };
                             }
 
                             // Populate basic request details

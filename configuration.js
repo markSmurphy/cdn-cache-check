@@ -2,7 +2,7 @@ const debug = require('debug')('cloudfront-cache-check-configuration');
 debug('Entry: [%s]', __filename);
 
 const prettyError = require('pretty-error');
-const pe = new prettyError();
+const PrettyErr = new prettyError();
 
 // Command line options parser
 var argv = require('yargs')
@@ -29,18 +29,18 @@ module.exports = {
             debug('Using Header Collection: %O', settings.headerCollection);
 
         } catch (error) {
-            console.log(pe.render(error));
+            console.log(PrettyErr.render(error));
         }
 
         // Check command line parameters for overrides...
         // HTTP Method
         if (argv.method) {
-            const HTTPMethods = ["get", "head", "options", "put", "patch", "delete", "trace", "connect"];
+            const HTTPMethods = ['get', 'head', 'options', 'put', 'patch', 'delete', 'trace', 'connect'];
             if (HTTPMethods.includes(argv.method.toLowerCase())) {
                 settings.method = argv.method.toLowerCase();
                 debug('Setting HTTP method to: %s', settings.method);
             } else {
-                console.log(chalk.blue('Warning: %s is not a supported HTTP method. Using %s instead.',argv.method.toUpperCase() , settings.method.toUpperCase()))
+                console.log(chalk.blue('Warning: %s is not a supported HTTP method. Using %s instead.',argv.method.toUpperCase() , settings.method.toUpperCase()));
             }
         }
 

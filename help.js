@@ -22,7 +22,7 @@ module.exports = {
         console.log('   ' + package.version);
         console.log(endOfLine);
         console.log(chalk.grey('USAGE:'));
-        console.log('   ' + 'node ccc [<url> <url> … | <filename> <filename> …] [options]');
+        console.log('   ' + 'node ccc.js [<url> | <filename> [<url> | <filename>] … ] [options]');
         console.log(endOfLine);
         console.log(chalk.grey('OPTIONS:'));
         console.log('   ' + '<url>                         ' + chalk.grey('A URL to query'));

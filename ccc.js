@@ -2,8 +2,8 @@
 
 const debug = require('debug')('cloudfront-cache-check');
 debug('Entry: [%s]', __filename);
+debug('Command line arguments: %O', process.argv);
 
-debug('Initialising all external modules...');
 // Command line options parser
 var argv = require('yargs')
 .help(false)
@@ -31,12 +31,15 @@ const validUrl = require('valid-url');
 // Initialise 'needle' HTTP client
 const needle = require('needle');
 
-// Initialise configuration
-var settings = require('./configuration').getSettings();
-
 const matcher = require('multimatch');
 
-debug('External modules have been initialised.');
+// Error formatting
+const prettyError = require('pretty-error');
+const pe = new prettyError();
+
+
+// Initialise configuration
+var settings = require('./configuration').getSettings();
 
 try {
     // Check for 'help' command line parameters
@@ -54,11 +57,9 @@ try {
 
     // Iterate through all parameters looking for ones that are URLs or files
     for (let i = 2; i < process.argv.length; ++i) {
-        debug('Examining command line argument [%i]: %s', i, process.argv[i]);
-
         // Check if it's a valid file
         try {
-            debug('Checking if it is a file...');
+            debug('Checking if [%s] is a file...', process.argv[i]);
             if (fs.existsSync(process.argv[i])) {
                 // File exists.  Extract URLs from it
                 try {
@@ -84,17 +85,14 @@ try {
                     debug('An error occurred while parsing the file [%s]: %O', process.argv[i], err);
                 }
             } else {
-                debug('Checking if it is a valid URL...');
+                debug('Checking if [%s] is a URL...', process.argv[i]);
                 if (validUrl.isWebUri(process.argv[i])) {
                     // It's a valid URL.  Add it to the urls array
-                    debug('√ It looks like a URL.  Adding it to the list');
                     urls.push(process.argv[i]);
-                } else {
-                    debug('It is not a URL.');
                 }
             }
         } catch(err) {
-            debug('Error: %O', err);
+            console.log(pe.render(err));
         }
     }
 
@@ -103,41 +101,38 @@ try {
     } else {
         // The main work starts here
         debug('Using settings: %O', settings);
-        console.log('Checking %i URLs %i times', urls.length, settings.iterations);
-        debug('Checking %i URLs %i times: %O', urls.length, settings.iterations, urls);
 
         // Initialise variables to keep track of progress
         const totalRequests = urls.length * settings.iterations;
-        debug('This run comprises of %s URLs checked %s times (%s requests in total)', urls.length, settings.iterations, totalRequests);
-
         let requestCounter = 0;
+
+        console.log(chalk.cyan('Checking %i URLs %i times'), urls.length, settings.iterations);
+        debug('Checking these URLs %i times (%s requests in total): %O', settings.iterations, totalRequests, urls);
 
         // Loop around the number of iterations
         for (let iterationCounter = 1; iterationCounter <= settings.iterations; iterationCounter++) {
+            // Keep array of response headers with request details
+            let responses = [];
 
             for (let i in urls) {
-                // Initialise variables scoped within the loop
-                let responses = [];
-                let Completed_requests = 0;
-
                 // Increment the request counter and update process
                 requestCounter++;
 
                 debug('(%s of %s) Issuing HTTP %s request to [%s]...', requestCounter, urls.length, settings.method.toUpperCase(), urls[i]);
 
                 // Send HTTP request for current URL
-                console.log(chalk.green(urls[i]));
+
                 needle.request(settings.method, urls[i], {}, function(error, response) {
-                    debug('Response [%s] headers: %O', response.statusCode, response.headers);
-                    console.log('%s - %s', response.statusCode, urls[i]);
+                    debug(response.statusCode + ' ' + urls[i]);
 
                     // Save request details and HTTP response headers as JSON
-                    let result = {'request': {
+                    let result = {
+                        'statusCode': response.statusCode,
+                        'request': {
                         'protocol': response.req.protocol,
                         'host': response.req.host,
                         'path': response.req.path,
                         'url' : urls[i],
-                        'statusCode': response.statusCode
                         },
                         'response': {
                             'headers': response.headers
@@ -146,24 +141,26 @@ try {
                     // Add request/response result to array (for later parsing once we have them all)
                     responses.push(result);
 
-                    // Increment counter
-                    Completed_requests++;
+                    debug('Completion check: %s of %s', responses.length, urls.length);
 
-                    // Check if response for each request has been received
-                    if (Completed_requests === urls.length) {
+                    // Check if there's a response for each request
+
+                    if (responses.length === urls.length) {
+
+                        debug('Parsing %s responses', responses.length);
 
                         // We'll collate the parsed results into an output array
                         let outputTable = [];
 
                         // Iterate through Responses array (we now have all the responses in this iteration)
                         for (let i = 0; i < responses.length; i++) {
-                            console.log(chalk.yellow(responses[i].request.url));
-
+                            debug('Parsing response for: %s', responses[i].request);
+                            debug('%O, responses[i].response');
                             // Each request/response will constitute a row in the output table
                             let row = {};
 
                             // Populate response status code, with colour indicator of success or failure
-                            if (responses[i].statusCode >= 400) {
+                            if ((Number.isInteger(responses[i].statusCode)) && (responses[i].statusCode >= 400)) {
                                 // Failure response code, 4xx & 5xx
                                 row = {
                                     'Status': chalk.red(responses[i].statusCode)
@@ -177,20 +174,21 @@ try {
                             }
 
                             // Populate basic request details
-                            row['host'] = responses[i].host;
-                            row['path'] = responses[i].path;
+                            row['host'] = responses[i].request.host;
+                            row['path'] = responses[i].request.path;
+                            //row['protocol'] = responses[i].request.protocol;
+                            //row['url'] = responses[i].request.url;
 
                             // Pull out select response headers
                             for(let attributeName in responses[i].response.headers){
                                 debug('Examining header %s : %s', attributeName, responses[i].response.headers[attributeName]);
                                 // Check if the response header's name matches one in the header collection
                                 if (matcher(attributeName, settings.headerCollection, {nocase: true}).length > 0) {
-                                    console.log('Extracting ==> %s : %s', attributeName, responses[i].response.headers[attributeName]);
+                                    debug('Extracting ==> %s : %s', attributeName, responses[i].response.headers[attributeName]);
                                     row[attributeName] = responses[i].response.headers[attributeName];
                                 } else {
                                     debug('Ignoring ==> %s : %s', attributeName, responses[i].response.headers[attributeName]);
                                 }
-
                             }
 
                             outputTable.push(row);
@@ -207,7 +205,7 @@ try {
             }
 
             debug('Completed iteration %s of %s', iterationCounter, settings.iterations);
-        // ** pause for configured interval here
+        // *** pause for configured interval here
 
         }
     }

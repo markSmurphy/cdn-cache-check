@@ -27,7 +27,4 @@
 ## Unused components
 
 * npmlog
-* columnify
 * is-valid-domain
-* pretty-error
-* valid-url

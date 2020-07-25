@@ -1,8 +1,8 @@
 const debug = require('debug')('cloudfront-cache-check-configuration');
 debug('Entry: [%s]', __filename);
 
-const prettyError = require('pretty-error');
-const PrettyErr = new prettyError();
+const PrettyError = require('pretty-error');
+const pe = new PrettyError();
 
 // Command line options parser
 var argv = require('yargs')
@@ -29,7 +29,7 @@ module.exports = {
             debug('Using Header Collection: %O', settings.headerCollection);
 
         } catch (error) {
-            console.log(PrettyErr.render(error));
+            console.log(pe.render(error));
         }
 
         // Check command line parameters for overrides...

@@ -34,8 +34,8 @@ const needle = require('needle');
 const matcher = require('multimatch');
 
 // Error formatting
-const prettyError = require('pretty-error');
-const PrettyErr = new prettyError();
+const PrettyError = require('pretty-error');
+const pe = new PrettyError();
 
 
 // Initialise configuration
@@ -92,7 +92,7 @@ try {
                 }
             }
         } catch(err) {
-            console.log(PrettyErr.render(err));
+            console.log(pe.render(err));
         }
     }
 

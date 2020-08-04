@@ -14,7 +14,30 @@
                 "x-cache",
                 "age",
                 "server",
-                "x-amz-*"
+                "x-amz-*",
+                "cache-control"
+            ]
+        },
+        {
+            "fastly": [
+                "x-cache",
+                "x-cache-hits",
+                "x-served-by",
+                "age",
+                "server",
+                "fastly-*",
+                "cache-control"
+            ]
+        },
+        {
+            "akamai": [
+                "x-cache",
+                "x-cache-key",
+                "x-check-cacheable",
+                "x-true-cache-key",
+                "akamai-*",
+                "x-akamai-*",
+                "cache-control"
             ]
         },
         {
@@ -49,9 +72,13 @@
             ]
         }
     ],
-    "cloudfrontApexDomains": [
-        "cloudfront.net"
-    ],
+    "ApexDomains": {
+        "*.cloudfront.net": "CloudFront",
+        "*.edgekey.net": "Akamai",
+        "*.edgesuite.net": "Akamai",
+        "*.akamaiedge.net": "Akamai",
+        "*.fastly.net": "Fastly"
+    },
     "options" : {
         "timeout": 10000,
         "response_timeout": 0,

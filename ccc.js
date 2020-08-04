@@ -174,20 +174,45 @@ try {
                             }
 
                             // Populate basic request details
-                            row['host'] = responses[i].request.host;
-                            row['path'] = responses[i].request.path;
+                            row['host'] = chalk.blue(responses[i].request.host);
+                            row['path'] = chalk.blue(responses[i].request.path);
                             //row['protocol'] = responses[i].request.protocol;
                             //row['url'] = responses[i].request.url;
 
                             // Pull out select response headers
                             for(let attributeName in responses[i].response.headers){
-                                debug('Examining header %s : %s', attributeName, responses[i].response.headers[attributeName]);
+                                let attributeValue = responses[i].response.headers[attributeName];
+                                debug('Examining header %s : %s', attributeName, attributeValue);
                                 // Check if the response header's name matches one in the header collection
                                 if (matcher(attributeName, settings.headerCollection, {nocase: true}).length > 0) {
-                                    debug('Extracting ==> %s : %s', attributeName, responses[i].response.headers[attributeName]);
-                                    row[attributeName] = responses[i].response.headers[attributeName];
+                                    debug('Extracting ==> %s : %s', attributeName, attributeValue);
+
+                                    switch(attributeName.toLowerCase()) {
+                                        case 'cache-control':
+                                            // code block
+                                            break;
+                                        case 'x-cache':
+                                            // Examine x-cache value
+                                            if (attributeValue.toLowerCase().search('hit') !== -1) {
+                                                // Cache HIT.  Colour it GREEN
+                                                row[attributeName] = chalk.green(attributeValue);
+
+                                            } else if (attributeValue.toLowerCase().search('miss') !== -1) {
+                                                // Cache MISS.  Colour it RED
+                                                row[attributeName] = chalk.red(attributeValue);
+                                            } else {
+
+                                                // Unknown cache state.  Colour it YELLOW
+                                                row[attributeName] = chalk.yellow(attributeValue);
+                                            }
+                                            break;
+                                        default:
+                                            // Add row with no formatting
+                                            row[attributeName] = attributeValue;
+                                      }
+
                                 } else {
-                                    debug('Ignoring ==> %s : %s', attributeName, responses[i].response.headers[attributeName]);
+                                    debug('Ignoring ==> %s : %s', attributeName, attributeValue);
                                 }
                             }
 

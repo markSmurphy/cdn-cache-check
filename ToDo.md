@@ -5,8 +5,8 @@
 * Format output into columns
 * Add date/time into request details and output columns
 * Colour output to indicate cache hit & cache miss
-  * Friendly interpretation based on CloudFront's x-cache documentation
-* Implemented iterations (with interval in-between)
+  * Friendly interpretation based on CDN's x-cache documentation
+* Implement iterations (with `interval` observed between)
 * Expand `user-agent` {variables} when reading config
 * Command line arguments for:
   * `timeout`
@@ -21,7 +21,7 @@
 * Implement `settings.options` passed through to `needle`
   * Allow `options` override from command line
 * ~~Investigate the spurious `400` responses~~
-* Allow customisation of user-agent string (avoid bot detection)
+* ~~Allow customisation of user-agent string (avoid bot detection)~~
 * ~~Investigate why req.path has `needle` options `json` concatenated~~
 * Investigate merits of implementing a custom [http_agent](https://nodejs.org/api/http.html#http_class_http_agent)
 

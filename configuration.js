@@ -73,6 +73,11 @@ module.exports = {
             settings.headersCollection = argv.headers;
             debug('Using Headers Collection: %s', settings.headersCollection);
         }
+
+        // Use a client specific customised user-agent string
+        settings.options.headers['user-agent'] = this.getUserAgent();
+        debug('Using the user-agent: %s', settings.options.headers['user-agent']);
+
         return settings;
     },
     getDefaults() {
@@ -93,5 +98,29 @@ module.exports = {
         // Perhaps return something that will collect all headers - return (['*']);
         console.log(chalk.blue('WARNING: The requested header collection [%s] does not exist', collectionName));
         return ([]);
+    },
+    getUserAgent(){
+        try {
+            // Load package.json for the version number etc
+            const package = require('./package.json');
+            // Load O/S module to get client specifics
+            const os = require('os');
+
+            // Extract default user-agent string from default config
+            let defaultSettings = this.getDefaults();
+            let userAgent = defaultSettings.options.headers['user-agent'];
+
+            // Replace embedded variables with platform specifics
+            userAgent = userAgent.replace('{version}', package.version);
+
+            userAgent = userAgent.replace('{OS}', os.type());
+
+            userAgent = userAgent.replace('{OSRelease}', os.release());
+
+            return(userAgent);
+
+        } catch (error) {
+            return('ccc/1.0');
+        }
     }
 };

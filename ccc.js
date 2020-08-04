@@ -22,6 +22,10 @@ const fs = require('fs');
 // const { promisify } = require('util');
 // const sleep = promisify(setTimeout);
 
+// Cache=control header parser
+//const {parseCacheControl} = require('@tusbar/cache-control');
+const {parse} = require('@tusbar/cache-control')
+
 // Platform independent new line character
 const EOL = require('os').EOL;
 
@@ -187,9 +191,23 @@ try {
                                 if (matcher(attributeName, settings.headerCollection, {nocase: true}).length > 0) {
                                     debug('Extracting ==> %s : %s', attributeName, attributeValue);
 
+                                    // Parse header value for cache-control directives (can't do this inside the following case blocks)
+                                    let clientCache = parse(attributeValue);
+
                                     switch(attributeName.toLowerCase()) {
                                         case 'cache-control':
-                                            // code block
+                                            if ((clientCache.noStore === false) && (clientCache.maxAge > 0)) {
+                                                // Response IS cacheable.  Colour it GREEN
+                                                row[attributeName] = chalk.green(attributeValue);
+
+                                            } else if ((clientCache.noStore === true) || (clientCache.maxAge === 0)) {
+                                                // Response is NOT cacheable.  Colour it RED
+                                                row[attributeName] = chalk.red(attributeValue);
+
+                                            } else {
+                                                // Unknown cache state.  Colour it YELLOW
+                                                row[attributeName] = chalk.yellow(attributeValue);
+                                            }
                                             break;
                                         case 'x-cache':
                                             // Examine x-cache value
@@ -200,8 +218,8 @@ try {
                                             } else if (attributeValue.toLowerCase().search('miss') !== -1) {
                                                 // Cache MISS.  Colour it RED
                                                 row[attributeName] = chalk.red(attributeValue);
-                                            } else {
 
+                                            } else {
                                                 // Unknown cache state.  Colour it YELLOW
                                                 row[attributeName] = chalk.yellow(attributeValue);
                                             }

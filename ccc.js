@@ -5,7 +5,7 @@ debug('Entry: [%s]', __filename);
 debug('Command line arguments: %O', process.argv);
 
 // Global Constants
-const CCC_REQUEST_WARNING_THRESHOLD = 100
+const CCC_REQUEST_WARNING_THRESHOLD = 100;
 
 // Command line options parser
 var argv = require('yargs')
@@ -27,7 +27,7 @@ const fs = require('fs');
 
 // Cache=control header parser
 //const {parseCacheControl} = require('@tusbar/cache-control');
-const {parse} = require('@tusbar/cache-control')
+const {parse} = require('@tusbar/cache-control');
 
 // Platform independent new line character
 const EOL = require('os').EOL;

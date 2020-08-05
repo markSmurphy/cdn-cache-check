@@ -2,7 +2,7 @@ const debug = require('debug')('cloudfront-cache-check-configuration');
 debug('Entry: [%s]', __filename);
 
 // Global Constants
-const CCC_DEFAULT_USERAGENT = 'ccc/1.0'
+const CCC_DEFAULT_USERAGENT = 'ccc/1.0';
 
 // Error formatting module
 const PrettyError = require('pretty-error');

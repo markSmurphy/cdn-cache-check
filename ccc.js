@@ -174,25 +174,23 @@ try {
                             // Each request/response will constitute a row in the output table
                             let row = {};
 
+                            // Populate basic request details
+                            // row['host'] = chalk.cyanBright(responses[i].request.host);
+                            // row['path'] = chalk.cyanBright(responses[i].request.path);
+                            //row['protocol'] = responses[i].request.protocol;
+                            //row['url'] = responses[i].request.url;
+                            row['url'] = chalk.cyan( responses[i].request.url);
+
                             // Populate response status code, with colour indicator of success or failure
                             if ((Number.isInteger(responses[i].statusCode)) && (responses[i].statusCode >= 400)) {
                                 // Failure response code, 4xx & 5xx
-                                row = {
-                                    'Status': chalk.red(responses[i].statusCode)
-                                };
+                                row['Status'] = chalk.red(responses[i].statusCode);
 
                             } else {
-                                // Success response code
-                                row = {
-                                    'Status': chalk.green(responses[i].statusCode)
-                                };
+                                // Success response code (1xx, 2xx, 3xx)
+                                row['Status'] = chalk.green(responses[i].statusCode);
                             }
 
-                            // Populate basic request details
-                            row['host'] = chalk.blue(responses[i].request.host);
-                            row['path'] = chalk.blue(responses[i].request.path);
-                            //row['protocol'] = responses[i].request.protocol;
-                            //row['url'] = responses[i].request.url;
 
                             // Pull out select response headers
                             for(let attributeName in responses[i].response.headers){

@@ -1,6 +1,10 @@
 const debug = require('debug')('cloudfront-cache-check-configuration');
 debug('Entry: [%s]', __filename);
 
+// Global Constants
+const CCC_DEFAULT_USERAGENT = 'ccc/1.0'
+
+// Error formatting module
 const PrettyError = require('pretty-error');
 const pe = new PrettyError();
 
@@ -120,7 +124,7 @@ module.exports = {
             return(userAgent);
 
         } catch (error) {
-            return('ccc/1.0');
+            return(CCC_DEFAULT_USERAGENT);
         }
     }
 };

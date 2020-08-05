@@ -4,6 +4,9 @@ const debug = require('debug')('cloudfront-cache-check');
 debug('Entry: [%s]', __filename);
 debug('Command line arguments: %O', process.argv);
 
+// Global Constants
+const CCC_REQUEST_WARNING_THRESHOLD = 100
+
 // Command line options parser
 var argv = require('yargs')
 .help(false)
@@ -110,8 +113,16 @@ try {
         const totalRequests = urls.length * settings.iterations;
         let requestCounter = 0;
 
-        console.log(chalk.cyan('Checking %i URLs %i times'), urls.length, settings.iterations);
+        // Workout how many requests we're going to make and display a notification if it exceeds the threshold
         debug('Checking these URLs %i times (%s requests in total): %O', settings.iterations, totalRequests, urls);
+        if (totalRequests > CCC_REQUEST_WARNING_THRESHOLD) {
+            // Display a subtly different notification if there are multiple iterations
+            if (settings.iterations > 1) {
+                console.log(chalk.cyan('Checking %i URLs * %i times (= %i requests)'), urls.length, settings.iterations, totalRequests);
+            } else {
+                console.log(chalk.cyan('Checking %i URLs'), urls.length, settings.iterations, totalRequests);
+            }
+        }
 
         // Loop around the number of iterations
         for (let iterationCounter = 1; iterationCounter <= settings.iterations; iterationCounter++) {

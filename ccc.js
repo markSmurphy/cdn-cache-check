@@ -26,7 +26,6 @@ const fs = require('fs');
 // const sleep = promisify(setTimeout);
 
 // Cache=control header parser
-//const {parseCacheControl} = require('@tusbar/cache-control');
 const {parse} = require('@tusbar/cache-control');
 
 // Platform independent new line character
@@ -44,9 +43,13 @@ const matcher = require('multimatch');
 const PrettyError = require('pretty-error');
 const pe = new PrettyError();
 
-
 // Initialise configuration
 var settings = require('./configuration').getSettings();
+
+if (settings.listResponseHeaders) {
+    // Array to store names of received response headers, used
+    var responseHeadersReceived= [];
+}
 
 try {
     // Check for 'help' command line parameters
@@ -156,9 +159,9 @@ try {
                     // Add request/response result to array (for later parsing once we have them all)
                     responses.push(result);
 
-                    debug('Completion check: %s of %s', responses.length, urls.length);
+                    debug('Completed check %s of %s', responses.length, urls.length);
 
-                    // Check if there's a response for each request
+                    // Check if there's been a response for each of the requests
 
                     if (responses.length === urls.length) {
 
@@ -196,6 +199,12 @@ try {
                             for(let attributeName in responses[i].response.headers){
                                 let attributeValue = responses[i].response.headers[attributeName];
                                 debug('Examining header %s : %s', attributeName, attributeValue);
+
+                                // Save the name of the header in an array
+                                if (settings.listResponseHeaders){
+                                    responseHeadersReceived.push(attributeName);
+                                }
+
                                 // Check if the response header's name matches one in the header collection
                                 if (matcher(attributeName, settings.headerCollection, {nocase: true}).length > 0) {
                                     debug('Extracting ==> %s : %s', attributeName, attributeValue);
@@ -252,12 +261,20 @@ try {
                             preserveNewLines: true,
                         });
                         console.log(columns);
+
+                        if (settings.listResponseHeaders) {
+                            // Dedupe the list of collected response headers
+                            debug('De-duplicating the collection of %i response headers', responseHeadersReceived.length);
+                            let uniqueResponseHeaders = [...new Set(responseHeadersReceived)];
+                            debug('%i unique response headers', uniqueResponseHeaders.length);
+                            console.log('%i unique response headers (from %i collected): %O', uniqueResponseHeaders.length, responseHeadersReceived.length, uniqueResponseHeaders);
+                        }
                     }
                 });
             }
 
             debug('Completed iteration %s of %s', iterationCounter, settings.iterations);
-        // *** pause for configured interval here
+            // *** pause for configured interval here
 
         }
     }

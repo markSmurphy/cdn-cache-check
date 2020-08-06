@@ -73,9 +73,16 @@ module.exports = {
 
         // Header Collection
         if (argv.headers) {
-            // ** We should validate the supplied collection name exists **
+            // ** We should validate the specified collection actually exists **
             settings.headersCollection = argv.headers;
             debug('Using Headers Collection: %s', settings.headersCollection);
+        }
+
+        // Check for list-response-headers argument
+        if (argv.listResponseHeaders) {
+            settings.listResponseHeaders = true
+        } else {
+            settings.listResponseHeaders = false
         }
 
         // Use a client specific customised user-agent string

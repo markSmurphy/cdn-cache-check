@@ -179,8 +179,8 @@ try {
 
                             // Populate basic request details
                             let timestamp = new Date();
-                            let timeResponded = timestamp.getHours() + ":" + timestamp.getMinutes() + ":" + timestamp.getSeconds() + ":" + timestamp.getMilliseconds();
-                            row['time'] = chalk.reset(timeResponded);
+                            let responseTimestamp = timestamp.getHours() + ":" + timestamp.getMinutes() + ":" + timestamp.getSeconds() + ":" + timestamp.getMilliseconds();
+                            row['Time'] = chalk.reset(responseTimestamp);
 
                             // Populate response status code, with colour indicator of success or failure
                             if ((Number.isInteger(responses[i].statusCode)) && (responses[i].statusCode >= 400)) {
@@ -192,10 +192,10 @@ try {
                                 row['Status'] = chalk.green(responses[i].statusCode);
                             }
 
-                            row['host'] = chalk.cyan(responses[i].request.host);
-                            row['path'] = chalk.cyan(responses[i].request.path);
-                            // row['protocol'] = chalk.cyan(responses[i].request.protocol);
-                            // row['url'] = chalk.cyan( responses[i].request.url);
+                            row['Host'] = chalk.cyan(responses[i].request.host);
+                            row['Path'] = chalk.cyan(responses[i].request.path);
+                            // row['Protocol'] = chalk.cyan(responses[i].request.protocol);
+                            // row['URL'] = chalk.cyan( responses[i].request.url);
 
                             // Pull out select response headers
                             for(let attributeName in responses[i].response.headers){
@@ -263,9 +263,9 @@ try {
                             preserveNewLines: true,
                             truncate: true,
                             config: {
-                                'url': {maxWidth: 60},
-                                'host': {maxWidth: 30},
-                                'path': {maxWidth: 60}
+                                'URL': {maxWidth: 60},
+                                'Host': {maxWidth: 30},
+                                'Path': {maxWidth: 60}
                             }
                         });
                         console.log(columns);

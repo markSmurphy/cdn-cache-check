@@ -2,7 +2,7 @@
     "method": "head",
     "iterations": 1,
     "interval": 0,
-    "headersCollection": "cloudfront",
+    "headersCollection": "default",
     "headersCollections": [
         {
             "all": [
@@ -41,11 +41,10 @@
             ]
         },
         {
-            "cache": [
+            "default": [
                 "x-cache",
                 "age",
                 "server",
-                "x-amz-*",
                 "cache-control",
                 "expires",
                 "vary"

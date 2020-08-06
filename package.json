@@ -1,6 +1,6 @@
 {
-  "name": "cloudfront-cache-check",
-  "version": "0.9.0",
+  "name": "cdn-cache-check",
+  "version": "1.0.0",
   "description": "Makes HTTP requests to URLs and parses response headers to determine caching behaviour",
   "main": "ccc.js",
   "scripts": {
@@ -13,20 +13,23 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MarkSMurphy/cloudfront-cache-check.git"
+    "url": "git+https://github.com/MarkSMurphy/cdn-cache-check.git"
   },
   "bugs": {
-    "url": "https://github.com/MarkSMurphy/cloudfront-cache-check/issues"
+    "url": "https://github.com/MarkSMurphy/cdn-cache-check/issues"
   },
-  "homepage": "https://github.com/MarkSMurphy/cloudfront-cache-check#readme",
+  "homepage": "https://github.com/MarkSMurphy/cdn-cache-check#readme",
   "keywords": [
     "aws",
     "cloudfront",
+    "akamai",
+    "fastly",
     "cache",
     "check",
     "test",
     "cdn",
     "http",
+    "headers",
     "offload"
   ],
   "author": "Mark Murphy",

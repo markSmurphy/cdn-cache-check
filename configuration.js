@@ -1,4 +1,4 @@
-const debug = require('debug')('cloudfront-cache-check-configuration');
+const debug = require('debug')('cdn-cache-check-configuration');
 debug('Entry: [%s]', __filename);
 
 // Global Constants

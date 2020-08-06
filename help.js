@@ -1,4 +1,4 @@
-const debug = require('debug')('cloudfront-cache-check-help');
+const debug = require('debug')('cdn-cache-check-help');
 debug('Entry: [%s]', __filename);
 
 module.exports = {
@@ -28,10 +28,11 @@ module.exports = {
         console.log('   ' + '<url>                         ' + chalk.grey('A URL to query'));
         console.log('   ' + '<filename>                    ' + chalk.grey('Specify a file containing a list of URLs to query'));
         console.log('   ' + '--method <head|get|options>   ' + chalk.grey('Specify the HTTP method.  Default: HEAD'));
-        console.log('   ' + '--headers <collection>        ' + chalk.grey('Select which collection of headers to output. Default: cloudfront'));
+        console.log('   ' + '--headers <collection>        ' + chalk.grey('Select which collection of headers to output.'));
+        console.log('   ' + '--list-response-headers       ' + chalk.grey('List all unique response headers. Useful when creating a header collection.'));
+        console.log('   ' + '--header-collections          ' + chalk.grey('Lists all Header Collections and the response headers they contain'));
         console.log('   ' + '--iterations <integer>        ' + chalk.grey('The number of times to request each URL. Default: 1'));
         console.log('   ' + '--interval <integer>          ' + chalk.grey('The number of milliseconds in-between multiple http requests. Default: 0'));
-        console.log('   ' + '--header-collections          ' + chalk.grey('Lists all Header Collections and the response headers they contain'));
         console.log('   ' + '--no-color                    ' + chalk.grey('Switches off colour output'));
         console.log('   ' + '--version                     ' + chalk.grey('Display version number'));
         console.log('   ' + '--help                        ' + chalk.grey('Display this help'));

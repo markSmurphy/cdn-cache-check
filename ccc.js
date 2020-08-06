@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const debug = require('debug')('cloudfront-cache-check');
+const debug = require('debug')('cdn-cache-check');
 debug('Entry: [%s]', __filename);
 debug('Command line arguments: %O', process.argv);
 

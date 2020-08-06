@@ -1,15 +1,15 @@
-# cloudfront-cache-check
+# cdn-cache-check
 
-![Version](https://img.shields.io/npm/v/cloudfront-cache-check.svg?style=plastic)
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/cc31d7b0b6274073a6181b3e7442d1a3)](https://www.codacy.com?utm_source=bitbucket.org&amp;utm_medium=referral&amp;utm_content=MarkSMurphy/cloudfront-cache-check&amp;utm_campaign=Badge_Grade)
-[![Known Vulnerabilities](https://snyk.io/test/npm/cloudfront-cache-check/1.0.0/badge.svg)](https://snyk.io/test/npm/cloudfront-cache-check/1.0.0)
-![Libraries.io dependency status for latest release](https://img.shields.io/librariesio/release/npm/cloudfront-cache-check.svg?style=plastic)
-![Downloads](https://img.shields.io/npm/dm/cloudfront-cache-check.svg?style=plastic)
-![Licence](https://img.shields.io/npm/l/cloudfront-cache-check.svg?style=plastic)
+![Version](https://img.shields.io/npm/v/cdn-cache-check.svg?style=plastic)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/cc31d7b0b6274073a6181b3e7442d1a3)](https://www.codacy.com?utm_source=bitbucket.org&amp;utm_medium=referral&amp;utm_content=MarkSMurphy/cdn-cache-check&amp;utm_campaign=Badge_Grade)
+[![Known Vulnerabilities](https://snyk.io/test/npm/cdn-cache-check/1.0.0/badge.svg)](https://snyk.io/test/npm/cdn-cache-check/1.0.0)
+![Libraries.io dependency status for latest release](https://img.shields.io/librariesio/release/npm/cdn-cache-check.svg?style=plastic)
+![Downloads](https://img.shields.io/npm/dm/cdn-cache-check.svg?style=plastic)
+![Licence](https://img.shields.io/npm/l/cdn-cache-check.svg?style=plastic)
 
 ## Overview
 
-If you've ever wondered what CloudFront might be doing then this utility may help.  Provide one or more URLs to resources which are behind CloudFront and `cloudfront-cache-check` will parse the response headers to ascertain:
+If you've ever wondered what your CDN might be caching, then this utility may help.  Provide one or more URLs to resources which are behind a CDN and `cdn-cache-check` will parse the response headers to ascertain:
 
 * If the resource is cacheable
 * If the response was served via the CDN cache, or via the origin
@@ -19,7 +19,7 @@ If you've ever wondered what CloudFront might be doing then this utility may hel
 ## Quick Start
 
 ```text
-npm -g cloudfront-cache-check
+npm -g cdn-cache-check
 
 ccc https://example.com/file.js
 ```
@@ -31,7 +31,7 @@ ccc https://example.com/file.js
 ## Installation
 
 ```text
-npm -g install cloudfront-cache-check
+npm -g install cdn-cache-check
 ```
 
 ---

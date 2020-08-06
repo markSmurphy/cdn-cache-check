@@ -178,10 +178,12 @@ try {
                             let row = {};
 
                             // Populate basic request details
-                            // row['host'] = chalk.cyanBright(responses[i].request.host);
-                            // row['path'] = chalk.cyanBright(responses[i].request.path);
-                            //row['protocol'] = responses[i].request.protocol;
-                            //row['url'] = responses[i].request.url;
+                            let timestamp = new Date();
+                            let timeResponded = timestamp.getHours() + ":" + timestamp.getMinutes() + ":" + timestamp.getSeconds() + ":" + timestamp.getMilliseconds();
+                            row['time'] = timeResponded;
+                            row['host'] = chalk.cyan(responses[i].request.host);
+                            // row['path'] = chalk.cyan(responses[i].request.path);
+                            // row['protocol'] = chalk.cyan(responses[i].request.protocol);
                             row['url'] = chalk.cyan( responses[i].request.url);
 
                             // Populate response status code, with colour indicator of success or failure

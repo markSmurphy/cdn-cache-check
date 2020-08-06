@@ -8,7 +8,7 @@
 * Allow request headers to be injected
 * ~~Collect all unique response headers and optionally list them out `--list-response-headers`~~
 * Attempt CDN detection based on `CNAME` apex domain.
-* Add date/time into request details and output columns
+* ~~Add timestamp into output columns~~
 * ~~Colour output to indicate cache hit & cache miss~~
   * Friendly interpretation based on CDN's x-cache documentation
 * Implement iterations (with `interval` observed between)

@@ -180,11 +180,7 @@ try {
                             // Populate basic request details
                             let timestamp = new Date();
                             let timeResponded = timestamp.getHours() + ":" + timestamp.getMinutes() + ":" + timestamp.getSeconds() + ":" + timestamp.getMilliseconds();
-                            row['time'] = timeResponded;
-                            row['host'] = chalk.cyan(responses[i].request.host);
-                            // row['path'] = chalk.cyan(responses[i].request.path);
-                            // row['protocol'] = chalk.cyan(responses[i].request.protocol);
-                            row['url'] = chalk.cyan( responses[i].request.url);
+                            row['time'] = chalk.reset(timeResponded);
 
                             // Populate response status code, with colour indicator of success or failure
                             if ((Number.isInteger(responses[i].statusCode)) && (responses[i].statusCode >= 400)) {
@@ -196,6 +192,10 @@ try {
                                 row['Status'] = chalk.green(responses[i].statusCode);
                             }
 
+                            row['host'] = chalk.cyan(responses[i].request.host);
+                            row['path'] = chalk.cyan(responses[i].request.path);
+                            // row['protocol'] = chalk.cyan(responses[i].request.protocol);
+                            // row['url'] = chalk.cyan( responses[i].request.url);
 
                             // Pull out select response headers
                             for(let attributeName in responses[i].response.headers){
@@ -246,7 +246,7 @@ try {
                                             break;
                                         default:
                                             // Add row with no formatting
-                                            row[attributeName] = attributeValue;
+                                            row[attributeName] = chalk.reset(attributeValue);
                                       }
 
                                 } else {
@@ -261,6 +261,12 @@ try {
                         let columns = columnify(outputTable, {
                             showHeaders: true,
                             preserveNewLines: true,
+                            truncate: true,
+                            config: {
+                                'url': {maxWidth: 60},
+                                'host': {maxWidth: 30},
+                                'path': {maxWidth: 60}
+                            }
                         });
                         console.log(columns);
 

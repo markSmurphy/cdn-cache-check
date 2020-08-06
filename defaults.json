@@ -14,7 +14,7 @@
                 "x-cache",
                 "age",
                 "server",
-                "x-amz-*",
+                "x-amz-cf-pop",
                 "cache-control"
             ]
         },

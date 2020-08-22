@@ -23,14 +23,14 @@ module.exports = {
     getSettings() {
         debug('Entry::getSettings()');
         // Load the defaults
-        let settings = this.getDefaults();
-        debug('Loaded default settings: %O', settings);
+        let defaultSettings = this.getDefaults();
+        debug('Loaded default settings: %O', defaultSettings);
 
         try {
             // Parse the headers collections to select the correct one
-            let headerCollection = this.getHeaderCollection(settings.headersCollection, settings);
-            settings.headerCollection = headerCollection;
-            debug('Using Header Collection: %O', settings.headerCollection);
+            let headerCollection = this.getHeaderCollection(defaultSettings.headersCollection, defaultSettings);
+            defaultSettings.headerCollection = headerCollection;
+            debug('Using Header Collection: %O', defaultSettings.headerCollection);
 
         } catch (error) {
             console.log(pe.render(error));
@@ -41,10 +41,10 @@ module.exports = {
         if (argv.method) {
             const HTTPMethods = ['get', 'head', 'options', 'put', 'patch', 'delete', 'trace', 'connect'];
             if (HTTPMethods.includes(argv.method.toLowerCase())) {
-                settings.method = argv.method.toLowerCase();
-                debug('Setting HTTP method to: %s', settings.method);
+                defaultSettings.method = argv.method.toLowerCase();
+                debug('Setting HTTP method to: %s', defaultSettings.method);
             } else {
-                console.log(chalk.blue('Warning: %s is not a supported HTTP method. Using %s instead.',argv.method.toUpperCase() , settings.method.toUpperCase()));
+                console.log(chalk.blue('Warning: %s is not a supported HTTP method. Using %s instead.',argv.method.toUpperCase() , defaultSettings.method.toUpperCase()));
             }
         }
 
@@ -52,10 +52,10 @@ module.exports = {
         if (argv.iterations) {
             // Validate that an integer was specified
             if (Number.isInteger(argv.iterations)) {
-                settings.iterations = argv.iterations;
-                debug('Iterations set to %s', settings.iterations);
+                defaultSettings.iterations = argv.iterations;
+                debug('Iterations set to %s', defaultSettings.iterations);
             } else {
-                console.log(chalk.blue('Ignoring "--iterations %s" because iterations must be an integer. Using the default "%s" instead'), argv.iterations, settings.iterations);
+                console.log(chalk.blue('Ignoring "--iterations %s" because iterations must be an integer. Using the default "%s" instead'), argv.iterations, defaultSettings.iterations);
             }
         }
 
@@ -63,33 +63,33 @@ module.exports = {
         if (argv.interval) {
             // Validate that an integer was specified
             if (Number.isInteger(argv.interval)) {
-                settings.interval = argv.interval;
-                debug('The interval is set to %s ms', settings.interval);
-                console.log(chalk.blue('The interval between iterations is set to %s'), utils.millisecondsToHms(settings.interval));
+                defaultSettings.interval = argv.interval;
+                debug('The interval is set to %s ms', defaultSettings.interval);
+                console.log(chalk.blue('The interval between iterations is set to %s'), utils.millisecondsToHms(defaultSettings.interval));
             } else {
-                console.log(chalk.blue('Warning: Ignoring "--interval %s" because interval must be an integer. Using the default "%s" instead'), argv.interval, settings.interval);
+                console.log(chalk.blue('Warning: Ignoring "--interval %s" because interval must be an integer. Using the default "%s" instead'), argv.interval, defaultSettings.interval);
             }
         }
 
         // Header Collection
         if (argv.headers) {
             // ** We should validate the specified collection actually exists **
-            settings.headersCollection = argv.headers;
-            debug('Using Headers Collection: %s', settings.headersCollection);
+            defaultSettings.headersCollection = argv.headers;
+            debug('Using Headers Collection: %s', defaultSettings.headersCollection);
         }
 
         // Check for list-response-headers argument
         if (argv.listResponseHeaders) {
-            settings.listResponseHeaders = true
+            defaultSettings.listResponseHeaders = true
         } else {
-            settings.listResponseHeaders = false
+            defaultSettings.listResponseHeaders = false
         }
 
         // Use a client specific customised user-agent string
-        settings.options.headers['user-agent'] = this.getUserAgent();
-        debug('Using the user-agent: %s', settings.options.headers['user-agent']);
+        defaultSettings.options.headers['user-agent'] = this.getUserAgent();
+        debug('Using the user-agent: %s', defaultSettings.options.headers['user-agent']);
 
-        return settings;
+        return defaultSettings;
     },
     getDefaults() {
         let defaultSettings = require('./defaults.json');
@@ -109,6 +109,18 @@ module.exports = {
         // Perhaps return something that will collect all headers - return (['*']);
         console.log(chalk.blue('WARNING: The requested header collection [%s] does not exist', collectionName));
         return ([]);
+    },
+    listHeaderCollections() {
+        debug('listHeaderCollections()');
+        // Load the defaults
+        let defaultSettings = this.getDefaults();
+
+        // Extract the headersCollections array
+        let headersCollections = defaultSettings.headersCollections;
+
+        debug('Returning: %O', headersCollections);
+
+        return(headersCollections);
     },
     getUserAgent(){
         try {

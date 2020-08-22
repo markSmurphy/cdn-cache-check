@@ -44,7 +44,8 @@ const PrettyError = require('pretty-error');
 const pe = new PrettyError();
 
 // Initialise configuration
-var settings = require('./configuration').getSettings();
+const config = require('./configuration');
+var settings = config.getSettings();
 
 if (settings.listResponseHeaders) {
     // Array to store names of received response headers, used
@@ -52,12 +53,29 @@ if (settings.listResponseHeaders) {
 }
 
 try {
-    // Check for 'help' command line parameters
+    // Check for '--help' command line parameters
     if (argv.help) {
         debug('--help detected.  Showing help screen.');
         // Show help screen
         const help = require('./help');
         help.helpScreen(argv.verbose);
+        //Exit to terminal
+        return;
+    }
+
+    // Check for '--header-collections' command line parameters
+    if (argv.listHeaderCollections) {
+        debug('--list-header-collections detected.  Retrieving all Headers Collections....');
+        // Get an array of Header Collections
+        let collections = config.listHeaderCollections();
+
+        // Initialise prettyJson object, to format output
+        let prettyJson = require('prettyjson');
+
+        // Output the formatted json contained within each array element
+        collections.forEach(element => console.log(prettyJson.render(element)));
+
+        // Exit to terminal
         return;
     }
 

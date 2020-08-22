@@ -73,7 +73,7 @@ try {
         let prettyJson = require('prettyjson');
 
         // Output the formatted json contained within each array element
-        collections.forEach(element => console.log(prettyJson.render(element)));
+        collections.forEach((element) => console.log(prettyJson.render(element)));
 
         // Exit to terminal
         return;
@@ -197,7 +197,7 @@ try {
 
                             // Populate basic request details
                             let timestamp = new Date();
-                            let responseTimestamp = timestamp.getHours() + ":" + timestamp.getMinutes() + ":" + timestamp.getSeconds() + ":" + timestamp.getMilliseconds();
+                            let responseTimestamp = timestamp.getHours() + ':' + timestamp.getMinutes() + ':' + timestamp.getSeconds() + ':' + timestamp.getMilliseconds();
                             row['Time'] = chalk.reset(responseTimestamp);
 
                             // Populate response status code, with colour indicator of success or failure

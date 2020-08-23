@@ -177,7 +177,7 @@ try {
                     // Add request/response result to array (for later parsing once we have them all)
                     responses.push(result);
 
-                    debug('Completed check %s of %s', responses.length, urls.length);
+                    debug('Completed request %s of %s', responses.length, urls.length);
 
                     // Check if there's been a response for each of the requests
 
@@ -190,14 +190,14 @@ try {
 
                         // Iterate through Responses array (we now have all the responses in this iteration)
                         for (let i = 0; i < responses.length; i++) {
-                            debug('Parsing response for: %s', responses[i].request);
-                            debug('%O, responses[i].response');
+                            debug('Request  [   %i]: %s', responses[i].request);
+                            debug('Response [   %1]: %O', responses[i].response);
                             // Each request/response will constitute a row in the output table
                             let row = {};
 
                             // Populate basic request details
                             let timestamp = new Date();
-                            let responseTimestamp = timestamp.getHours() + ':' + timestamp.getMinutes() + ':' + timestamp.getSeconds() + ':' + timestamp.getMilliseconds();
+                            let responseTimestamp = `${timestamp.getHours()}:${timestamp.getMinutes()}:${timestamp.getSeconds()}:${timestamp.getMilliseconds()}`;
                             row['Time'] = chalk.reset(responseTimestamp);
 
                             // Populate response status code, with colour indicator of success or failure
@@ -268,7 +268,7 @@ try {
                                       }
 
                                 } else {
-                                    debug('Ignoring ==> %s : %s', attributeName, attributeValue);
+                                    debug('Ignoring [%s]', attributeName);
                                 }
                             }
 

@@ -19,6 +19,14 @@
             ]
         },
         {
+            "cloudflare": [
+                "x-cache",
+                "server",
+                "cf-*",
+                "cache-control"
+            ]
+        },
+        {
             "fastly": [
                 "x-cache",
                 "x-cache-hits",
@@ -76,7 +84,8 @@
         "*.edgekey.net": "Akamai",
         "*.edgesuite.net": "Akamai",
         "*.akamaiedge.net": "Akamai",
-        "*.fastly.net": "Fastly"
+        "*.fastly.net": "Fastly",
+        "*.cdn.cloudflare.net": "Cloudflare"
     },
     "options" : {
         "timeout": 10000,

@@ -22,6 +22,7 @@
   "keywords": [
     "aws",
     "cloudfront",
+    "cloudflare",
     "akamai",
     "fastly",
     "cache",

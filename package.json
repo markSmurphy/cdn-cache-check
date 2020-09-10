@@ -47,6 +47,6 @@
     "pretty-error": "^2.1.1",
     "prettyjson": "^1.2.1",
     "valid-url": "^1.0.9",
-    "yargs": "^15.4.1"
+    "yargs": "^16.0.3"
   }
 }

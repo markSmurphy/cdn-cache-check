@@ -55,7 +55,9 @@
                 "server",
                 "cache-control",
                 "expires",
-                "vary"
+                "vary",
+                "via",
+                "*cache*"
             ]
         },
         {

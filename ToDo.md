@@ -6,6 +6,8 @@
 * ~~Implement `--header-collections`~~
 * ~~Implement `--headers`~~
 * Allow request headers to be injected
+* Automatically inject request headers array as part of header collection
+  * i.e. Add `fastly-debug:1` to all requests when the Fastly header collection is used
 * ~~Collect all unique response headers and optionally list them out `--list-response-headers`~~
 * Attempt CDN detection based on `CNAME` apex domain.
 * ~~Add timestamp into output columns~~

@@ -35,13 +35,6 @@
 
 ## Commands to fix
 
-Doesn't recognise `www.asos.com` as a valid URL
-
-```bash
-ccc www.asos.com
-Error: No URL(s) provided.
-```
-
 Doesn't recognise `--header-collections` nor list them out
 
 ```bash

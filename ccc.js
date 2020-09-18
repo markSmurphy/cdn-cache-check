@@ -34,9 +34,13 @@ const EOL = require('os').EOL;
 // Initialise URL validation object
 const validUrl = require('valid-url');
 
+// Initialise Domain validation object
+const isValidDomain = require('is-valid-domain')
+
 // Initialise 'needle' HTTP client
 const needle = require('needle');
 
+// Initialise wildcard string parser
 const matcher = require('multimatch');
 
 // Error formatting
@@ -64,6 +68,11 @@ try {
     }
 
     // Check for '--header-collections' command line parameters
+    if (argv.headerCollections) {
+        console.log('Did you mean to use ' + chalk.cyan('--list-header-collections') + ' ?');
+    }
+
+    // Check for '--list-header-collections' command line parameters
     if (argv.listHeaderCollections) {
         debug('--list-header-collections detected.  Retrieving all Headers Collections....');
         // Get an array of Header Collections
@@ -87,37 +96,49 @@ try {
     for (let i = 2; i < process.argv.length; ++i) {
         // Check if it's a valid file
         try {
-            debug('Checking if [%s] is a file...', process.argv[i]);
+            debug('Checking if [%s] is a file, URL or bare domain ...', process.argv[i]);
             if (fs.existsSync(process.argv[i])) {
                 // File exists.  Extract URLs from it
                 try {
                     // Read contents of the file
-                    debug('Reading file [%s]...', process.argv[i]);
+                    debug('It\'s a file. Reading its contents ...');
                     let data = fs.readFileSync(process.argv[i], 'UTF-8');
 
                     // Split the contents by new line
-                    //let lines = data.split(/\r?\n/);
                     let lines = data.split(EOL);
 
                     // Examine each line
                     debug('Examining %i lines looking for URLs...', lines.length);
                     for (let i = 0; i < lines.length; ++i) {
                         if (validUrl.isWebUri(lines[i])) {
-                            debug('Found [%s]', lines[i]);
+                            debug('Found a URL [%s]', lines[i]);
                             urls.push(lines[i]);
+
+                        } else if (isValidDomain(lines[i], {subdomain: true, wildcard: false})) {
+                            debug('Found a bare domain [%s]', lines[i]);
+                            urls.push('https://' + lines[i]);
+
                         } else if (lines[i].length > 0) {
+                            // This line didn't pass any tests so log it to debug output, but only if it's not a blank line
                             debug('Ignoring [%s]', lines[i]);
                         }
                     }
                 } catch (err) {
                     debug('An error occurred while parsing the file [%s]: %O', process.argv[i], err);
                 }
+            } else if (validUrl.isWebUri(process.argv[i])) {
+                // It's a valid URL.  Add it to the urls array
+                debug('It\'s a valid URL');
+                urls.push(process.argv[i]);
+
+            } else if (isValidDomain(process.argv[i], {subdomain: true, wildcard: false})) {
+                // It's a bare domain (i.e. there's no protocol)
+                debug('It\'s a valid domain but not a URL. Adding "https://" to it');
+                urls.push('https://' + process.argv[i]);
+
             } else {
-                debug('Checking if [%s] is a URL...', process.argv[i]);
-                if (validUrl.isWebUri(process.argv[i])) {
-                    // It's a valid URL.  Add it to the urls array
-                    urls.push(process.argv[i]);
-                }
+                // It doesn't pass any tests. Ignore it
+                debug('Ignoring [%s]', process.argv[i]);
             }
         } catch(err) {
             console.log(pe.render(err));
@@ -181,8 +202,8 @@ try {
 
                     // Check if there's been a response for each of the requests
 
+                    debug('Received %i of %i responses', responses.length, urls.length);
                     if (responses.length === urls.length) {
-
                         debug('Parsing %s responses', responses.length);
 
                         // We'll collate the parsed results into an output array
@@ -190,8 +211,9 @@ try {
 
                         // Iterate through Responses array (we now have all the responses in this iteration)
                         for (let i = 0; i < responses.length; i++) {
-                            debug('Request  [   %i]: %s', responses[i].request);
-                            debug('Response [   %1]: %O', responses[i].response);
+                            //Write to debug file here *****
+                            //debug('Request  [   %i]: %O', responses[i], responses[i].request);
+                            //debug('Response [   %1]: %O', responses[i], responses[i].response);
                             // Each request/response will constitute a row in the output table
                             let row = {};
 
@@ -224,7 +246,7 @@ try {
                             // Pull out select response headers
                             for(let attributeName in responses[i].response.headers){
                                 let attributeValue = responses[i].response.headers[attributeName];
-                                debug('Examining header %s : %s', attributeName, attributeValue);
+                                //debug('Examining header %s : %s', attributeName, attributeValue);
 
                                 // Save the name of the header in an array
                                 if (settings.listResponseHeaders){
@@ -233,8 +255,9 @@ try {
 
                                 // Check if the response header's name matches one in the header collection
                                 if (matcher(attributeName, settings.headerCollection, {nocase: true}).length > 0) {
-                                    debug('Extracting ==> %s : %s', attributeName, attributeValue);
+                                    debug('Extracting header ==> %s : %s', attributeName, attributeValue);
 
+                                    //
                                     // Parse header value for cache-control directives (can't do this inside the following case blocks)
                                     let clientCache = parse(attributeValue);
 
@@ -274,7 +297,7 @@ try {
                                       }
 
                                 } else {
-                                    debug('Ignoring [%s]', attributeName);
+                                    debug('Ignoring header --> %s', attributeName);
                                 }
                             }
 

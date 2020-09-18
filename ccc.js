@@ -207,8 +207,12 @@ try {
                                 // Failure response code, 4xx & 5xx
                                 row['Status'] = chalk.red(responses[i].statusCode);
 
+                            } else if (responses[i].statusCode >= 300) {
+                                // Redirect response code (3xx)
+                                row['Status'] = chalk.yellow(responses[i].statusCode);
+
                             } else {
-                                // Success response code (1xx, 2xx, 3xx)
+                                // Success response code (1xx, 2xx)
                                 row['Status'] = chalk.green(responses[i].statusCode);
                             }
 

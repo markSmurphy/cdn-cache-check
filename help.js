@@ -29,8 +29,8 @@ module.exports = {
         console.log('   ' + '<filename>                    ' + chalk.grey('Specify a file containing a list of URLs to query'));
         console.log('   ' + '--method <head|get|options>   ' + chalk.grey('Specify the HTTP method.  Default: HEAD'));
         console.log('   ' + '--headers <collection>        ' + chalk.grey('Select which collection of headers to output.'));
+        console.log('   ' + '--list-header-collections     ' + chalk.grey('List all Header Collections and the response headers they contain'));
         console.log('   ' + '--list-response-headers       ' + chalk.grey('List all unique response headers. Useful when creating a header collection.'));
-        console.log('   ' + '--list-header-collections     ' + chalk.grey('Lists all Header Collections and the response headers they contain'));
         console.log('   ' + '--iterations <integer>        ' + chalk.grey('The number of times to request each URL. Default: 1'));
         console.log('   ' + '--interval <integer>          ' + chalk.grey('The number of milliseconds in-between multiple http requests. Default: 0'));
         console.log('   ' + '--no-color                    ' + chalk.grey('Switches off colour output'));

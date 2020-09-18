@@ -38,8 +38,10 @@ module.exports = {
         console.log('   ' + '--help                        ' + chalk.grey('Display this help'));
         console.log(endOfLine);
         console.log(chalk.grey('EXAMPLES:'));
-        console.log('   node ccc https://example.com');
-        console.log('   **** TBC ****');
+        console.log('   ccc https://example.com');
+        console.log('   ccc https://example.com https://www.example.com');
+        console.log('   ccc URLs.txt');
+        console.log('   ccc https://cdn.example.com/resources/client.js --method get --headers fastly --iterations 5 --interval 10000');
         // Display more information if `verbose` is enabled
         if (verbose) {
             const os = require('os');

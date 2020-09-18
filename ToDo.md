@@ -25,7 +25,7 @@
   * [jsonexport](https://www.npmjs.com/package/jsonexport)
   * Perhaps export all response headers to separate `csv` file when `debug` is enabled
 * Implement full debug request/response logging
-* Implement progress bar when issuing many requests and/or many iterations| [npmlog](https://www.npmjs.com/package/npmlog)
+* Implement progress bar when issuing many requests and/or many iterations | [npmlog](https://www.npmjs.com/package/npmlog)
 * Implement `settings.options` passed through to `needle`
   * Allow `options` override from command line
 * ~~Investigate the spurious `400` responses~~

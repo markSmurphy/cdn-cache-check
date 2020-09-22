@@ -121,6 +121,7 @@ try {
                     }
                 } catch (err) {
                     debug('An error occurred while parsing the file [%s]: %O', process.argv[i], err);
+                    //console.error(pe.render(err));
                 }
             } else if (validUrl.isWebUri(process.argv[i])) {
                 // It's a valid URL.  Add it to the urls array
@@ -137,7 +138,7 @@ try {
                 debug('Ignoring [%s]', process.argv[i]);
             }
         } catch(err) {
-            console.log(pe.render(err));
+            console.error(pe.render(err));
         }
     }
 
@@ -338,5 +339,5 @@ try {
         }
     }
 } catch (error) {
-    console.error('An error occurred: %O', error);
+    console.error(pe.render(error));
 }

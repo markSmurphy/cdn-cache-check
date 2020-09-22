@@ -93,7 +93,7 @@ module.exports = {
             return Settings;
 
         } catch (error) {
-            console.log(pe.render(error));
+            console.error(pe.render(error));
         }
     },
     getDefaults() {

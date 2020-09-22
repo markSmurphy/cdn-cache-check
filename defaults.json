@@ -1,7 +1,7 @@
 {
     "method": "head",
     "iterations": 1,
-    "interval": 0,
+    "interval": 3000,
     "headersCollection": "default",
     "headersCollections": [
         {

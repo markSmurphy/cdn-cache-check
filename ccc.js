@@ -21,10 +21,6 @@ const columnify = require('columnify');
 // Initialise File System object
 const fs = require('fs');
 
-// Initialise Promisify object, used to sleep the thread when injecting intervals
-// const { promisify } = require('util');
-// const sleep = promisify(setTimeout);
-
 // Cache=control header parser
 const {parse} = require('@tusbar/cache-control');
 
@@ -160,9 +156,9 @@ try {
         if (totalRequests > CCC_REQUEST_WARNING_THRESHOLD) {
             // Display a subtly different notification if there are multiple iterations
             if (settings.iterations > 1) {
-                console.log(chalk.cyan('Checking %i URLs * %i times (= %i requests)'), urls.length, settings.iterations, totalRequests);
+                console.log(chalk.cyan('Checking %i URLs * %i times (%i requests)'), urls.length, settings.iterations, totalRequests);
             } else {
-                console.log(chalk.cyan('Checking %i URLs'), urls.length, settings.iterations, totalRequests);
+                console.log(chalk.cyan('Checking %i URLs'), urls.length);
             }
         }
 
@@ -324,13 +320,21 @@ try {
                             debug('%i unique response headers', uniqueResponseHeaders.length);
                             console.log('%i unique response headers (from %i collected): %O', uniqueResponseHeaders.length, responseHeadersReceived.length, uniqueResponseHeaders);
                         }
+
+                        // Pause for configured interval (when we're looping through URLs more than once and the interval isn't zero) ...
+                        if ((settings.iterations > 1) && (settings.interval > 0)){
+                            debug('Sleeping for %i milliseconds', settings.interval);
+                            let resumeTime = Date.now() + settings.interval;
+                            while (resumeTime > Date.now()) {
+                                debug('waiting...');
+                            }
+                            debug('...resuming');
+                        }
                     }
                 });
             }
 
             debug('Completed iteration %s of %s', iterationCounter, settings.iterations);
-            // *** pause for configured interval here
-
         }
     }
 } catch (error) {

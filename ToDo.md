@@ -1,6 +1,6 @@
 # To Do
 
-* Implement `interval` (observed between iterations)
+* ~~Implement `interval` (observed between iterations)~~
 * Command line arguments for:
   * `timeout`
   * `response_timeout`

@@ -322,12 +322,13 @@ try {
                             console.log('%i unique response headers (from %i collected): %O', uniqueResponseHeaders.length, responseHeadersReceived.length, uniqueResponseHeaders);
                         }
 
-                        // Pause for configured interval (when we're looping through URLs more than once and the interval isn't zero) ...
-                        if ((settings.iterations > 1) && (settings.interval > 0)){
+                        // Pause for configured interval (when we're looping through URLs more than once and there are still iterations left, and when the interval isn't zero) ...
+                        debug('iterationCounter: %i ::: settings.iterations: %i', iterationCounter, settings.iterations);
+                        if ((iterationCounter < settings.iterations) && (settings.interval > 0)){
                             debug('Sleeping for %i milliseconds', settings.interval);
                             let resumeTime = Date.now() + settings.interval;
                             while (resumeTime > Date.now()) {
-                                debug('waiting...');
+                                //debug('waiting...');
                             }
                             debug('...resuming');
                         }

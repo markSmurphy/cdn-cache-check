@@ -1,6 +1,13 @@
 # To Do
 
 * ~~Implement `interval` (observed between iterations)~~
+* Handle misspelt filename being treated as URL
+
+  ```bash
+  ccc URLs.CloudFront.txt --iterations 5 --interval 10000
+  ```
+  
+* Add `error` handling to `needle` callback
 * Command line arguments for:
   * `timeout`
   * `response_timeout`

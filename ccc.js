@@ -177,21 +177,50 @@ try {
                 // Send HTTP request for current URL
 
                 needle.request(settings.method, urls[i], {}, function(error, response) {
-                    debug(response.statusCode + ' ' + urls[i]);
+                    // Initialise result object
+                    let result = {};
+                    debug('Callback for [%s] received', urls[i]);
 
-                    // Save request details and HTTP response headers as JSON
-                    let result = {
-                        'statusCode': response.statusCode,
-                        'request': {
-                        'protocol': response.req.protocol,
-                        'host': response.req.host,
-                        'path': response.req.path,
-                        'url' : urls[i],
-                        },
-                        'response': {
-                            'headers': response.headers
-                        }
-                    };
+                    if (error) {
+                        debug('Error for [%s]: %O', urls[i], error);
+                        // Parse URL into component parts (since we don't have a response object when there's an error)
+                        let requestURL = new URL(urls[i]);
+
+                        // Log error to JSON result
+                        result = {
+                            'error': true,
+                            'statusCode': error.code,
+                            'request': {
+                                'protocol': requestURL.protocol,
+                                'host': requestURL.hostname,
+                                'path': requestURL.pathname,
+                                'url' : urls[i],
+                            },
+                            'response': {
+                                'headers': []
+                            }
+                        };
+
+                    } else {
+                        // We got a HTTP response
+                        debug(response.statusCode + ' ' + urls[i]);
+
+                        // Save request details and HTTP response headers as JSON
+                        result = {
+                            'error': false,
+                            'statusCode': response.statusCode,
+                            'request': {
+                                'protocol': response.req.protocol,
+                                'host': response.req.host,
+                                'path': response.req.path,
+                                'url' : urls[i],
+                            },
+                            'response': {
+                                'headers': response.headers
+                            }
+                        };
+                    }
+
                     // Add request/response result to array (for later parsing once we have them all)
                     responses.push(result);
 
@@ -222,17 +251,23 @@ try {
                             row['Time'] = chalk.reset(responseTimestamp);
 
                             // Populate response status code, with colour indicator of success or failure
-                            if ((Number.isInteger(responses[i].statusCode)) && (responses[i].statusCode >= 400)) {
-                                // Failure response code, 4xx & 5xx
-                                row['Status'] = chalk.red(responses[i].statusCode);
+                            if (Number.isInteger(responses[i].statusCode)) {
 
-                            } else if (responses[i].statusCode >= 300) {
-                                // Redirect response code (3xx)
-                                row['Status'] = chalk.yellow(responses[i].statusCode);
+                                if (responses[i].statusCode >= 400) {
+                                    // Failure response code, 4xx & 5xx
+                                    row['Status'] = chalk.red(responses[i].statusCode);
 
-                            } else {
-                                // Success response code (1xx, 2xx)
-                                row['Status'] = chalk.green(responses[i].statusCode);
+                                } else if (responses[i].statusCode >= 300) {
+                                    // Redirect response code (3xx)
+                                    row['Status'] = chalk.yellow(responses[i].statusCode);
+
+                                } else {
+                                    // Success response code (1xx, 2xx)
+                                    row['Status'] = chalk.green(responses[i].statusCode);
+                                }
+                            } else if (responses[i].error) {
+                                row['Status'] = chalk.bgRed.whiteBright(responses[i].statusCode);
+
                             }
 
                             row['Host'] = chalk.cyan(responses[i].request.host);

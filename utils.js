@@ -110,5 +110,25 @@ module.exports = {
             debug('Error caught in getHeadersCollections(): %O', error);
             return [];
         }
+    },
+
+    IsTLD(testString) {
+        debug('IsTLD()');
+        try {
+            // Load array of valid top-level-domains
+            let tlds = require('tlds');
+
+            // Query array for supplied string
+            if (tlds.indexOf(testString) > -1) {
+                // `testString` exists
+                return(true);
+            } else {
+                // `testString` does not exist
+                return(false);
+            }
+        } catch (error) {
+            debug('IsTLD() caught an error: %O', error);
+            return(false);
+        }
     }
 };

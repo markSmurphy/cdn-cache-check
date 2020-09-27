@@ -364,7 +364,11 @@ try {
                             let resumeTime = Date.now() + settings.interval;
                             while (resumeTime > Date.now()) {
                                 //debug('waiting...');
+                                if (Number.isInteger((Date.now() - resumeTime) / 1000)){
+                                    process.stdout.write('.');
+                                }
                             }
+                            console.log('.');
                             debug('...resuming');
                         }
                     }

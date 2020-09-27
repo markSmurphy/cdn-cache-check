@@ -46,7 +46,7 @@
     "npmlog": "^4.1.2",
     "pretty-error": "^2.1.1",
     "prettyjson": "^1.2.1",
-    "tlds": "^1.209.0",
+    "tlds": "^1.210.0",
     "valid-url": "^1.0.9",
     "yargs": "^16.0.3"
   }

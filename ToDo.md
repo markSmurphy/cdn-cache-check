@@ -6,7 +6,14 @@
   ```bash
   ccc URLs.CloudFront.txt --iterations 5 --interval 10000
   ```
-  
+
+* Check for invalid hostnames in valid URLs (where `https://*.allowed.com/` passes the valid-URL test but `*.allowed.com` is validated as a domain):
+
+```text
+  Checking if [https://*.allowed.com/] is a file, URL or bare domain ...
+  It's a valid URL
+```
+
 * Add `error` handling to `needle` callback
 * Command line arguments for:
   * `timeout`

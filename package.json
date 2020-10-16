@@ -1,6 +1,6 @@
 {
   "name": "cdn-cache-check",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "description": "Makes HTTP requests to URLs and parses response headers to determine caching behaviour",
   "main": "ccc.js",
   "scripts": {
@@ -48,6 +48,6 @@
     "prettyjson": "^1.2.1",
     "tlds": "^1.211.0",
     "valid-url": "^1.0.9",
-    "yargs": "^16.0.3"
+    "yargs": "^16.1.0"
   }
 }

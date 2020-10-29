@@ -41,7 +41,7 @@
     "columnify": "^1.5.4",
     "debug": "^4.2.0",
     "dns-sync": "^0.2.1",
-    "is-valid-domain": "0.0.16",
+    "is-valid-domain": "0.0.17",
     "multimatch": "^5.0.0",
     "needle": "^2.5.2",
     "npmlog": "^4.1.2",

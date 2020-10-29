@@ -82,13 +82,49 @@
             ]
         }
     ],
+    "ApexDomainsOld": {
+        "CloudFront": ["*.cloudfront.net"],
+        "Akamai": ["*.edgekey.net","*.edgesuite.net", "*.akamaiedge.net"],
+        "Fastly": ["*.fastly.net"],
+        "CloudFlare": ["*.cdn.cloudflare.net"],
+        "AWS S3 Bucket": ["s3.*.amazonaws.com", "*.s3.*.amazonaws.com", "*.s3-accesspoint.*.amazonaws.com"]
+    },
     "ApexDomains": {
-        "*.cloudfront.net": "CloudFront",
-        "*.edgekey.net": "Akamai",
-        "*.edgesuite.net": "Akamai",
-        "*.akamaiedge.net": "Akamai",
-        "*.fastly.net": "Fastly",
-        "*.cdn.cloudflare.net": "Cloudflare"
+        "CloudFront" :{
+            "domains": ["*.cloudfront.net"],
+            "title": "CloudFront",
+            "service": "CDN"
+        },
+        "Akamai" :{
+            "domains": ["*.edgekey.net","*.edgesuite.net", "*.akamaiedge.net"],
+            "title": "Akamai",
+            "service": "CDN"
+        },
+        "Fastly" :{
+            "domains": ["*.fastly.net"],
+            "title": "Fastly",
+            "service": "CDN"
+        },
+        "CloudFlare" :{
+            "domains": ["*.cdn.cloudflare.net"],
+            "title": "CloudFlare",
+            "service": "CDN"
+        },
+        "KeyCDN" :{
+            "domains": ["*.kxcdn.com"],
+            "title": "KeyCDN",
+            "service": "CDN"
+        },
+        "S3" :{
+            "domains": ["s3.*.amazonaws.com", "*.s3.*.amazonaws.com", "s3*.amazonaws.com", "*.s3-accesspoint.*.amazonaws.com"],
+            "title": "AWS S3 Bucket",
+            "service": "S3"
+        },
+        "Blob" :{
+            "domains": ["*.blob.core.windows.net", "*.web.core.windows.net"],
+            "title": "Azure Blob Storage",
+            "service": "Blob"
+        }
     },
     "options" : {
         "timeout": 10000,

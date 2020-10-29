@@ -31,7 +31,7 @@ const EOL = require('os').EOL;
 const validUrl = require('valid-url');
 
 // Initialise Domain validation object
-const isValidDomain = require('is-valid-domain')
+const isValidDomain = require('is-valid-domain');
 
 // Initialise 'needle' HTTP client
 const needle = require('needle');
@@ -161,6 +161,22 @@ try {
             } else {
                 console.log(chalk.cyan('Checking %i URLs'), urls.length);
             }
+        }
+
+        const cccDNS = require('./ccc-dns');
+        let uniqueDomains = cccDNS.getUniqueDomains(urls);
+        debug('Unique Domains: %O', uniqueDomains);
+
+        // Determine CDN provider for each domain we're about to call
+
+        for (let domain of uniqueDomains) {
+            process.stdout.write(domain + chalk.grey(' inspecting ....'));
+            cccDNS.determineCDN(domain, settings.ApexDomains, (cdn) => {
+                process.stdout.write('\r'); // "\r" character returns cursor to the beginning of the line
+                process.stdout.write('\x1b[K');// "\x1b[K" clears all characters from the cursor to the end of the line
+                process.stdout.write(chalk.cyan(domain) + chalk.whiteBright(' ' + cdn.message));
+                process.stdout.write(EOL + EOL);
+            });
         }
 
         // Loop around the number of iterations

@@ -40,13 +40,14 @@
     "chalk": "^4.1.0",
     "columnify": "^1.5.4",
     "debug": "^4.2.0",
+    "dns-sync": "^0.2.1",
     "is-valid-domain": "0.0.16",
     "multimatch": "^5.0.0",
     "needle": "^2.5.2",
     "npmlog": "^4.1.2",
-    "pretty-error": "^2.1.1",
+    "pretty-error": "^2.1.2",
     "prettyjson": "^1.2.1",
-    "tlds": "^1.211.0",
+    "tlds": "^1.212.0",
     "valid-url": "^1.0.9",
     "yargs": "^16.1.0"
   }

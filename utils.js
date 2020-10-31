@@ -113,7 +113,7 @@ module.exports = {
     },
 
     IsTLD(testString) {
-        debug('IsTLD()');
+        debug('IsTLD(%s)', testString);
         try {
             // Load array of valid top-level-domains
             let tlds = require('tlds');
@@ -129,6 +129,41 @@ module.exports = {
         } catch (error) {
             debug('IsTLD() caught an error: %O', error);
             return(false);
+        }
+    },
+
+    generateUniqueFilename(extension) {
+        debug('generateUniqueFilename(%s)', extension);
+        const defaultExtension = '.csv';
+        var prefix = 'ccc-';
+        try {
+            const uniqueFilename = require('unique-filename');
+            const os = require('os');
+            const today = new Date();
+
+            // Check if a file extension was provided
+            if (extension) {
+                // Prepend a dot '.' if there isn't one
+                if (!extension.charAt(0) === '.') {
+                    extension = '.' + extension
+                }
+            } else {
+                extension  = defaultExtension;
+            }
+
+            // Incorporate today's date into the prefix
+            prefix = prefix + (today.getFullYear()).toString() + (today.getMonth() + 1).toString() + (today.getDay() + 1).toString();
+
+            // Generate full filename with path
+            const filename = uniqueFilename(os.tmpdir(), prefix) + extension;
+            debug('Generated the unique filename: %s', uniqueFilename);
+            // return the resulting filename
+            return(filename);
+
+        } catch (error) {
+            debug('generateUniqueFilename() caught an error: %O', error);
+            // We need to return something, so generate a random 8 char string and apply prefix and extension
+            return(prefix + Math.random().toString().substring(2,10) + defaultExtension);
         }
     }
 };

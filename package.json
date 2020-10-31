@@ -42,12 +42,13 @@
     "debug": "^4.2.0",
     "dns-sync": "^0.2.1",
     "is-valid-domain": "0.0.17",
+    "jsonexport": "^3.0.1",
     "multimatch": "^5.0.0",
     "needle": "^2.5.2",
-    "npmlog": "^4.1.2",
     "pretty-error": "^2.1.2",
     "prettyjson": "^1.2.1",
     "tlds": "^1.212.0",
+    "unique-filename": "^1.1.1",
     "valid-url": "^1.0.9",
     "yargs": "^16.1.0"
   }

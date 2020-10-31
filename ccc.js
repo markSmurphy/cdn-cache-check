@@ -21,6 +21,9 @@ const columnify = require('columnify');
 // Initialise File System object
 const fs = require('fs');
 
+// For exporting JSON to CSV
+const jsonexport = require('jsonexport');
+
 // Cache=control header parser
 const {parse} = require('@tusbar/cache-control');
 
@@ -45,6 +48,7 @@ const pe = new PrettyError();
 
 // Initialise configuration
 const config = require('./configuration');
+const utils = require('./utils');
 var settings = config.getSettings();
 
 if (settings.listResponseHeaders) {
@@ -349,7 +353,7 @@ try {
                                 }
                             }
 
-                            outputTable.push(row);
+                            outputTable.push(row); // Append completed row to the table
                         }
 
                         // Send output results to console, formatted into columns
@@ -364,6 +368,29 @@ try {
                             }
                         });
                         console.log(columns);
+
+                        // Export to CSV
+                        if (settings.options.exportToCSV) {
+                            // Perform conversion of JSON output to CSV
+                            jsonexport(outputTable, (err, csv) => {
+
+                                if (err) { // Check for an error
+                                    console.error(chalk.redBright('An error occurred converting the results into a CSV format: ') + err);
+                                } else {
+                                    let filename = utils.generateUniqueFilename();
+                                    fs.writeFile(filename, csv, (err) => {
+                                        if (err) {
+                                            settings.options.exportToCSV = false; // Switch off further exporting to a file seeing as it hasn't worked
+                                            throw err;
+                                        }
+
+                                        console.log(chalk.grey('Results written to [%s]'), filename);
+                                    });
+
+
+                                }
+                            });
+                        }
 
                         if (settings.listResponseHeaders) {
                             // Dedupe the list of collected response headers

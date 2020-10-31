@@ -23,6 +23,8 @@
 * Export to CSV
   * [jsonexport](https://www.npmjs.com/package/jsonexport)
   * Perhaps export all response headers to separate `csv` file when `debug` is enabled
+  * ~~Added `exportToCSV` to settings~~
+  * Implement command line switch to enable/disable `exportToCSV`
 * Implement full debug request/response logging
   * Perhaps to a `har` file
 * Implement progress bar when issuing many requests and/or many iterations | [npmlog](https://www.npmjs.com/package/npmlog)
@@ -31,9 +33,9 @@
   * i.e. Add `fastly-debug:1` to all requests when the Fastly header collection is used
 * Friendly interpretation of caching based on CDN's x-cache documentation
   * Perhaps workout a score based upon `x-cache`, `cache-control`, `eTag`, et al
-* Implement `settings.options` passed through to `needle`
+* Implement `settings.options.httpOptions` passed through to `needle`
   * Allow `options` override from command line
-* Attempt CDN detection based on `CNAME` apex domain.
+* ~~Attempt CDN detection based on `CNAME` apex domain.~~
 * Investigate merits of implementing a custom [http_agent](https://nodejs.org/api/http.html#http_class_http_agent)
 * ~~Expand `settings` to incorporate `needle`'s options json~~
 * ~~Filter response headers based on selected header collection~~

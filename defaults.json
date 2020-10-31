@@ -82,13 +82,6 @@
             ]
         }
     ],
-    "ApexDomainsOld": {
-        "CloudFront": ["*.cloudfront.net"],
-        "Akamai": ["*.edgekey.net","*.edgesuite.net", "*.akamaiedge.net"],
-        "Fastly": ["*.fastly.net"],
-        "CloudFlare": ["*.cdn.cloudflare.net"],
-        "AWS S3 Bucket": ["s3.*.amazonaws.com", "*.s3.*.amazonaws.com", "*.s3-accesspoint.*.amazonaws.com"]
-    },
     "ApexDomains": {
         "CloudFront" :{
             "domains": ["*.cloudfront.net"],
@@ -127,14 +120,16 @@
         }
     },
     "options" : {
-        "timeout": 10000,
-        "response_timeout": 0,
-        "read_timeout": 0,
-        "follow": 5,
-        "export": true,
+        "exportToCSV": true,
         "headers": {
             "user-agent": "ccc/{version} {OS}/{OSRelease}",
             "Connection": "close"
+        },
+        "httpOptions": {
+            "timeout": 6000,
+            "response_timeout": 6000,
+            "read_timeout": 6000,
+            "follow": 5
         }
     }
 }

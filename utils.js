@@ -3,22 +3,22 @@ debug('Entry: [%s]', __filename);
 
 module.exports = {
     formatBytes(bytes, decimals = 2) {
-        if (bytes === 0) {
-            return '0 Bytes';
-        }
         try {
-            const k = 1024;
-            const dm = decimals < 0 ? 0 : decimals;
-            const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+            if (bytes === 0) {
+                return ('0 Bytes');
+            } else {
+                const k = 1024;
+                const dm = decimals < 0 ? 0 : decimals;
+                const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
 
-            const i = Math.floor(Math.log(bytes) / Math.log(k));
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
 
-            return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+                return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+            }
         } catch (error) {
             debug('formatBytes() caught an exception: %O', error);
-            return('%d Bytes', bytes);
+            return(bytes + ' Bytes');
         }
-
     },
 
     secondsToHms(seconds) {
@@ -34,7 +34,7 @@ module.exports = {
             } catch (error) {
                 debug('secondsToHms() caught an exception: %O', error);
                 // an unexpected error occurred; return the original value
-                return('%d seconds', seconds);
+                return(seconds + ' seconds');
             }
         } else {
             return('<invalid>');
@@ -72,7 +72,7 @@ module.exports = {
             } catch (error) {
                 debug('millisecondsToHms() caught an exception: %O', error);
                 // an unexpected error occurred; return the original value
-                return('%d milliseconds', milliseconds);
+                return(milliseconds + ' milliseconds');
             }
         } else {
             return('<invalid>');
@@ -144,7 +144,7 @@ module.exports = {
             // Check if a file extension was provided
             if (extension) {
                 // Prepend a dot '.' if there isn't one
-                if (!extension.charAt(0) === '.') {
+                if ((extension.charAt(0) === '.') === false) {
                     extension = '.' + extension
                 }
             } else {

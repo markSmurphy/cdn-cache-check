@@ -1,5 +1,5 @@
 {
-    "method": "head",
+    "method": "get",
     "iterations": 1,
     "interval": 5000,
     "headersCollection": "default",
@@ -51,13 +51,14 @@
         {
             "default": [
                 "x-cache",
-                "age",
-                "server",
                 "cache-control",
-                "expires",
+                "server",
+                "content-encoding",
                 "vary",
-                "via",
+                "age",
                 "*cache*",
+                "expires",
+                "via",
                 "eTag"
             ]
         },
@@ -121,15 +122,18 @@
     },
     "options" : {
         "exportToCSV": true,
+        "openAfterExport": true,
         "headers": {
             "user-agent": "ccc/{version} {OS}/{OSRelease}",
-            "Connection": "close"
+            "Connection": "close",
+            "Accept-Encoding": "gzip"
         },
         "httpOptions": {
             "timeout": 6000,
             "response_timeout": 6000,
             "read_timeout": 6000,
-            "follow": 5
+            "follow": 5,
+            "compressed": true
         }
     }
 }

@@ -196,7 +196,7 @@ try {
 
                 // Send HTTP request for current URL
 
-                needle.request(settings.method, urls[i], {}, function(error, response) {
+                needle.request(settings.method, urls[i], {}, settings.options.httpOptions, function(error, response) {
                     // Initialise result object
                     let result = {};
                     debug('Callback for [%s] received', urls[i]);
@@ -255,13 +255,18 @@ try {
                         // We'll collate the parsed results into an output array
                         let outputTable = [];
 
+                        // We'll also collect the raw (unformatted for console output) which we'll use in exportToCSV;
+                        let outputTableRaw = [];
+
                         // Iterate through Responses array (we now have all the responses in this iteration)
                         for (let i = 0; i < responses.length; i++) {
                             //Write to debug file here *****
                             //debug('Request  [   %i]: %O', responses[i], responses[i].request);
                             //debug('Response [   %1]: %O', responses[i], responses[i].response);
-                            // Each request/response will constitute a row in the output table
+
+                            // Each request/response will constitute a row in each of the output tables
                             let row = {};
+                            let rowRaw = {};
 
                             // Populate basic request details
                             let timestamp = new Date();
@@ -269,6 +274,7 @@ try {
                             // Pad the hours/mins/secs/mSecs with a leading '0' and then return (trim) the last 2 rightmost characters to ensure a leading zero for 1 digit numbers
                             let responseTimestamp = ('0' + timestamp.getHours()).slice(-2) + ':' + ('0' + timestamp.getMinutes()).slice(-2) + ':' + ('0' + timestamp.getSeconds()).slice(-2) + ':' + ('0' + timestamp.getMilliseconds()).slice(-2);
                             row['Time'] = chalk.reset(responseTimestamp);
+                            rowRaw['Time'] = responseTimestamp;
 
                             // Populate response status code, with colour indicator of success or failure
                             if (Number.isInteger(responses[i].statusCode)) {
@@ -287,14 +293,23 @@ try {
                                 }
                             } else if (responses[i].error) {
                                 row['Status'] = chalk.bgRed.whiteBright(responses[i].statusCode);
-
                             }
+                            // Write it to the raw output row regardless of its value
+                            rowRaw['Status'] = responses[i].statusCode;
 
                             row['Host'] = chalk.cyan(responses[i].request.host);
-                            row['Path'] = chalk.cyan(responses[i].request.path);
-                            // row['Protocol'] = chalk.cyan(responses[i].request.protocol);
-                            // row['URL'] = chalk.cyan( responses[i].request.url);
+                            rowRaw['Host'] = responses[i].request.host;
 
+                            row['Path'] = chalk.cyan(responses[i].request.path);
+                            rowRaw['Path'] = responses[i].request.path
+                            ;
+                            // row['Protocol'] = chalk.cyan(responses[i].request.protocol);
+                            rowRaw['Protocol'] = responses[i].request.protocol;
+
+                            // row['URL'] = chalk.cyan(responses[i].request.url);
+                            rowRaw['URL'] = responses[i].request.url;
+
+                            // ***** Copy rowRaw into new rowDebug here *****
                             // Pull out select response headers
                             for(let attributeName in responses[i].response.headers){
                                 let attributeValue = responses[i].response.headers[attributeName];
@@ -305,12 +320,18 @@ try {
                                     responseHeadersReceived.push(attributeName);
                                 }
 
+                                // **** Save all response headers into rowDebug here, if --verbose is on ****
+
+
                                 // Check if the response header's name matches one in the header collection
                                 if (matcher(attributeName, settings.headerCollection, {nocase: true}).length > 0) {
                                     debug('Extracting header ==> %s : %s', attributeName, attributeValue);
 
-                                    //
-                                    // Parse header value for cache-control directives (can't do this inside the following case blocks)
+                                    // Add all response headers/values to raw collection here, for use in exportToCSV()
+                                    rowRaw[attributeName] = attributeValue;
+
+
+                                    // Parse header value for cache-control directives (for use inside the following switch blocks)
                                     let clientCache = parse(attributeValue);
 
                                     switch(attributeName.toLowerCase()) {
@@ -354,6 +375,7 @@ try {
                             }
 
                             outputTable.push(row); // Append completed row to the table
+                            outputTableRaw.push(rowRaw);
                         }
 
                         // Send output results to console, formatted into columns
@@ -372,7 +394,7 @@ try {
                         // Export to CSV
                         if (settings.options.exportToCSV) {
                             // Perform conversion of JSON output to CSV
-                            jsonexport(outputTable, (err, csv) => {
+                            jsonexport(outputTableRaw, (err, csv) => {
 
                                 if (err) { // Check for an error
                                     console.error(chalk.redBright('An error occurred converting the results into a CSV format: ') + err);
@@ -383,8 +405,11 @@ try {
                                             settings.options.exportToCSV = false; // Switch off further exporting to a file seeing as it hasn't worked
                                             throw err;
                                         }
-
+                                        // Notify user where the file is, and open it if configured to do so
                                         console.log(chalk.grey('Results written to [%s]'), filename);
+                                        if (settings.options.openAfterExport) {
+                                            debug('Opening [%s] ...', filename);
+                                        }
                                     });
 
 

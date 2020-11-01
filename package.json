@@ -45,6 +45,7 @@
     "jsonexport": "^3.0.1",
     "multimatch": "^5.0.0",
     "needle": "^2.5.2",
+    "open": "^7.3.0",
     "pretty-error": "^2.1.2",
     "prettyjson": "^1.2.1",
     "tlds": "^1.212.0",

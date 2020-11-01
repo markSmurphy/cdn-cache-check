@@ -125,8 +125,7 @@
         "openAfterExport": true,
         "headers": {
             "user-agent": "ccc/{version} {OS}/{OSRelease}",
-            "Connection": "close",
-            "Accept-Encoding": "gzip"
+            "Connection": "close"
         },
         "httpOptions": {
             "timeout": 6000,

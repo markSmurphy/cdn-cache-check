@@ -196,7 +196,7 @@ try {
 
                 // Send HTTP request for current URL
 
-                needle.request(settings.method, urls[i], {}, settings.options.httpOptions, function(error, response) {
+                needle.request(settings.method, urls[i], '', settings.options.httpOptions, function(error, response) {
                     // Initialise result object
                     let result = {};
                     debug('Callback for [%s] received', urls[i]);

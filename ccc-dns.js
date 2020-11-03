@@ -38,7 +38,7 @@ module.exports = {
         debug('determineCDN(%s)', hostname);
         // Set default response
         let returnValue = {
-            'message': 'Indeterminate',
+            'message': chalk.grey('Indeterminate'),
             'hostname': hostname
         };
 

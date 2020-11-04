@@ -136,9 +136,11 @@ module.exports = {
         debug('generateUniqueFilename(%s)', extension);
         const defaultExtension = '.csv';
         var prefix = 'ccc-';
+        const os = require('os');
+        const path = require('path');
+
         try {
             const uniqueFilename = require('unique-filename');
-            const os = require('os');
             const today = new Date();
 
             // Check if a file extension was provided
@@ -155,15 +157,16 @@ module.exports = {
             prefix = prefix + (today.getFullYear()).toString() + (today.getMonth() + 1).toString() + (today.getDay() + 1).toString();
 
             // Generate full filename with path
-            const filename = uniqueFilename(os.tmpdir(), prefix) + extension;
-            debug('Generated the unique filename: %s', uniqueFilename);
+            let filename = uniqueFilename(os.tmpdir(), prefix) + extension;
+            debug('Generated the unique filename: %s', filename);
             // return the resulting filename
             return(filename);
 
         } catch (error) {
             debug('generateUniqueFilename() caught an error: %O', error);
             // We need to return something, so generate a random 8 char string and apply prefix and extension
-            return(prefix + Math.random().toString().substring(2,10) + defaultExtension);
+            let filename = os.tmpdir() + path.sep +  prefix + Math.random().toString().substring(2,10) + defaultExtension;
+            return(filename);
         }
     }
 };

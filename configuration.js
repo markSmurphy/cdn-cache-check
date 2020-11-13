@@ -97,8 +97,51 @@ module.exports = {
         }
     },
     getDefaults() {
-        let defaultSettings = require('./defaults.json');
-        return defaultSettings;
+        try {
+            let defaultSettings = require('./defaults.json'); // Load the defaults
+            return (defaultSettings); // Return the json object
+        } catch (error) {
+            debug('An error occurred loading the defaults.json file: %O', error);
+            // The defaults.json didn't load.  Return a bare and very basic config
+            let defaultSettings = {
+                method: 'get',
+                iterations: 1,
+                interval: 5000,
+                headersCollection: 'default',
+                headersCollections: [
+                    {
+                        default: [
+                            'x-cache',
+                            'cache-control',
+                            'server',
+                            'content-encoding',
+                            'vary',
+                            '*cache*'
+                        ]
+                    }
+                ],
+                ApexDomains: {},
+                options : {
+                    exportToCSV: true,
+                    openAfterExport: false,
+                    headers: {
+                        'user-agent': 'ccc/{version} {OS}/{OSRelease}',
+                        Connection: 'close'
+                    },
+                    httpOptions: {
+                        timeout: 6000,
+                        response_timeout: 6000,
+                        read_timeout: 6000,
+                        follow: 5,
+                        compressed: true
+                    }
+                }
+            };
+
+
+            return (defaultSettings);
+        }
+
     },
     getHeaderCollection(collectionName, settings) {
         // Iterate through each header collection definition

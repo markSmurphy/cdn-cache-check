@@ -1,16 +1,31 @@
 #!/usr/bin/env node
 
-const debug = require('debug')('cdn-cache-check');
+const debug = require('debug');//('cdn-cache-check');
 debug('Entry: [%s]', __filename);
 debug('Command line arguments: %O', process.argv);
 
 // Global Constants
-const CCC_REQUEST_WARNING_THRESHOLD = 100;
+const CCC_REQUEST_WARNING_THRESHOLD = 5;
+const CCC_CDN_DETERMINATION_STATUS = {
+    INDETERMINATE: 'Indeterminate',
+    CDN: 'CDN',
+    ERROR: 'Error',
+    OTHER: 'Other Internet Service'
+};
 
 // Command line options parser
 var argv = require('yargs')
 .help(false)
 .argv;
+
+// check if "debug" mode is enabled via the command line
+if (argv.debug) {
+    debug.enable('*');
+    //debug.enabled('*');
+}
+
+// cdn-cache-check's own DNS helper functions
+const cccDNS = require('./ccc-dns');
 
 // Initialise console colours
 const chalk = require('chalk');
@@ -48,7 +63,11 @@ const pe = new PrettyError();
 
 // Initialise configuration
 const config = require('./configuration');
+
+// Library of general helper functions
 const utils = require('./utils');
+
+// Populate the settings object
 var settings = config.getSettings();
 
 if (settings.listResponseHeaders) {
@@ -124,7 +143,7 @@ try {
                         }
                     }
                 } catch (err) {
-                    debug('An error occurred while parsing the file [%s]: %O', process.argv[i], err);
+                    debug('An error occurred when parsing the file [%s]: %O', process.argv[i], err);
                     //console.error(pe.render(err));
                 }
             } else if (validUrl.isWebUri(process.argv[i])) {
@@ -154,33 +173,27 @@ try {
 
         // Initialise variables to keep track of progress
         const totalRequests = urls.length * settings.iterations;
-        let requestCounter = 0;
+        var requestCounter = 0;
 
-        // Workout how many requests we're going to make and display a notification if it exceeds the threshold
-        debug('Checking these URLs %i times (%s requests in total): %O', settings.iterations, totalRequests, urls);
-        if (totalRequests > CCC_REQUEST_WARNING_THRESHOLD) {
-            // Display a subtly different notification if there are multiple iterations
-            if (settings.iterations > 1) {
-                console.log(chalk.cyan('Checking %i URLs * %i times (%i requests)'), urls.length, settings.iterations, totalRequests);
-            } else {
-                console.log(chalk.cyan('Checking %i URLs'), urls.length);
-            }
-        }
-
-        const cccDNS = require('./ccc-dns');
-        let uniqueDomains = cccDNS.getUniqueDomains(urls);
+        // Extract a list of each distinct FQDN from the list of URLs
+        var uniqueDomains = cccDNS.getUniqueDomains(urls);
         debug('Unique Domains: %O', uniqueDomains);
 
-        // Determine CDN provider for each domain we're about to call
+        // Calculate how many requests we're going to make and display a notification if it exceeds the threshold
+        debug('Checking these %s URLs %s times (%s requests in total across %s domain(s)): %O', urls.length, settings.iterations, totalRequests, uniqueDomains.count, urls);
+        if (totalRequests > CCC_REQUEST_WARNING_THRESHOLD) {
+            // Display a subtly different notification if there are multiple iterations and/or multiple domains
+            let notification = chalk.cyan('Checking ' + urls.length + ' URLs');
 
-        for (let domain of uniqueDomains) {
-            process.stdout.write(domain + chalk.grey(' inspecting ....'));
-            cccDNS.determineCDN(domain, settings.ApexDomains, (cdn) => {
-                process.stdout.write('\r'); // "\r" character returns cursor to the beginning of the line
-                process.stdout.write('\x1b[K');// "\x1b[K" clears all characters from the cursor to the end of the line
-                process.stdout.write(chalk.cyan(domain) + chalk.whiteBright(' ' + cdn.message));
-                process.stdout.write(EOL + EOL);
-            });
+            if (uniqueDomains.count > 1) {
+                notification += chalk.cyan(' across ' + uniqueDomains.count + ' domains');
+            }
+
+            if (settings.iterations > 1) {
+                notification += chalk.cyan(' * ' + settings.iterations + ' times (totaling ' + totalRequests + ' requests)');
+            }
+
+            console.log(notification);
         }
 
         // Loop around the number of iterations
@@ -399,7 +412,7 @@ try {
                                 if (err) { // Check for an error
                                     console.error(chalk.redBright('An error occurred converting the results into a CSV format: ') + err);
                                 } else {
-                                    let filename = utils.generateUniqueFilename();
+                                    let filename = utils.generateUniqueFilename('csv');
                                     fs.writeFile(filename, csv, (err) => {
                                         if (err) {
                                             settings.options.exportToCSV = false; // Switch off further exporting to a file seeing as it hasn't worked
@@ -429,6 +442,49 @@ try {
                             debug('%i unique response headers', uniqueResponseHeaders.length);
                             console.log('%i unique response headers (from %i collected): %O', uniqueResponseHeaders.length, responseHeadersReceived.length, uniqueResponseHeaders);
                         }
+
+                        console.log(EOL + chalk.grey('CDN Detection in progress ...'));
+                        // Determine the CDN or service behind each unique domain
+                        uniqueDomains.domains.forEach((domain) => {
+                            cccDNS.determineCDN(domain, settings.ApexDomains, (cdn) => {
+                                debug('determineCDN(%s) returned: %O', domain, cdn);
+
+                                // Construct the console message
+                                var cdnDeduction = [{
+                                    hostname: chalk.blueBright(cdn.hostname)
+                                }];
+
+                                // Add colour to the message depending upon the success of otherwise of the determination
+                                switch (cdn.status) {
+                                    case CCC_CDN_DETERMINATION_STATUS.INDETERMINATE:
+                                        cdnDeduction[0].message = chalk.grey(cdn.message);
+                                    break;
+
+                                    case CCC_CDN_DETERMINATION_STATUS.ERROR:
+                                        cdnDeduction[0].message = chalk.redBright(cdn.message);
+                                    break;
+
+                                    case CCC_CDN_DETERMINATION_STATUS.CDN:
+                                        cdnDeduction[0].message = chalk.greenBright(cdn.message);
+                                    break;
+
+                                    case CCC_CDN_DETERMINATION_STATUS.OTHER:
+                                        cdnDeduction[0].message = chalk.yellowBright(cdn.message);
+                                    break;
+                                }
+
+                                // Format text into paced columns
+                                let columns = columnify(cdnDeduction, {
+                                    showHeaders: false,
+                                    config: {
+                                        hostname: {minWidth: uniqueDomains.maxLength}
+                                    }
+                                });
+
+                                // Display results
+                                console.log(columns);
+                            });
+                        });
 
                         // Pause for configured interval (when we're looping through URLs more than once and there are still iterations left, and when the interval isn't zero) ...
                         debug('iterationCounter: %i ::: settings.iterations: %i', iterationCounter, settings.iterations);

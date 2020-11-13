@@ -97,9 +97,6 @@ module.exports = {
         debug('getHeadersCollections()');
         try {
             let collections = [];
-            //console.log('settings.headerCollections: %O', settings.headersCollections);
-            console.log(settings.headersCollections.length);
-            //console.log(Object.keys(JSON.parse(settings.headersCollections[0])));
             for (let i = 0; i < settings.headersCollections.length; i++) {
                 collections.push(Object.keys(settings.headersCollections[i]).toString());
             }

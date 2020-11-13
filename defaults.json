@@ -55,11 +55,7 @@
                 "server",
                 "content-encoding",
                 "vary",
-                "age",
-                "*cache*",
-                "expires",
-                "via",
-                "eTag"
+                "*cache*"
             ]
         },
         {
@@ -122,7 +118,7 @@
     },
     "options" : {
         "exportToCSV": true,
-        "openAfterExport": true,
+        "openAfterExport": false,
         "headers": {
             "user-agent": "ccc/{version} {OS}/{OSRelease}",
             "Connection": "close"

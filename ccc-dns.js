@@ -64,16 +64,21 @@ module.exports = {
             // No IP addresses, `answer` is an empty array
             return('no_address');
         } else {
-            // Initialise the response
-            var response = '';
+            // Initialise the array we're going to return
+            var response = [];
+
+            // Add the hostname that was resolved to the response array (so we have a complete end-to-end chain in the recursive response)
+            if (Object.prototype.hasOwnProperty.call(answer[0], 'name')){
+                response.push(answer[0].name);
+            }
+
             switch (options.operation) {
                 case 'getRecursion': // Get full recursive hostnames
-                    // Initialise the array we're going to return
-                    response = [];
+
                     // Get the whole nested recursion
                     for (let i = 0; i < answer.length; i++){
 
-                        if(Object.prototype.hasOwnProperty.call(answer[i], 'data')){ // Check if the answer element has a "data" property (which a CNAME record will have)
+                        if (Object.prototype.hasOwnProperty.call(answer[i], 'data')){ // Check if the answer element has a "data" property (which a CNAME record will have)
                             response.push(answer[i].data); // Extract CNAME record data
 
                         } else if (Object.prototype.hasOwnProperty.call(answer[i], 'address')) { // Check if the answer element has an "address" property (which an A record will have)

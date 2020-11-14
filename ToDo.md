@@ -23,6 +23,7 @@
   })();
   ```
 
+* ~~Add the actual `hostname` being resolved to `parseAnswer()` so that it's included in the `determineCDN()` logic~~
 * Add `error` handling to `needle` callback
 * Command line arguments for:
   * `timeout`

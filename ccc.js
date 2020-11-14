@@ -410,16 +410,18 @@ try {
                             jsonexport(outputTableRaw, (err, csv) => {
 
                                 if (err) { // Check for an error
-                                    console.error(chalk.redBright('An error occurred converting the results into a CSV format: ') + err);
+                                    console.error(chalk.redBright('An error occurred converting the results into a CSV format: ') + '%O', err);
                                 } else {
                                     let filename = utils.generateUniqueFilename('csv');
-                                    fs.writeFile(filename, csv, (err) => {
-                                        if (err) {
-                                            settings.options.exportToCSV = false; // Switch off further exporting to a file seeing as it hasn't worked
-                                            throw err;
-                                        }
+
+                                    // Write the results to file
+                                    try {
+                                        fs.writeFileSync(filename, csv);
+
                                         // Notify user where the file is, and open it if configured to do so
                                         console.log(chalk.grey('Results written to [%s]'), filename);
+
+
                                         if (settings.options.openAfterExport) {
                                             debug('Opening [%s] ...', filename);
 
@@ -430,7 +432,11 @@ try {
                                                 await open(filename);
                                             })();
                                         }
-                                    });
+                                    } catch (error) {
+                                        settings.options.exportToCSV = false; // Switch off further exporting to a file seeing as it hasn't worked
+                                        debug('An error occurred writing to results to disk. Switching off "exportToCSV".');
+                                        console.error(chalk.redBright('An error occurred writing to the file [%s]: ') + '%O', filename, error);
+                                    }
                                 }
                             });
                         }

@@ -14,6 +14,15 @@
   It's a valid URL
 ```
 
+* Investigate the wisdom of waiting for the external app to close before continuing when opening the `.csv` file. Perhaps make the behaviour a switch:
+
+  ```JavaScript
+  (async () => {
+    // Opens the image in the default image viewer and waits for the opened app to quit.
+    await open(filename);
+  })();
+  ```
+
 * Add `error` handling to `needle` callback
 * Command line arguments for:
   * `timeout`

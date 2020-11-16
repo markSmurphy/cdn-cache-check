@@ -4,6 +4,10 @@
 * Report on CNAME TTL for each unique domain
 * eTag support - Allow conditional `GET` requests such as `If-None-Match` to analyse Entity Tags
 * If a request redirects to a new domain and we follow that redirect, add the target domain to the `uniqueDomains` Set
+* Add console width warning if it's too narrow (`process.stdout.columns`)
+* Add a **reason** to `cdnDetection()` output when `--verbose` is enabled
+* Try to make console output easier to follow by having column headings (`HOST` and `PATH`) match output string colour (`chalk.cyan`)
+  * Perhaps offer a progress monitor whilst the requests are being made and out all the columns at once using `columnify` formatting options
 * ~~Implement `interval` (observed between iterations)~~
 * Handle misspelt filename being treated as URL
 
@@ -16,6 +20,27 @@
 ```text
   Checking if [https://*.allowed.com/] is a file, URL or bare domain ...
   It's a valid URL
+```
+
+* Fix erroneous and sporadic CDN detection. E.g. `www.amazon.co.uk` cdnDetection() erroneously being reported as `Akamai`:
+
+```bash
+ccc www.amazon.co.uk
+TIME        STATUS HOST             PATH SERVER CACHE-CONTROL CONTENT-ENCODING X-CACHE
+11:37:00:33 200    www.amazon.co.uk /    Server no-cache      gzip             Miss from cloudfront
+Results written to [C:\Users\markm\AppData\Local\Temp\ccc-2020112-32ce04e5.csv]
+
+CDN Detection in progress ...
+www.amazon.co.uk Akamai
+```
+
+```bash
+dig www.amazon.co.uk +answer
+
+;; ANSWER SECTION:
+www.amazon.co.uk.       1782    IN      CNAME   tp.bfbdc3ca1-frontier.amazon.co.uk.
+tp.bfbdc3ca1-frontier.amazon.co.uk. 42 IN CNAME dmv2ch3zz9u6u.cloudfront.net.
+dmv2ch3zz9u6u.cloudfront.net. 42 IN     A       143.204.189.105
 ```
 
 * Investigate the wisdom of waiting for the external app to close before continuing when opening the `.csv` file. Perhaps make the behaviour a switch:

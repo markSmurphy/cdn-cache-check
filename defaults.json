@@ -114,6 +114,11 @@
             "domains": ["*.blob.core.windows.net", "*.web.core.windows.net"],
             "title": "Azure Blob Storage",
             "service": "Blob"
+        },
+        "FBCDN": {
+            "domains": ["*.c*.facebook.com"],
+            "title": "Facebook Content Distribution Network",
+            "service": "CDN"
         }
     },
     "options" : {

@@ -397,7 +397,7 @@ try {
                             preserveNewLines: true,
                             truncate: true,
                             config: {
-                                'URL': {maxWidth: 60},
+                                'vary': {maxWidth: 20},
                                 'Host': {maxWidth: 30},
                                 'Path': {maxWidth: 60}
                             }

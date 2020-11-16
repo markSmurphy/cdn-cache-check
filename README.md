@@ -87,6 +87,10 @@ Display the help screen.
 
 ### CDN Detection
 
+### Handling redirects
+
+---
+
 ## Debugging
 
 ## FAQ

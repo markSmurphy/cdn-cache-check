@@ -3,6 +3,7 @@
 * HTTP/2 Support (or reporting support against each unique domain)
 * Report on CNAME TTL for each unique domain
 * eTag support - Allow conditional `GET` requests such as `If-None-Match` to analyse Entity Tags
+* If a request redirects to a new domain and we follow that redirect, add the target domain to the `uniqueDomains` Set
 * ~~Implement `interval` (observed between iterations)~~
 * Handle misspelt filename being treated as URL
 

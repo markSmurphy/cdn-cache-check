@@ -8,15 +8,6 @@
 ![Downloads](https://img.shields.io/npm/dm/cdn-cache-check.svg?style=plastic)
 ![Licence](https://img.shields.io/npm/l/cdn-cache-check.svg?style=plastic)
 
-## Overview
-
-If you've ever wondered what your CDN might be caching, then this utility may help.  Provide one or more URLs to resources which are behind a CDN and `cdn-cache-check` will parse the response headers to ascertain:
-
-* If the resource is cacheable
-* If the response was served via the CDN cache, or via the origin
-* The age of the cached object
-* If the response was compressed
-
 ## Quick Start
 
 ```text
@@ -29,6 +20,15 @@ ccc https://example.com/file.js
 
 ---
 
+## Overview
+
+If you've ever wondered what your CDN might be caching, then this utility may help.  Provide one or more URLs to resources which are behind a CDN and `cdn-cache-check` will parse the response headers to ascertain:
+
+* If the resource is cacheable
+* If the response was served via the CDN cache, or via the origin
+* The age of the cached object
+* If the response was compressed
+
 ## Installation
 
 ```text
@@ -37,13 +37,25 @@ npm -g install cdn-cache-check
 
 ---
 
+## Usage
+
 ## Options
 
-You can use the `--help` option to list all of the options.
+### url
 
-### URL
+### filename
 
----TBC---
+### method
+
+### headers *collection*
+
+### list-header-collections
+
+### list-response-headers
+
+### iterations
+
+### interval
 
 ### --no-color
 
@@ -57,5 +69,30 @@ Display the version number.
 
 Display the help screen.
 
-![`ccc --help`](https://marksmurphy.github.io/img/ccc-help.png)
+## Examples
 
+### Check a single URL
+
+### Check multiple URLs
+
+### Check URLs from a text file
+
+### Select **Header Collection**
+
+### Create new **Header Collection**
+
+---
+
+## Features
+
+### CDN Detection
+
+## Debugging
+
+## FAQ
+
+* [Where is the Change Log?](#where-is-the-change-log)
+
+### Where is the Change Log
+
+The `CHANGELOG.md` can be found [here](./CHANGELOG.md)

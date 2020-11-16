@@ -5,6 +5,8 @@
 * eTag support - Allow conditional `GET` requests such as `If-None-Match` to analyse Entity Tags
 * If a request redirects to a new domain and we follow that redirect, add the target domain to the `uniqueDomains` Set
 * Add console width warning if it's too narrow (`process.stdout.columns`)
+* Add an indicator [•] to the response when it's followed a redirect
+* Some sites (such as `www.etsy.com`) use multiple CDNs. Not sure how to handle that, but maybe mention it in a *README* section
 * Add a **reason** to `cdnDetection()` output when `--verbose` is enabled
 * Try to make console output easier to follow by having column headings (`HOST` and `PATH`) match output string colour (`chalk.cyan`)
   * Perhaps offer a progress monitor whilst the requests are being made and out all the columns at once using `columnify` formatting options

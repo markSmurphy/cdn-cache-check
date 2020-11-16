@@ -89,6 +89,20 @@ Display the help screen.
 
 ### Handling redirects
 
+### Error handling/reporting
+
+Example:
+
+```bash
+node ccc.js https://www.wallmart.com/
+TIME        STATUS                       HOST             PATH
+12:25:27:06 ERR_TLS_CERT_ALTNAME_INVALID www.wallmart.com /
+Results written to [C:\Users\markm\AppData\Local\Temp\ccc-2020112-6fe61c30.csv]
+
+CDN Detection in progress ...
+www.wallmart.com Akamai
+```
+
 ---
 
 ## Debugging

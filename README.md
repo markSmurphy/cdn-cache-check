@@ -3,6 +3,7 @@
 ![Version](https://img.shields.io/npm/v/cdn-cache-check.svg?style=plastic)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/9036b897af074a8ba94d5a22e24e5680)](https://www.codacy.com?utm_source=bitbucket.org&amp;utm_medium=referral&amp;utm_content=MarkSMurphy/cdn-cache-check&amp;utm_campaign=Badge_Grade)
 [![Known Vulnerabilities](https://snyk.io/test/npm/cdn-cache-check/1.0.0/badge.svg)](https://snyk.io/test/npm/cdn-cache-check/1.0.0)
+![Snyk Vulnerabilities for npm package](https://img.shields.io/snyk/vulnerabilities/npm/cdn-cache-check?style=plastic)
 ![Libraries.io dependency status for latest release](https://img.shields.io/librariesio/release/npm/cdn-cache-check.svg?style=plastic)
 ![Downloads](https://img.shields.io/npm/dm/cdn-cache-check.svg?style=plastic)
 ![Licence](https://img.shields.io/npm/l/cdn-cache-check.svg?style=plastic)
@@ -58,27 +59,3 @@ Display the help screen.
 
 ![`ccc --help`](https://marksmurphy.github.io/img/ccc-help.png)
 
-## Future support
-
-### Request header amending
-
-* User-Agent
-* Cookie
-* Authorization
-* Accept-Encoding
-* Range
-* From
-* Origin
-* Referer
-
-### CORS
-
-Allowing inclusion of CORS request headers and analysis of response
-
-### Entity Tags
-
-Allowing conditional `GET` requests such as `If-None-Match`
-
-### HTTP/2
-
-Allowing HTTP/2 requests could be useful.

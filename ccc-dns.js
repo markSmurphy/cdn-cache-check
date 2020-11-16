@@ -81,10 +81,8 @@ module.exports = {
                         if (Object.prototype.hasOwnProperty.call(answer[i], 'data')){ // Check if the answer element has a "data" property (which a CNAME record will have)
                             response.push(answer[i].data); // Extract CNAME record data
 
-                        } else if (Object.prototype.hasOwnProperty.call(answer[i], 'address')) { // Check if the answer element has an "address" property (which an A record will have)
+                        } else if ((options.includeIpAddresses) && (Object.prototype.hasOwnProperty.call(answer[i], 'address'))) { // Check if the answer element has an "address" property (which an A record will have)
                             response.push(answer[i].address); // Extract A record data
-                        } else {
-                            debug('Warning: There is an unhandled element [%s] in answer array: %O', i, answer[i]);
                         }
                     }
                     break;
@@ -112,7 +110,7 @@ module.exports = {
         let cdnResponse = {
             message: 'Indeterminate',
             hostname: hostname,
-            reason: 'Not enough information to make a determination',
+            reason: '',
             service: 'Unknown',
             status: CCC_CDN_DETERMINATION_STATUS.INDETERMINATE
         };
@@ -155,27 +153,24 @@ module.exports = {
                     // Iterate through each nested address in the DNS answer to check if matches a known CDN
                     for (var i = 0; i < cdnResponse.dnsAnswer.length; i++) {
                         for (let cdn in apexDomains) {
-                            debug('Evaluating %s against %s [%s]', cdnResponse.dnsAnswer[i], apexDomains[cdn], cdn);
+                            debug('Evaluating [%s] against [%s]: %O', cdnResponse.dnsAnswer[i], cdn, apexDomains[cdn].domains);
                             let matchingDomains = matcher(cdnResponse.dnsAnswer[i], apexDomains[cdn].domains);
-                            debug('matchingDomains: %O', matchingDomains);
                             if (matchingDomains.length > 0) {
-                                // We've found a match.  Record the details; we don't need to loop through the rest of the DNS response
-                                debug('Setting return value to [' + cdn + '] for [' + hostname +']');
-                                if (apexDomains[cdn].service.toUpperCase() === 'CDN') {
-                                    cdnResponse.message = apexDomains[cdn].title;
-                                    debug('FOUND CDN: %s [%s]', cdnResponse.message, cdnResponse.dnsAnswer[i]);
-                                    cdnResponse.status = CCC_CDN_DETERMINATION_STATUS.CDN;
-                                } else {
-                                    cdnResponse.message = apexDomains[cdn].title;
-                                    debug('FOUND RECOGNISED SERVICE: %s [%s]', cdnResponse.message, cdnResponse.dnsAnswer[i]);
-                                    cdnResponse.status = CCC_CDN_DETERMINATION_STATUS.OTHER;
-                                }
+                                // We've found a match.  Record the details
+                                debug('%s is served by %s due to nested domain %s', hostname, apexDomains[cdn].title, matchingDomains[0]);
 
+                                cdnResponse.reason = `${hostname} resolves to ${matchingDomains[0]} which matches a ${cdn} domain pattern`;
                                 cdnResponse.matchingDomains = matchingDomains[0];
                                 cdnResponse.service = apexDomains[cdn].service.toUpperCase();
+                                cdnResponse.message = apexDomains[cdn].title;
+                                cdnResponse.status = CCC_CDN_DETERMINATION_STATUS.CDN;
+                                if (apexDomains[cdn].service.toUpperCase() !== 'CDN') {
+                                    cdnResponse.status = CCC_CDN_DETERMINATION_STATUS.OTHER;
+                                }
                             }
                         }
                     }
+                    debug('determineCDN(%s) returning: %O', hostname, cdnResponse);
                     callback(cdnResponse);
                 }
             });

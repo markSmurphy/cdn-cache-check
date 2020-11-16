@@ -457,7 +457,7 @@ try {
 
                                 // Construct the console message
                                 var cdnDeduction = [{
-                                    hostname: chalk.blueBright(cdn.hostname)
+                                    hostname: chalk.cyan(cdn.hostname)
                                 }];
 
                                 // Add colour to the message depending upon the success of otherwise of the determination

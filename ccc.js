@@ -207,51 +207,47 @@ try {
 
                 debug('(%s of %s) Issuing HTTP %s request to [%s]...', requestCounter, urls.length, settings.method.toUpperCase(), urls[i]);
 
-                // Send HTTP request for current URL
+                // Initialise result object
+                let result = {
+                    error: false,
+                    statusCode: 0,
+                    request: {},
+                    response: {},
+                    redirectCount: 0
+                };
 
-                needle.request(settings.method, urls[i], '', settings.options.httpOptions, function(error, response) {
-                    // Initialise result object
-                    let result = {};
+                // Parse URL into component parts (since we don't have a response object when there's an error)
+                let requestURL = new URL(urls[i]);
+
+                // Populate the request properties for reference
+                result.request.protocol = requestURL.protocol;
+                result.request.host = requestURL.hostname;
+                result.request.path = requestURL.pathname;
+                result.request.url = urls[i];
+
+                // Send HTTP request for current URL
+                let resp = needle.request(settings.method, urls[i], '', settings.options.httpOptions, function(error, response) {
+
                     debug('Callback for [%s] received', urls[i]);
 
                     if (error) {
                         debug('Error for [%s]: %O', urls[i], error);
-                        // Parse URL into component parts (since we don't have a response object when there's an error)
-                        let requestURL = new URL(urls[i]);
 
                         // Log error to JSON result
-                        result = {
-                            'error': true,
-                            'statusCode': error.code,
-                            'request': {
-                                'protocol': requestURL.protocol,
-                                'host': requestURL.hostname,
-                                'path': requestURL.pathname,
-                                'url' : urls[i],
-                            },
-                            'response': {
-                                'headers': []
-                            }
-                        };
+                        result.error=true;
+                        result.statusCode = error.code;
+                        result.response.headers = [];
 
                     } else {
                         // We got a HTTP response
                         debug(response.statusCode + ' ' + urls[i]);
 
                         // Save request details and HTTP response headers as JSON
-                        result = {
-                            'error': false,
-                            'statusCode': response.statusCode,
-                            'request': {
-                                'protocol': response.req.protocol,
-                                'host': response.req.host,
-                                'path': response.req.path,
-                                'url' : urls[i],
-                            },
-                            'response': {
-                                'headers': response.headers
-                            }
-                        };
+                        result.statusCode = response.statusCode;
+                        result.request.protocol = response.req.protocol;
+                        result.request.host = response.req.host;
+                        result.request.path = response.req.path;
+                        result.response.headers = response.headers;
                     }
 
                     // Add request/response result to array (for later parsing once we have them all)
@@ -270,7 +266,6 @@ try {
 
                         // We'll also collect the raw (unformatted for console output) which we'll use in exportToCSV;
                         let outputTableRaw = [];
-
                         // Iterate through Responses array (we now have all the responses in this iteration)
                         for (let i = 0; i < responses.length; i++) {
                             //Write to debug file here *****
@@ -507,6 +502,11 @@ try {
                             debug('...resuming');
                         }
                     }
+                });
+
+                resp.on('redirect', function(url) {
+                    result.redirectCount += 1;
+                    debug('redirectCount incremented to %s by redirect event to [%s] ', result.redirectCount, url);
                 });
             }
 

@@ -89,6 +89,8 @@ Display the help screen.
 
 ### Handling redirects
 
+Also mention the redirect indicator ® and hte redirect count in the `csv` export file
+
 ### Error handling/reporting
 
 Example:

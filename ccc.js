@@ -12,6 +12,7 @@ const CCC_CDN_DETERMINATION_STATUS = {
     ERROR: 'Error',
     OTHER: 'Other Internet Service'
 };
+const CCC_OUTPUT_REDIRECT_INDICATOR = '\u00AE'; // "\u00AE" = ®
 
 // Command line options parser
 var argv = require('yargs')
@@ -276,6 +277,16 @@ try {
                             let row = {};
                             let rowRaw = {};
 
+                            // Indicate if a redirect was followed
+                            if (settings.options.httpOptions.follow > 0) {
+                                // Add the column and a placeholder for the redirects indicator
+                                row['Redirects'] = ' ';
+                                // Add the integer value to the raw results
+                                rowRaw['Redirects'] = responses[i].redirectCount;
+                                if(responses[i].redirectCount > 0){ // If the request resulted in one or more redirects, add the indicator character to the results
+                                    row['Redirects'] = CCC_OUTPUT_REDIRECT_INDICATOR;
+                                }
+                            }
                             // Populate basic request details
                             let timestamp = new Date();
                             // let responseTimestamp = `${timestamp.getHours()}:${timestamp.getMinutes()}:${timestamp.getSeconds()}:${timestamp.getMilliseconds()}`;
@@ -388,13 +399,15 @@ try {
 
                         // Send output results to console, formatted into columns
                         let columns = columnify(outputTable, {
+                            maxWidth: 35,
                             showHeaders: true,
                             preserveNewLines: true,
                             truncate: true,
                             config: {
                                 'vary': {maxWidth: 20},
                                 'Host': {maxWidth: 30},
-                                'Path': {maxWidth: 60}
+                                'Path': {maxWidth: 60},
+                                'Redirects': {showHeaders: false}
                             }
                         });
                         console.log(columns);

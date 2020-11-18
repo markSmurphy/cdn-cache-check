@@ -39,7 +39,6 @@
 * Add console width warning if it's too narrow (`process.stdout.columns`)
 * Some sites (such as `www.etsy.com` & `www.amazon.co.uk`) use multiple CDNs. Mention this in a *README* section, but fix it by turning `ddig` into a library and querying multiple resolvers for the full `CNAME` chain before performing CDN detection.
 * Add a **reason** to `cdnDetection()` output when `--verbose` is enabled
-* Display a progress indicator whilst the requests are being made (maybe [npmlog](https://www.npmjs.com/package/npmlog))
 * Command line arguments for `needle` http options:
   * `timeout`
   * `response_timeout`
@@ -55,6 +54,7 @@
 
 ---
 
+* ~~Display an activity indicator whilst the HTTP requests are being made (maybe [ora](https://www.npmjs.com/package/ora))~~
 * ~~Add an indicator [®] to the response output row when it's followed a redirect, and the redirect count to the raw `csv` export file~~
 * ~~Add the actual `hostname` being resolved to `parseAnswer()` so that it's included in the `determineCDN()` logic~~
 * ~~Export to CSV~~

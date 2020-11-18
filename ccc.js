@@ -197,8 +197,13 @@ try {
             console.log(notification);
         }
 
+        const ora = require('ora');
+
+        const spinner = ora('Issuing HTTP requests ...').start();
+
         // Loop around the number of iterations
         for (let iterationCounter = 1; iterationCounter <= settings.iterations; iterationCounter++) {
+
             // Keep array of response headers with request details
             let responses = [];
 
@@ -260,6 +265,7 @@ try {
 
                     debug('Received %i of %i responses', responses.length, urls.length);
                     if (responses.length === urls.length) {
+                        spinner.succeed(chalk.green('Completed ' + urls.length + ' HTTP requests'));
                         debug('Parsing %s responses', responses.length);
 
                         // We'll collate the parsed results into an output array

@@ -39,7 +39,7 @@
     "@tusbar/cache-control": "^0.5.0",
     "chalk": "^4.1.0",
     "columnify": "^1.5.4",
-    "debug": "^4.2.0",
+    "debug": "^4.3.1",
     "is-valid-domain": "0.0.17",
     "jsonexport": "^3.0.1",
     "multimatch": "^5.0.0",

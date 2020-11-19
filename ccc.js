@@ -13,6 +13,7 @@ const CCC_CDN_DETERMINATION_STATUS = {
     OTHER: 'Other Internet Service'
 };
 const CCC_OUTPUT_REDIRECT_INDICATOR = '\u00AE'; // "\u00AE" = ®
+const CCC_OUTPUT_PADDING_CHARACTER = '·';
 
 // Command line options parser
 var argv = require('yargs')
@@ -493,9 +494,10 @@ try {
                                     break;
                                 }
 
-                                // Format text into paced columns
+                                // Format text into spaced columns
                                 let columns = columnify(cdnDeduction, {
                                     showHeaders: false,
+                                    paddingChr: CCC_OUTPUT_PADDING_CHARACTER,
                                     config: {
                                         hostname: {minWidth: uniqueDomains.maxLength}
                                     }

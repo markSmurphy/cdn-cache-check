@@ -96,7 +96,7 @@
             "service": "CDN"
         },
         "CloudFlare" :{
-            "domains": ["*.cdn.cloudflare.net"],
+            "domains": ["*.cdn.cloudflare.net", "*.cloudflare.com"],
             "title": "CloudFlare",
             "service": "CDN"
         },
@@ -108,17 +108,22 @@
         "S3" :{
             "domains": ["s3.*.amazonaws.com", "*.s3.*.amazonaws.com", "s3*.amazonaws.com", "*.s3-accesspoint.*.amazonaws.com"],
             "title": "AWS S3 Bucket",
-            "service": "S3"
+            "service": "Static Hosting"
         },
         "Blob" :{
             "domains": ["*.blob.core.windows.net", "*.web.core.windows.net"],
             "title": "Azure Blob Storage",
-            "service": "Blob"
+            "service": "Static Hosting"
         },
         "FBCDN": {
             "domains": ["*.c*.facebook.com"],
             "title": "Facebook Content Distribution Network",
             "service": "CDN"
+        },
+        "GitHubPages": {
+            "domains": ["*.github.io"],
+            "title": "GitHub Pages",
+            "service": "Static Hosting"
         }
     },
     "options" : {

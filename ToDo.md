@@ -2,7 +2,8 @@
 
 ## Bugs
 
-* Add `error` handling to `needle` callback
+* `--open` doesn't work as intended (it doesn't open the csv file)
+* `--export` doesn't work as intended (it doesn't turn exportToCSV on or off)
 * If a request redirects to a new domain and we follow that redirect, the target domain isn't in the `uniqueDomains` Set
 * Handle misspelt filename being treated as URL
 * `--interval` & `--iterations` do not work as intended
@@ -23,6 +24,8 @@
   ```
 
 * `--help` screen doesn't reflect all command line switches
+  * export
+  * open
   * http options
   * debug
 

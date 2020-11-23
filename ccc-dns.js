@@ -19,9 +19,6 @@ const isValidDomain = require('is-valid-domain');
 // Import DNS library
 const dns = require('native-dns-multisocket');
 
-// Console Colours
-const chalk = require('chalk');
-
 module.exports = {
     getUniqueDomains(urls) {
         try {

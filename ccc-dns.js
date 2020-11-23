@@ -139,7 +139,7 @@ module.exports = {
 
             req.on('message', (error, answer) => { // DNS message received
                 if (error) { // DNS returned an error
-                    debug(chalk.grey('Received DNS error for %s: %O'), hostname, error);
+                    debug('Received DNS error for %s: %O', hostname, error);
                     cdnResponse.message = 'DNS Error';
                     cdnResponse.reason = 'DNS Error';
                     cdnResponse.error = error;

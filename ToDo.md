@@ -2,6 +2,7 @@
 
 ## Bugs
 
+* A URL whose domain is not resolved (`ENOTFOUND`) is still included in the CDN Detection and is reported as `Indeterminate` - e.g. `node .\ccc.js iplayer.bbc.co.uk`
 * `--open` doesn't work as intended (it doesn't open the csv file)
 * `--export` doesn't work as intended (it doesn't turn exportToCSV on or off)
 * If a request redirects to a new domain and we follow that redirect, the target domain isn't in the `uniqueDomains` Set

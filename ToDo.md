@@ -35,6 +35,7 @@
 * HTTP/2 Support (or reporting support against each unique domain)
 * Change the `exportToCSV()` function to save files to a `ccc` specific subfolder
 * Add a modifier to `--open` which opens the folder
+* Allow modification of DNS question (`resolver` etc) and move defaults to config file.
 * Report on CNAME TTL for each unique domain
 * eTag support - Allow conditional `GET` requests such as `If-None-Match` to analyse Entity Tags
 * Allow request headers to be injected

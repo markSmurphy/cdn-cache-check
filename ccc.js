@@ -59,6 +59,9 @@ const needle = require('needle');
 // Initialise wildcard string parser
 const matcher = require('multimatch');
 
+// Import terminal spinner library
+const ora = require('ora');
+
 // Error formatting
 const PrettyError = require('pretty-error');
 const pe = new PrettyError();
@@ -198,9 +201,8 @@ try {
             console.log(notification);
         }
 
-        const ora = require('ora');
-
-        const spinner = ora('Issuing HTTP requests ...').start();
+        // Create and start the HTTP requests activity spinner
+        const spinnerHTTPRequests = ora('Issuing HTTP requests ...').start();
 
         // Loop around the number of iterations
         for (let iterationCounter = 1; iterationCounter <= settings.iterations; iterationCounter++) {
@@ -266,7 +268,8 @@ try {
 
                     debug('Received %i of %i responses', responses.length, urls.length);
                     if (responses.length === urls.length) {
-                        spinner.succeed(chalk.green('Completed ' + urls.length + ' HTTP requests'));
+                        // Stop the HTTP Requests spinner
+                        spinnerHTTPRequests.succeed(chalk.green('Completed ' + urls.length + ' HTTP requests'));
                         debug('Parsing %s responses', responses.length);
 
                         // We'll collate the parsed results into an output array
@@ -434,7 +437,7 @@ try {
                                         fs.writeFileSync(filename, csv);
 
                                         // Notify user where the file is, and open it if configured to do so
-                                        console.log(chalk.grey('Results written to [%s]'), filename);
+                                        console.log(chalk.grey('%sResults written to [%s]'), EOL, filename);
 
 
                                         if (settings.options.openAfterExport) {
@@ -464,7 +467,9 @@ try {
                             console.log('%i unique response headers (from %i collected): %O', uniqueResponseHeaders.length, responseHeadersReceived.length, uniqueResponseHeaders);
                         }
 
-                        console.log(EOL + chalk.grey('CDN Detection in progress ...'));
+                        // Create and start the CDN Detection activity spinner
+                        const spinnerCDNDetection = ora('CDN detection being performed on ' + uniqueDomains.length + ' unique domains ...').start();
+
                         // Determine the CDN or service behind each unique domain
                         uniqueDomains.domains.forEach((domain) => {
                             cccDNS.determineCDN(domain, settings.ApexDomains, (cdn) => {
@@ -494,12 +499,13 @@ try {
                                     break;
                                 }
 
+                                let hostnameColumnWidth = uniqueDomains.maxLength +5;
                                 // Format text into spaced columns
                                 let columns = columnify(cdnDeduction, {
                                     showHeaders: false,
                                     paddingChr: CCC_OUTPUT_PADDING_CHARACTER,
                                     config: {
-                                        hostname: {minWidth: uniqueDomains.maxLength}
+                                        hostname: {minWidth: hostnameColumnWidth}
                                     }
                                 });
 
@@ -507,6 +513,9 @@ try {
                                 console.log(columns);
                             });
                         });
+
+                        // Stop the DNS Detection spinner
+                        spinnerCDNDetection.succeed(chalk.green('CDN detection complete'));
 
                         // Pause for configured interval (when we're looping through URLs more than once and there are still iterations left, and when the interval isn't zero) ...
                         debug('iterationCounter: %i ::: settings.iterations: %i', iterationCounter, settings.iterations);

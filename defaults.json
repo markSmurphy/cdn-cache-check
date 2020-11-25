@@ -91,7 +91,7 @@
             "service": "CDN"
         },
         "Fastly" :{
-            "domains": ["*.fastly.net"],
+            "domains": ["*.fastly.net", "*.fastly.com"],
             "title": "Fastly",
             "service": "CDN"
         },

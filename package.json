@@ -12,7 +12,7 @@
     "ccc": "./ccc.js"
   },
   "engines": {
-    "node": ">=10.0.0"
+    "node": ">=10"
   },
   "repository": {
     "type": "git",

@@ -2,6 +2,7 @@
 
 ## Bugs
 
+* If the input is not a valid top level domain then assume it's a file and report `file not found` accordingly; e.g. `ccc filename.har`
 * A URL whose domain is not resolved (`ENOTFOUND`) is still included in the CDN Detection and is reported as `Indeterminate` - e.g. `node .\ccc.js iplayer.bbc.co.uk`
   * Need to handle an empty `answer.answer[]` array, and parseAnswer() returning something more useful than `'no_address'`
 * `--open` doesn't work as intended (it doesn't open the csv file)
@@ -30,6 +31,8 @@
   * open
   * http options
   * debug
+
+  * `--help` examples should match `readme` examples
 
 ## Features
 

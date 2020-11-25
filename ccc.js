@@ -515,7 +515,7 @@ try {
                         });
 
                         // Stop the DNS Detection spinner
-                        spinnerCDNDetection.succeed(chalk.green('CDN detection complete'));
+                        spinnerCDNDetection.succeed(chalk.green('CDN detection complete on ' + uniqueDomains.domains.length + ' unique domains'));
 
                         // Pause for configured interval (when we're looping through URLs more than once and there are still iterations left, and when the interval isn't zero) ...
                         debug('iterationCounter: %i ::: settings.iterations: %i', iterationCounter, settings.iterations);

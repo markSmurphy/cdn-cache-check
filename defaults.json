@@ -10,6 +10,26 @@
             ]
         },
         {
+            "CORS": [
+                "access-control-*"
+            ]
+        },
+        {
+            "security": [
+                "Content-Security-Policy",
+                "Expect-CT",
+                "Feature-Policy",
+                "Public-Key-Pins",
+                "Referrer-Policy",
+                "Strict-Transport-Security",
+                "X-Content-Type-Options",
+                "X-Frame-Options",
+                "X-Permitted-Cross-Domain-Policies",
+                "X-XSS-Protection",
+                "access-control-*"
+            ]
+        },
+        {
             "cloudfront": [
                 "x-cache",
                 "age",
@@ -55,27 +75,7 @@
                 "server",
                 "content-encoding",
                 "vary",
-                "*cache*"
-            ]
-        },
-        {
-            "CORS": [
-                "access-control-*"
-            ]
-        },
-        {
-            "security": [
-                "Content-Security-Policy",
-                "Expect-CT",
-                "Feature-Policy",
-                "Public-Key-Pins",
-                "Referrer-Policy",
-                "Strict-Transport-Security",
-                "X-Content-Type-Options",
-                "X-Frame-Options",
-                "X-Permitted-Cross-Domain-Policies",
-                "X-XSS-Protection",
-                "access-control-*"
+                "age"
             ]
         }
     ],

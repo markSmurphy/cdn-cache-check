@@ -16,14 +16,13 @@ const CCC_OUTPUT_REDIRECT_INDICATOR = '\u00AE'; // "\u00AE" = ®
 const CCC_OUTPUT_PADDING_CHARACTER = '·';
 
 // Command line options parser
-var argv = require('yargs')
+const argv = require('yargs')
 .help(false)
 .argv;
 
 // check if "debug" mode is enabled via the command line
 if (argv.debug) {
     debug.enable('*');
-    //debug.enabled('*');
 }
 
 // cdn-cache-check's own DNS helper functions
@@ -44,8 +43,9 @@ const jsonexport = require('jsonexport');
 // Cache=control header parser
 const {parse} = require('@tusbar/cache-control');
 
-// Platform independent new line character
+// Platform independent new line character and path separator
 const EOL = require('os').EOL;
+const pathSeparator = require('path').sep;
 
 // Initialise URL validation object
 const validUrl = require('valid-url');
@@ -108,6 +108,10 @@ try {
         // Output the formatted json contained within each array element
         collections.forEach((element) => console.log(prettyJson.render(element)));
 
+        // Display config file location
+        let configFile = __dirname + pathSeparator + 'defaults.json';
+
+        console.log(EOL + chalk.grey('Config file:') + chalk.yellowBright(configFile));
         // Exit to terminal
         return;
     }

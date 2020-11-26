@@ -97,6 +97,7 @@ module.exports = {
         }
     },
     getDefaults() {
+        debug('getDefaults() :: Entry');
         try {
             let defaultSettings = require('./defaults.json'); // Load the defaults
             return (defaultSettings); // Return the json object
@@ -116,7 +117,7 @@ module.exports = {
                             'server',
                             'content-encoding',
                             'vary',
-                            '*cache*'
+                            'age'
                         ]
                     }
                 ],

@@ -2,7 +2,8 @@
 
 ## Bugs
 
-* If the input is not a valid top level domain then assume it's a file and report `file not found` accordingly; e.g. `ccc filename.har`
+* `getDefaults()` appears to called three times when executing `ccc --list-header-collections`
+* If the input does not have a valid top level domain then assume it's a file, and report `file not found` accordingly; e.g. `ccc filename.txt` as `.txt` is not a valid TLD
 * A URL whose domain is not resolved (`ENOTFOUND`) is still included in the CDN Detection and is reported as `Indeterminate` - e.g. `node .\ccc.js iplayer.bbc.co.uk`
   * Need to handle an empty `answer.answer[]` array, and parseAnswer() returning something more useful than `'no_address'`
 * `--open` doesn't work as intended (it doesn't open the csv file)
@@ -36,9 +37,14 @@
 
 ## Features
 
+* Add colour indicators for the response headers:
+  * `vary` - where `*`, `user-agent`, `cookie` are all anti-patterns for CDN caching
+  * `content-encoding` - where not being `gzip`, `br`, et al is sub-optimal
 * HTTP/2 Support (or reporting support against each unique domain)
 * Change the `exportToCSV()` function to save files to a `ccc` specific subfolder
 * Add a modifier to `--open` which opens the folder
+* Add support for input file type `.har` to extract resource URLs from
+* Add support for input file type Lighthouse `.json` to extract resource URLs from
 * Allow modification of DNS question (`resolver` etc) and move defaults to config file.
 * Report on CNAME TTL for each unique domain
 * eTag support - Allow conditional `GET` requests such as `If-None-Match` to analyse Entity Tags
@@ -55,7 +61,7 @@
   * `follow`
   * et al
 * Implement full debug request/response logging
-  * Perhaps to a `har` file
+  * Perhaps to a `.har` file
   * Export all response headers to separate `csv` file when `debug` || `verbose` is enabled
 * Provide a friendly interpretation of caching based on CDN's x-cache documentation
   * Perhaps workout a score based upon `x-cache`, `cache-control`, `eTag`, et al

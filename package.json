@@ -43,7 +43,9 @@
     "http",
     "https",
     "headers",
-    "offload"
+    "offload",
+    "web",
+    "performance"
   ],
   "author": "Mark Murphy",
   "license": "MIT",

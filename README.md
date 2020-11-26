@@ -8,32 +8,63 @@
 ![Downloads](https://img.shields.io/npm/dm/cdn-cache-check.svg?style=plastic)
 ![Licence](https://img.shields.io/npm/l/cdn-cache-check.svg?style=plastic)
 
+HTTP caching is an important component in the delivery of a fast web site. This command line utility helps to analyse URLs to determine if they're served via a CDN and the caching behaviours of both the CDN and the user-agent.
+
 ## Quick Start
 
-```text
-npm -g cdn-cache-check
+Install globally using:
 
-ccc https://example.com/file.js
+```text
+npm -g install cdn-cache-check
 ```
 
-![`ccc-QuickStart`](https://marksmurphy.github.io/img/ccc-QuickStart.gif)
+Check a single URL using `ccc [URL]`:
+
+```text
+ccc https://www.rolex.com/
+```
+
+![cdn-cache-check - Single URL](https://marksmurphy.github.io/img/ccc.single.url.gif)
+
+---
+Check multiple URLs using `ccc [URL [URL […]]]`:
+
+```text
+ccc https://www.rolls-royce.com/ https://www.rolls-roycemotorcars.com/
+```
+
+![cdn-cache-check - Multiple URLs](https://marksmurphy.github.io/img/ccc.multiple.urls.gif)
+
+---
+Check a list of URLs read from a text file using `ccc [filename]`:
+
+```text
+ccc URLs.examples.txt
+```
+
+![cdn-cache-check - Single text file](https://marksmurphy.github.io/img/ccc.single.file.gif)
+
+Where `URLs.examples.txt` contains:
+
+```text
+#List of example URLs
+www.twitch.tv
+www.reddit.com
+www.stackoverflow.com
+www.adobe.com
+https://www.wired.com/
+https://www.rolex.com/
+```
 
 ---
 
 ## Overview
 
-If you've ever wondered what your CDN might be caching, then this utility may help.  Provide one or more URLs to resources which are behind a CDN and `cdn-cache-check` will parse the response headers to ascertain:
+If you're looking into web site performance then, at some stage of your analysis, you'll be interested in caching, compression and CDNs.  `cdn-cache-check` aims to help with this task by making HTTP requests to one, or 100's of, URLs and analysing certain response headers.
 
-* If the resource is cacheable
-* If the response was served via the CDN cache, or via the origin
-* The age of the cached object
-* If the response was compressed
+The headers are displayed in columns with colours indicating how optimal they are.
 
-## Installation
-
-```text
-npm -g install cdn-cache-check
-```
+![cdn-cache-check - Example of e-commerce domains](https://marksmurphy.github.io/img/ccc.example.ecommerce.gif)
 
 ---
 
@@ -86,6 +117,8 @@ Display the help screen.
 ## Features
 
 ### CDN Detection
+
+### Explanation of header analysis and colour coding
 
 ### Handling redirects
 

@@ -105,7 +105,7 @@ module.exports = {
 
         // Set default response
         let cdnResponse = {
-            message: 'Indeterminate',
+            message: 'Undetermined',
             hostname: hostname,
             reason: '',
             service: 'Unknown',

@@ -60,9 +60,7 @@ https://www.rolex.com/
 
 ## Overview
 
-If you're looking into web site performance then, at some stage of your analysis, you'll be interested in caching, compression and CDNs.  `cdn-cache-check` aims to help with this task by making HTTP requests to one, or 100's of, URLs and analysing certain response headers.
-
-The headers are displayed in columns with colours indicating how optimal they are.
+If you're looking into web site performance you'll be interested, at some stage of your analysis, in caching, compression and CDNs. `cdn-cache-check` (or `ccc` when installed globally) aims to help with this task by making HTTP requests and reporting on the response headers that control these aspects across multiple URLs at a time.
 
 ![cdn-cache-check - Example of e-commerce domains](https://marksmurphy.github.io/img/ccc.example.ecommerce.gif)
 
@@ -70,23 +68,64 @@ The headers are displayed in columns with colours indicating how optimal they ar
 
 ## Usage
 
+Supply `cdn-cache-check` with a URL, or the name of a text file containing URLs, and it will issue HTTP requests for each. You can supply multiple URLs or multiple filenames (separated by a `space`), and you can mix-and-match them too if you wish.
+
+It will also attempt to detect the CDN serving each unique domain by performing a recursive DNS resolution and check if the domain resolves to a known CDN's apex domain.
+
+```text
+ccc [URL|file [URL|file […]]] [options]
+```
+
 ## Options
 
-### url
+### URL
+
+The `URL` can be any valid URL or a bare domain, in which case `HTTPS` will be used when making the request.
+
+```text
+ccc https://example.com
+```
+
+```text
+ccc example.com
+```
 
 ### filename
 
-### method
+The file should be a plain text file with a URL on each line. Lines which do not contain a valid URL or valid domain name are ignored, so you can have comments and annotation in the file if you so wish.
 
-### headers *collection*
+### --method
 
-### list-header-collections
+The default HTTP method is `GET` but you can modify this
 
-### list-response-headers
+```text
+ccc example.com --method head
+```
 
-### iterations
+### --headers *collection*
 
-### interval
+By default the listed response headers are limited to `x-cache`, `cache-control`, `server`, `content-encoding`, `vary`, `age`; but this is just the **default** headers collection. You can use the `--headers` switch to specify and alternate collection of headers, and can use ``list-header-collections` to view all collections as described [here](#list-header-collections).
+
+For example, there's a collection that lists **security** related response headers:
+
+```text
+ccc https://www.mozilla.org/ --headers security
+```
+
+![cdn-cache-check - Example of header collection 'security'](https://marksmurphy.github.io/img/ccc.example.header.security.gif)
+
+### --list-header-collections
+
+```text
+ccc --list-header-collections
+```
+
+![cdn-cache-check - Example listing all header collections](https://marksmurphy.github.io/img/ccc.example.list-header-collections.gif)
+
+
+### --list-response-headers
+
+
 
 ### --no-color
 
@@ -128,7 +167,7 @@ Also mention the redirect indicator ® and hte redirect count in the `csv` expor
 
 Example:
 
-```bash
+```text
 node ccc.js https://www.wallmart.com/
 TIME        STATUS                       HOST             PATH
 12:25:27:06 ERR_TLS_CERT_ALTNAME_INVALID www.wallmart.com /

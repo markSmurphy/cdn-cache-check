@@ -153,7 +153,6 @@ try {
                     }
                 } catch (err) {
                     debug('An error occurred when parsing the file [%s]: %O', process.argv[i], err);
-                    //console.error(pe.render(err));
                 }
             } else if (validUrl.isWebUri(process.argv[i])) {
                 // It's a valid URL.  Add it to the urls array
@@ -440,10 +439,12 @@ try {
                                     try {
                                         fs.writeFileSync(filename, csv);
 
-                                        // Notify user where the file is, and open it if configured to do so
-                                        console.log(chalk.grey('%sResults written to [%s]'), EOL, filename);
+                                        // Notify the user where the file is saved
+                                        console.log(EOL); // New line
+                                        console.log(chalk.grey('Results written to [%s]'), filename);
+                                        console.log(EOL); // New line
 
-
+                                        // Open the file if configured to do so
                                         if (settings.options.openAfterExport) {
                                             debug('Opening [%s] ...', filename);
 

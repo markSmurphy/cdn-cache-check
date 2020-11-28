@@ -156,7 +156,7 @@ module.exports = {
 
         // If we get here then no matches were found.
         // Perhaps return something that will collect all headers - return (['*']);
-        console.log(chalk.blue('WARNING: The requested header collection [%s] does not exist', collectionName));
+        console.log(chalk.blue('WARNING: The requested header collection ') + collectionName + chalk.blue(' does not exist'));
         return ([]);
     },
     listHeaderCollections() {

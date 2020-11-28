@@ -469,58 +469,60 @@ try {
                             debug('De-duplicating the collection of %i response headers', responseHeadersReceived.length);
                             let uniqueResponseHeaders = [...new Set(responseHeadersReceived)];
                             debug('%i unique response headers', uniqueResponseHeaders.length);
-                            console.log('%i unique response headers (from %i collected): %O', uniqueResponseHeaders.length, responseHeadersReceived.length, uniqueResponseHeaders);
+                            console.log('%i unique response headers (from %i collected):%s%O', uniqueResponseHeaders.length, responseHeadersReceived.length, EOL, uniqueResponseHeaders);
                         }
 
-                        // Create and start the CDN Detection activity spinner
-                        const spinnerCDNDetection = ora('CDN detection being performed on ' + uniqueDomains.length + ' unique domains ...').start();
+                        if (settings.CDNDetection) {
+                            // Create and start the CDN Detection activity spinner
+                            const spinnerCDNDetection = ora('CDN detection being performed on ' + uniqueDomains.length + ' unique domains ...').start();
 
-                        // Determine the CDN or service behind each unique domain
-                        uniqueDomains.domains.forEach((domain) => {
-                            cccDNS.determineCDN(domain, settings.ApexDomains, (cdn) => {
-                                debug('determineCDN(%s) returned: %O', domain, cdn);
+                            // Determine the CDN or service behind each unique domain
+                            uniqueDomains.domains.forEach((domain) => {
+                                cccDNS.determineCDN(domain, settings.ApexDomains, (cdn) => {
+                                    debug('determineCDN(%s) returned: %O', domain, cdn);
 
-                                // Construct the console message
-                                var cdnDeduction = [{
-                                    hostname: chalk.cyan(cdn.hostname)
-                                }];
+                                    // Construct the console message
+                                    var cdnDeduction = [{
+                                        hostname: chalk.cyan(cdn.hostname)
+                                    }];
 
-                                // Add colour to the message depending upon the success of otherwise of the determination
-                                switch (cdn.status) {
-                                    case CCC_CDN_DETERMINATION_STATUS.INDETERMINATE:
-                                        cdnDeduction[0].message = chalk.grey.strikethrough(cdn.message);
-                                    break;
+                                    // Add colour to the message depending upon the success of otherwise of the determination
+                                    switch (cdn.status) {
+                                        case CCC_CDN_DETERMINATION_STATUS.INDETERMINATE:
+                                            cdnDeduction[0].message = chalk.grey.strikethrough(cdn.message);
+                                        break;
 
-                                    case CCC_CDN_DETERMINATION_STATUS.ERROR:
-                                        cdnDeduction[0].message = chalk.redBright(cdn.message);
-                                    break;
+                                        case CCC_CDN_DETERMINATION_STATUS.ERROR:
+                                            cdnDeduction[0].message = chalk.redBright(cdn.message);
+                                        break;
 
-                                    case CCC_CDN_DETERMINATION_STATUS.CDN:
-                                        cdnDeduction[0].message = chalk.greenBright(cdn.message);
-                                    break;
+                                        case CCC_CDN_DETERMINATION_STATUS.CDN:
+                                            cdnDeduction[0].message = chalk.greenBright(cdn.message);
+                                        break;
 
-                                    case CCC_CDN_DETERMINATION_STATUS.OTHER:
-                                        cdnDeduction[0].message = chalk.yellowBright(cdn.message);
-                                    break;
-                                }
-
-                                let hostnameColumnWidth = uniqueDomains.maxLength +5;
-                                // Format text into spaced columns
-                                let columns = columnify(cdnDeduction, {
-                                    showHeaders: false,
-                                    paddingChr: CCC_OUTPUT_PADDING_CHARACTER,
-                                    config: {
-                                        hostname: {minWidth: hostnameColumnWidth}
+                                        case CCC_CDN_DETERMINATION_STATUS.OTHER:
+                                            cdnDeduction[0].message = chalk.yellowBright(cdn.message);
+                                        break;
                                     }
+
+                                    let hostnameColumnWidth = uniqueDomains.maxLength +5;
+                                    // Format text into spaced columns
+                                    let columns = columnify(cdnDeduction, {
+                                        showHeaders: false,
+                                        paddingChr: CCC_OUTPUT_PADDING_CHARACTER,
+                                        config: {
+                                            hostname: {minWidth: hostnameColumnWidth}
+                                        }
+                                    });
+
+                                    // Display results
+                                    console.log(columns);
                                 });
-
-                                // Display results
-                                console.log(columns);
                             });
-                        });
 
-                        // Stop the DNS Detection spinner
-                        spinnerCDNDetection.succeed(chalk.green('CDN detection complete on ' + uniqueDomains.domains.length + ' unique domains'));
+                            // Stop the DNS Detection spinner
+                            spinnerCDNDetection.succeed(chalk.green('CDN detection complete on ' + uniqueDomains.domains.length + ' unique domains'));
+                        }
 
                         // Pause for configured interval (when we're looping through URLs more than once and there are still iterations left, and when the interval isn't zero) ...
                         debug('iterationCounter: %i ::: settings.iterations: %i', iterationCounter, settings.iterations);

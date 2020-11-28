@@ -3,6 +3,7 @@
     "iterations": 1,
     "interval": 5000,
     "headersCollection": "default",
+    "CDNDetection": true,
     "headersCollections": [
         {
             "all": [

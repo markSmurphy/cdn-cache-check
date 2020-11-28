@@ -82,6 +82,8 @@ module.exports = {
             // Check for list-response-headers argument
             if (argv.listResponseHeaders) {
                 Settings.listResponseHeaders = true
+                // If we're just listing response headers we can switch off the CDN detection output
+                Settings.CDNDetection = false
             } else {
                 Settings.listResponseHeaders = false
             }
@@ -109,6 +111,7 @@ module.exports = {
                 iterations: 1,
                 interval: 5000,
                 headersCollection: 'default',
+                CDNDetection: true,
                 headersCollections: [
                     {
                         default: [

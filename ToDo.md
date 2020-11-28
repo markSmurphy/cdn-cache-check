@@ -37,7 +37,6 @@
 
 ## Features
 
-* [ ] `--list-header-collections` is not sorted alphabetically
 * [ ] Detect if `--list-header-collections` is being piped to a file and output raw `json` (i.e. only use `prettyjson` for console output)
 * [ ] Add colour indicators for the response headers:
   * [ ] `vary` - where `*`, `user-agent`, `cookie` are all anti-patterns for CDN caching
@@ -73,6 +72,7 @@
 
 ## Fixed
 
+* [X] `--list-header-collections` is not sorted alphabetically
 * [X] `--list-response-headers` also performs CDN detection but should probably be constrained to *just* listing the headers
 * [X] ~~Add padding character to CDN Detection table to aid readability~~
 * [X] ~~Display an activity indicator whilst the HTTP requests are being made (maybe [ora](https://www.npmjs.com/package/ora))~~

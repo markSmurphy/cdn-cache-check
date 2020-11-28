@@ -467,7 +467,7 @@ try {
                         if (settings.listResponseHeaders) {
                             // Dedupe the list of collected response headers
                             debug('De-duplicating the collection of %i response headers', responseHeadersReceived.length);
-                            let uniqueResponseHeaders = [...new Set(responseHeadersReceived)];
+                            let uniqueResponseHeaders = [...new Set(responseHeadersReceived.sort())];
                             debug('%i unique response headers', uniqueResponseHeaders.length);
                             console.log('%i unique response headers (from %i collected):%s%O', uniqueResponseHeaders.length, responseHeadersReceived.length, EOL, uniqueResponseHeaders);
                         }

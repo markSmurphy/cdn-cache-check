@@ -2,6 +2,7 @@
 
 ## Bugs
 
+* `--list-response-headers` also performs CDN detection but should probably be constrained to *just* listing the headers
 * `getDefaults()` appears to called three times when executing `ccc --list-header-collections`
 * If the input does not have a valid top level domain then assume it's a file, and report `file not found` accordingly; e.g. `ccc filename.txt` as `.txt` is not a valid TLD
 * A URL whose domain is not resolved (`ENOTFOUND`) is still included in the CDN Detection and is reported as `Indeterminate` - e.g. `node .\ccc.js iplayer.bbc.co.uk`

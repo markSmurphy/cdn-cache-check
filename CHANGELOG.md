@@ -1,11 +1,7 @@
 # Changelog
 
-## [1.0.0] - (unreleased)
+## [1.0.0] - 29<sup>th</sup> November 2020
 
-### Changed
-
-### Fixed
-
-### Features
+Initial release.
 
 ---

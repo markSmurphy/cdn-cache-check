@@ -60,7 +60,7 @@ https://www.rolex.com/
 
 ## Overview
 
-If you're looking into web site performance you'll be interested, at some stage of your analysis, in caching, compression and CDNs. `cdn-cache-check` (or `ccc` when installed globally) aims to help with this task by making HTTP requests and reporting on the response headers that control these aspects across multiple URLs at a time.
+If you're looking into web site performance you'll be interested, at some stage of your analysis, in caching, compression and CDNs. `cdn-cache-check` aims to help with this task by making HTTP requests and reporting on the response headers that control these aspects across multiple URLs at a time.
 
 ![cdn-cache-check - Example of e-commerce domains](https://marksmurphy.github.io/img/ccc.example.ecommerce.gif)
 
@@ -104,7 +104,7 @@ ccc example.com --method head
 
 ### --headers *collection*
 
-By default the listed response headers are limited to `x-cache`, `cache-control`, `server`, `content-encoding`, `vary`, `age`; but this is just the **default** headers collection. You can use the `--headers` switch to specify and alternate collection of headers, and can use ``list-header-collections` to view all collections as described [here](#list-header-collections).
+By default the listed response headers are limited to `x-cache`, `cache-control`, `server`, `content-encoding`, `vary`, `age`; but this is just the **default** headers collection. You can use the `--headers` switch to specify and alternate collection of headers, and can use ``list-header-collections` to view all collections as described [here].(#list-header-collections).
 
 For example, there's a collection that lists **security** related response headers:
 
@@ -116,16 +116,23 @@ ccc https://www.mozilla.org/ --headers security
 
 ### --list-header-collections
 
+Use `--list-header-collection` to see all of the configured **Header Collections** and which responses are included in each. The location of the configuration file is also shown, which you can edit to include your own custom **Header Collection**.
+
 ```text
 ccc --list-header-collections
 ```
 
 ![cdn-cache-check - Example listing all header collections](https://marksmurphy.github.io/img/ccc.example.list-header-collections.gif)
 
-
 ### --list-response-headers
 
+`--list-response-headers` is used to display the names of each unique response header returned from the URL(s) provided. It's primary purpose is to assist with creating a custom [header collection](#--list-header-collection) as it shows all the headers from which a custom list can be selected.
 
+```text
+ccc https://www.amazon.com https://www.amazon.co.uk --list-response-headers
+```
+
+![cdn-cache-check - Example listing response headers](https://marksmurphy.github.io/img/ccc.example.list-response-headers.gif)
 
 ### --no-color
 
@@ -133,23 +140,11 @@ Switches off colour output.  Useful if piping output somewhere which doesn't han
 
 ### --version
 
-Display the version number.
+Displays the version number.
 
 ### --help
 
-Display the help screen.
-
-## Examples
-
-### Check a single URL
-
-### Check multiple URLs
-
-### Check URLs from a text file
-
-### Select **Header Collection**
-
-### Create new **Header Collection**
+Displays the help screen.
 
 ---
 
@@ -157,29 +152,50 @@ Display the help screen.
 
 ### CDN Detection
 
-### Explanation of header analysis and colour coding
+The CDN detection works by perform a recursive DNS lookup on the target domain and looking through the `CNAME` records for an entry in an apex domain that's known to be owned by a CDN service. If the target domain resolves to an `A` record there is no information with which to make a determination, so those domains will be listed as `Undetermined`.
+
+The detection technique also works for cloud hosting services, so services like AWS's S3, Azure's Blob Storage and GitHub Pages will also be identified.
+
+### .csv Export
+
+All results will be written in full to a `csv` file in the `temp` directory. The full path of this file is displayed in the terminal.
 
 ### Handling redirects
 
-Also mention the redirect indicator ® and hte redirect count in the `csv` export file
+If the target URL results in a redirect it will be followed, and the final URL will be the one shown in the results. All output entries which are the result of following a redirect are marked with a redirect indicator `®` (and a redirect count in the `csv` export file).
+
+![ccc - Redirect Indictor Screenshot](https://marksmurphy.github.io/img/ccc.example.redirect.png)
+
+```text
+ccc http://thefacebook.com
+```
+
+![ccc - Example redirect](https://marksmurphy.github.io/img/ccc.example.redirect.gif)
 
 ### Error handling/reporting
 
+Network, DNS and HTTP errors are reported in the `STATUS` column.
 Example:
 
 ```text
-node ccc.js https://www.wallmart.com/
-TIME        STATUS                       HOST             PATH
-12:25:27:06 ERR_TLS_CERT_ALTNAME_INVALID www.wallmart.com /
-Results written to [C:\Users\markm\AppData\Local\Temp\ccc-2020112-6fe61c30.csv]
-
-CDN Detection in progress ...
-www.wallmart.com Akamai
+ccc https://www.wallmart.com http://aksjdfkasdnfkja.com
 ```
+
+![ccc - Example errors](https://marksmurphy.github.io/img/ccc.example.errors.gif)
 
 ---
 
 ## Debugging
+
+Include the `--debug` switch to get verbose debug output.
+
+```text
+ccc www.bing.com --debug
+```
+
+![ccc - Example debug](https://marksmurphy.github.io/img/ccc.example.debug.gif)
+
+---
 
 ## FAQ
 
@@ -188,3 +204,5 @@ www.wallmart.com Akamai
 ### Where is the Change Log
 
 The `CHANGELOG.md` can be found [here](./CHANGELOG.md)
+
+---

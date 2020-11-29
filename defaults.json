@@ -81,37 +81,37 @@
         }
     ],
     "ApexDomains": {
-        "CloudFront" :{
+        "CloudFront": {
             "domains": ["*.cloudfront.net"],
             "title": "CloudFront",
             "service": "CDN"
         },
-        "Akamai" :{
+        "Akamai": {
             "domains": ["*.edgekey.net","*.edgesuite.net", "*.akamaiedge.net"],
             "title": "Akamai",
             "service": "CDN"
         },
-        "Fastly" :{
+        "Fastly": {
             "domains": ["*.fastly.net", "*.fastly.com"],
             "title": "Fastly",
             "service": "CDN"
         },
-        "CloudFlare" :{
+        "CloudFlare": {
             "domains": ["*.cdn.cloudflare.net", "*.cloudflare.com"],
             "title": "CloudFlare",
             "service": "CDN"
         },
-        "KeyCDN" :{
+        "KeyCDN": {
             "domains": ["*.kxcdn.com"],
             "title": "KeyCDN",
             "service": "CDN"
         },
-        "S3" :{
+        "S3": {
             "domains": ["s3.*.amazonaws.com", "*.s3.*.amazonaws.com", "s3*.amazonaws.com", "*.s3-accesspoint.*.amazonaws.com"],
             "title": "AWS S3 Bucket",
             "service": "Static Hosting"
         },
-        "Blob" :{
+        "Blob": {
             "domains": ["*.blob.core.windows.net", "*.web.core.windows.net"],
             "title": "Azure Blob Storage",
             "service": "Static Hosting"
@@ -125,6 +125,11 @@
             "domains": ["*.github.io"],
             "title": "GitHub Pages",
             "service": "Static Hosting"
+        },
+        "TrafficManager": {
+            "domains": ["*.trafficmanager.net"],
+            "title": "Azure Traffic Manager",
+            "service": "DNS"
         }
     },
     "options" : {

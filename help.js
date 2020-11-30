@@ -22,7 +22,7 @@ module.exports = {
         console.log('   ' + package.version);
         console.log(endOfLine);
         console.log(chalk.grey('USAGE:'));
-        console.log('   ' + 'node ccc.js [<url> | <filename> [<url> | <filename>] … ] [options]');
+        console.log('   ' + 'node ccc.js [<url> | <filename> [<url> | <filename>] […] ] [options]');
         console.log(endOfLine);
         console.log(chalk.grey('OPTIONS:'));
         console.log('   ' + '<url>                         ' + chalk.grey('A URL to query'));
@@ -38,10 +38,10 @@ module.exports = {
         console.log('   ' + '--help                        ' + chalk.grey('Display this help'));
         console.log(endOfLine);
         console.log(chalk.grey('EXAMPLES:'));
-        console.log('   ccc https://example.com');
-        console.log('   ccc https://example.com https://www.example.com');
+        console.log('   ccc https://www.rolex.com/');
+        console.log('   ccc https://www.rolls-royce.com/ https://www.rolls-roycemotorcars.com/');
         console.log('   ccc URLs.txt');
-        console.log('   ccc https://cdn.example.com/resources/client.js --method head --headers security');
+        console.log('   ccc https://www.mozilla.org/ --headers security -method head');
         // Display more information if `verbose` is enabled
         if (verbose) {
             const os = require('os');

@@ -32,8 +32,6 @@
   * [ ] http options
   * [ ] debug
 
-  * [ ] `--help` examples should match `readme` examples
-
 ## Features
 
 * [ ] Detect if `--list-header-collections` is being piped to a file and output raw `json` (i.e. only use `prettyjson` for console output)
@@ -71,6 +69,7 @@
 
 ## Fixed
 
+* [X] `--help` examples should match `readme` examples
 * [X] `getDefaults()` appears to called three times when executing `ccc --list-header-collections`
 * [X] `--list-header-collections` is not sorted alphabetically
 * [X] `--list-response-headers` also performs CDN detection but should probably be constrained to *just* listing the headers

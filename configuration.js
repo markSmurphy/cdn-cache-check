@@ -19,13 +19,59 @@ const chalk = require('chalk');
 // Initialise collection of Utilities
 const utils = require('./utils');
 
+// Initialise default settings
+var defaultSettings = {};
+
+try {
+    defaultSettings = require('./defaults.json'); // Load the defaults
+} catch (error) {
+    debug('An error occurred loading the defaults.json file: %O', error);
+    // The defaults.json didn't load.  Return a bare and very basic config
+    defaultSettings = {
+        method: 'get',
+        iterations: 1,
+        interval: 5000,
+        headersCollection: 'default',
+        CDNDetection: true,
+        headersCollections: [
+            {
+                default: [
+                    'x-cache',
+                    'cache-control',
+                    'server',
+                    'content-encoding',
+                    'vary',
+                    'age'
+                ]
+            }
+        ],
+        ApexDomains: {},
+        options : {
+            exportToCSV: true,
+            openAfterExport: false,
+            headers: {
+                'user-agent': 'ccc/{version} {OS}/{OSRelease}',
+                Connection: 'close'
+            },
+            httpOptions: {
+                timeout: 6000,
+                response_timeout: 6000,
+                read_timeout: 6000,
+                follow: 5,
+                compressed: true
+            }
+        }
+    };
+}
+
+
 module.exports = {
     getSettings() {
         debug('Entry::getSettings()');
         try {
             // Load the defaults
-            let Settings = this.getDefaults();
-            debug('Loaded default settings: %O', Settings);
+            let settings = defaultSettings;
+            debug('Loaded default settings: %O', settings);
 
             // Check command line parameters for overrides...
             debug('Looking for overrides to default settings');
@@ -33,26 +79,26 @@ module.exports = {
             // Header Collection
             if (argv.headers) {
                 // ** We should validate the specified collection actually exists **
-                Settings.headersCollection = argv.headers;
-                debug('Using the specified Headers Collection: %s', Settings.headersCollection);
+                settings.headersCollection = argv.headers;
+                debug('Using the specified Headers Collection: %s', settings.headersCollection);
             } else {
-                debug('Using the default Headers Collection: %s', Settings.headersCollection);
+                debug('Using the default Headers Collection: %s', settings.headersCollection);
             }
 
             // Load the headers collections
-            let headerCollection = this.getHeaderCollection(Settings.headersCollection, Settings);
+            let headerCollection = this.getHeaderCollection(settings.headersCollection, settings);
             // Add it into the Settings object
-            Settings.headerCollection = headerCollection;
-            debug('Will collect response header matching any of: %O', Settings.headerCollection);
+            settings.headerCollection = headerCollection;
+            debug('Will collect response header matching any of: %O', settings.headerCollection);
 
             // HTTP Method
             if (argv.method) {
                 const HTTPMethods = ['get', 'head', 'options', 'put', 'patch', 'delete', 'trace', 'connect'];
                 if (HTTPMethods.includes(argv.method.toLowerCase())) {
-                    Settings.method = argv.method.toLowerCase();
-                    debug('Setting HTTP method to: %s', Settings.method);
+                    settings.method = argv.method.toLowerCase();
+                    debug('Setting HTTP method to: %s', settings.method);
                 } else {
-                    console.log(chalk.blue('Warning: %s is not a supported HTTP method. Using %s instead.',argv.method.toUpperCase() , Settings.method.toUpperCase()));
+                    console.log(chalk.blue('Warning: %s is not a supported HTTP method. Using %s instead.',argv.method.toUpperCase() , settings.method.toUpperCase()));
                 }
             }
 
@@ -60,10 +106,10 @@ module.exports = {
             if (argv.iterations) {
                 // Validate that an integer was specified
                 if (Number.isInteger(argv.iterations)) {
-                    Settings.iterations = argv.iterations;
-                    debug('Iterations set to %s', Settings.iterations);
+                    settings.iterations = argv.iterations;
+                    debug('Iterations set to %s', settings.iterations);
                 } else {
-                    console.log(chalk.blue('Ignoring "--iterations %s" because iterations must be an integer. Using the default "%s" instead'), argv.iterations, Settings.iterations);
+                    console.log(chalk.blue('Ignoring "--iterations %s" because iterations must be an integer. Using the default "%s" instead'), argv.iterations, settings.iterations);
                 }
             }
 
@@ -71,81 +117,32 @@ module.exports = {
             if (argv.interval) {
                 // Validate that an integer was specified
                 if (Number.isInteger(argv.interval)) {
-                    Settings.interval = argv.interval;
-                    debug('The interval is set to %s ms', Settings.interval);
-                    console.log(chalk.blue('The interval between iterations is set to %s'), utils.millisecondsToHms(Settings.interval));
+                    settings.interval = argv.interval;
+                    debug('The interval is set to %s ms', settings.interval);
+                    console.log(chalk.blue('The interval between iterations is set to %s'), utils.millisecondsToHms(settings.interval));
                 } else {
-                    console.log(chalk.blue('Warning: Ignoring "--interval %s" because interval must be an integer. Using the default "%s" instead'), argv.interval, Settings.interval);
+                    console.log(chalk.blue('Warning: Ignoring "--interval %s" because interval must be an integer. Using the default "%s" instead'), argv.interval, settings.interval);
                 }
             }
 
             // Check for list-response-headers argument
             if (argv.listResponseHeaders) {
-                Settings.listResponseHeaders = true
+                settings.listResponseHeaders = true
                 // If we're just listing response headers we can switch off the CDN detection output
-                Settings.CDNDetection = false
+                settings.CDNDetection = false
             } else {
-                Settings.listResponseHeaders = false
+                settings.listResponseHeaders = false
             }
 
             // Use a client specific customised user-agent string
-            Settings.options.headers['user-agent'] = this.getUserAgent();
-            debug('Using the user-agent: %s', Settings.options.headers['user-agent']);
+            settings.options.headers['user-agent'] = this.getUserAgent();
+            debug('Using the user-agent: %s', settings.options.headers['user-agent']);
 
-            return Settings;
+            return settings;
 
         } catch (error) {
             console.error(pe.render(error));
         }
-    },
-    getDefaults() {
-        debug('getDefaults() :: Entry');
-        try {
-            let defaultSettings = require('./defaults.json'); // Load the defaults
-            return (defaultSettings); // Return the json object
-        } catch (error) {
-            debug('An error occurred loading the defaults.json file: %O', error);
-            // The defaults.json didn't load.  Return a bare and very basic config
-            let defaultSettings = {
-                method: 'get',
-                iterations: 1,
-                interval: 5000,
-                headersCollection: 'default',
-                CDNDetection: true,
-                headersCollections: [
-                    {
-                        default: [
-                            'x-cache',
-                            'cache-control',
-                            'server',
-                            'content-encoding',
-                            'vary',
-                            'age'
-                        ]
-                    }
-                ],
-                ApexDomains: {},
-                options : {
-                    exportToCSV: true,
-                    openAfterExport: false,
-                    headers: {
-                        'user-agent': 'ccc/{version} {OS}/{OSRelease}',
-                        Connection: 'close'
-                    },
-                    httpOptions: {
-                        timeout: 6000,
-                        response_timeout: 6000,
-                        read_timeout: 6000,
-                        follow: 5,
-                        compressed: true
-                    }
-                }
-            };
-
-
-            return (defaultSettings);
-        }
-
     },
     getHeaderCollection(collectionName, settings) {
         // Iterate through each header collection definition
@@ -163,10 +160,7 @@ module.exports = {
         return ([]);
     },
     listHeaderCollections() {
-        debug('listHeaderCollections()');
-        // Load the defaults
-        let defaultSettings = this.getDefaults();
-
+        debug('listHeaderCollections():: Entry');
         // Extract the headersCollections array
         let headersCollections = defaultSettings.headersCollections;
 
@@ -182,7 +176,6 @@ module.exports = {
             const os = require('os');
 
             // Extract default user-agent string from default config
-            let defaultSettings = this.getDefaults();
             let userAgent = defaultSettings.options.headers['user-agent'];
 
             // Replace embedded variables with platform specifics

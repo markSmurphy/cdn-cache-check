@@ -31,8 +31,8 @@ module.exports = {
         console.log('   ' + '--headers <collection>        ' + chalk.grey('Select which collection of headers to output.'));
         console.log('   ' + '--list-header-collections     ' + chalk.grey('List all Header Collections and the response headers they contain'));
         console.log('   ' + '--list-response-headers       ' + chalk.grey('List all unique response headers. Useful when creating a header collection.'));
-        console.log('   ' + '--iterations <integer>        ' + chalk.grey('The number of times to request each URL. Default: 1'));
-        console.log('   ' + '--interval <integer>          ' + chalk.grey('The number of milliseconds in-between multiple http requests. Default: 3000'));
+        //console.log('   ' + '--iterations <integer>        ' + chalk.grey('The number of times to request each URL. Default: 1'));
+        //console.log('   ' + '--interval <integer>          ' + chalk.grey('The number of milliseconds in-between multiple http requests. Default: 3000'));
         console.log('   ' + '--no-color                    ' + chalk.grey('Switches off colour output'));
         console.log('   ' + '--version                     ' + chalk.grey('Display version number'));
         console.log('   ' + '--help                        ' + chalk.grey('Display this help'));
@@ -41,7 +41,7 @@ module.exports = {
         console.log('   ccc https://example.com');
         console.log('   ccc https://example.com https://www.example.com');
         console.log('   ccc URLs.txt');
-        console.log('   ccc https://cdn.example.com/resources/client.js --method get --headers fastly --iterations 5 --interval 10000');
+        console.log('   ccc https://cdn.example.com/resources/client.js --method head --headers security');
         // Display more information if `verbose` is enabled
         if (verbose) {
             const os = require('os');

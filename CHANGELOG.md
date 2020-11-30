@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.0.x] - (unreleased)
+## [1.x.x] - (unreleased)
 
 ### Changed
 
@@ -9,6 +9,7 @@
 ### Fixed
 
 * Refactored `configuration.js` so that `getDefaults()` is called just once, rather than once per exported function. Not only is this now more efficient, but it cuts down on the `--debug` output making it more readable.
+* `--headers [collection]` is now case insensitive, so argument values that don't match the case in the `defaults.json` file no longer cause a warning.
 
 ---
 

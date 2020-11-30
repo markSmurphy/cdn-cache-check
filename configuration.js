@@ -145,12 +145,16 @@ module.exports = {
         }
     },
     getHeaderCollection(collectionName, settings) {
+        debug('getHeaderCollection(%s)');
         // Iterate through each header collection definition
         for (let i = 0; i < settings.headersCollections.length; i++) {
+            let currentCollection = Object.keys(settings.headersCollections[i])[0];
+            debug('comparing %s with %s', collectionName.toLowerCase(), currentCollection.toLowerCase());
             // Check if its name matches the supplied one
-            if (settings.headersCollections[i][collectionName]) {
+            if (collectionName.toLowerCase() === currentCollection.toLowerCase()) {
                 // Return the array of headers
-                return (settings.headersCollections[i][collectionName]);
+                debug('getHeaderCollection() returning: %O', settings.headersCollections[i][currentCollection]);
+                return (settings.headersCollections[i][currentCollection]);
             }
         }
 

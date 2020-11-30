@@ -2,7 +2,6 @@
 
 ## Bugs
 
-* [ ] `--headers [collection]` is case sensitive meaning `ccc https://www.mozilla.org/ --headers cors` causes a warning while `ccc https://www.mozilla.org/ --headers CORS` succeeds
 * [ ] If the input does not have a valid top level domain then assume it's a file, and report `file not found` accordingly; e.g. `ccc filename.txt` as `.txt` is not a valid TLD
 * [ ] A URL whose domain is not resolved (`ENOTFOUND`) is still included in the CDN Detection and is reported as `Indeterminate` - e.g. `node .\ccc.js iplayer.bbc.co.uk`
   * [ ] Need to handle an empty `answer.answer[]` array, and parseAnswer() returning something more useful than `'no_address'`
@@ -70,10 +69,11 @@
 
 ## Fixed
 
-* [X] `--help` examples should match `readme` examples
-* [X] `getDefaults()` appears to called three times when executing `ccc --list-header-collections`
-* [X] `--list-header-collections` is not sorted alphabetically
-* [X] `--list-response-headers` also performs CDN detection but should probably be constrained to *just* listing the headers
+* [X] ~~`--headers [collection]` is case sensitive meaning `ccc https://www.mozilla.org/ --headers cors` causes a warning while `ccc https://www.mozilla.org/ --headers CORS` succeeds~~
+* [X] ~~`--help` examples should match `readme` examples~~
+* [X] ~~`getDefaults()` appears to called three times when executing `ccc --list-header-collections`~~
+* [X] ~~`--list-header-collections` is not sorted alphabetically~~
+* [X] ~~`--list-response-headers` also performs CDN detection but should probably be constrained to *just* listing the headers~~
 * [X] ~~Add padding character to CDN Detection table to aid readability~~
 * [X] ~~Display an activity indicator whilst the HTTP requests are being made (maybe [ora](https://www.npmjs.com/package/ora))~~
 * [X] ~~Add an indicator [®] to the response output row when it's followed a redirect, and the redirect count to the raw `csv` export file~~

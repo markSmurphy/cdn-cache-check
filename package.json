@@ -4,7 +4,7 @@
   "description": "Makes HTTP requests to URLs and parses response headers to determine caching behaviour",
   "main": "ccc.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "for %F in (tests\\*.cmd) do start %F cmd.exe /k %F"
   },
   "private": false,
   "preferGlobal": true,

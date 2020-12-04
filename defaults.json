@@ -130,6 +130,11 @@
             "domains": ["*.trafficmanager.net"],
             "title": "Azure Traffic Manager",
             "service": "DNS"
+        },
+        "MaxCDN": {
+            "domains": ["*.maxcdn-edge.com"],
+            "title": "Max CDN",
+            "service": "CDN"
         }
     },
     "options" : {

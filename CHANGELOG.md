@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.x.x] - *Unreleased*
+
+### Added
+
+* Updated CDN Detection to include **Max CDN**.
+
+---
+
 ## [1.1.0] - 1<sup>st</sup> December 2020
 
 ### Changed

@@ -29,6 +29,7 @@
     "akamai",
     "fastly",
     "KeyCDN",
+    "MaxCDN",
     "fbcdn",
     "aws",
     "s3",

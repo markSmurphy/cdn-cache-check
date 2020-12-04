@@ -18,6 +18,7 @@ const chalk = require('chalk');
 
 // Initialise collection of Utilities
 const utils = require('./utils');
+const { settings } = require('cluster');
 
 // Initialise default settings
 var defaultSettings = {};
@@ -127,11 +128,27 @@ module.exports = {
 
             // Check for list-response-headers argument
             if (argv.listResponseHeaders) {
-                settings.listResponseHeaders = true
-                // If we're just listing response headers we can switch off the CDN detection output
-                settings.CDNDetection = false
+                settings.listResponseHeaders = true;
+                // We can switch off the CDN detection output because we're just listing response headers
+                settings.CDNDetection = false;
             } else {
-                settings.listResponseHeaders = false
+                settings.listResponseHeaders = false;
+            }
+
+            // Check for '--open' argument
+            if (argv.open) {
+                settings.options.openAfterExport = true;
+            }
+
+            // Check for '--export false' argument
+            if (argv.export){
+                if(typeof argv.export === 'string') {
+                    if (argv.export.toLowerCase() === 'false') {
+                        settings.options.exportToCSV = false;
+                        // Switch off openAfterExport because we're not exporting anything
+                        settings.options.openAfterExport = true;
+                    }
+                }
             }
 
             // Use a client specific customised user-agent string
@@ -142,6 +159,7 @@ module.exports = {
 
         } catch (error) {
             console.error(pe.render(error));
+            return(settings);
         }
     },
     getHeaderCollection(collectionName, settings) {

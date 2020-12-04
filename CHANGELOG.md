@@ -6,6 +6,8 @@
 
 * Updated CDN Detection to include **Max CDN**.
 * Updated CDN Detection to include **StackPath CDN**.
+* Added the argument `--export` which accepts a boolean value controlling whether the output is also written to a `.csv` file. Defaults to `true`.
+* Added the argument `--open` which accepts a boolean value controlling whether the exported `.csv` file is automatically opened. Defaults to `false`.
 
 ### Changed
 

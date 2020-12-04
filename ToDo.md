@@ -6,8 +6,6 @@
 * [ ] If the input does not have a valid top level domain then assume it's a file, and report `file not found` accordingly; e.g. `ccc filename.txt` as `.txt` is not a valid TLD
 * [ ] A URL whose domain is not resolved (`ENOTFOUND`) is still included in the CDN Detection and is reported as `Indeterminate` - e.g. `node .\ccc.js iplayer.bbc.co.uk`
   * [ ] Need to handle an empty `answer.answer[]` array, and parseAnswer() returning something more useful than `'no_address'`
-* [ ] `--open` doesn't work as intended (it doesn't open the csv file)
-* [ ] `--export` doesn't work as intended (it doesn't turn exportToCSV on or off)
 * [ ] If a request redirects to a new domain and we follow that redirect, the target domain isn't in the `uniqueDomains` Set
 * [ ] Handle misspelt filename being treated as URL
 * [ ] `--interval` & `--iterations` do not work as intended
@@ -28,8 +26,8 @@
   ```
 
 * [ ] `--help` screen doesn't reflect all command line switches
-  * [ ] export
-  * [ ] open
+  * [X] export
+  * [X] open
   * [ ] http options
   * [ ] debug
 
@@ -70,6 +68,8 @@
 
 ## Fixed
 
+* [X] ~~`--open` doesn't work as intended (it doesn't open the csv file)~~
+* [X] ~~`--export` doesn't work as intended (it doesn't turn exportToCSV on or off)~~
 * [X] ~~`--headers [collection]` is case sensitive meaning `ccc https://www.mozilla.org/ --headers cors` causes a warning while `ccc https://www.mozilla.org/ --headers CORS` succeeds~~
 * [X] ~~`--help` examples should match `readme` examples~~
 * [X] ~~`getDefaults()` appears to called three times when executing `ccc --list-header-collections`~~

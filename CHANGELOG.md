@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.x.x] - *Unreleased*
+## [1.2.0] - 4<sup>th</sup> December 2020
 
 ### Added
 
@@ -8,6 +8,7 @@
 * Updated CDN Detection to include **StackPath CDN**.
 * Added the argument `--export` which accepts a boolean value controlling whether the output is also written to a `.csv` file. Defaults to `true`.
 * Added the argument `--open` which accepts a boolean value controlling whether the exported `.csv` file is automatically opened. Defaults to `false`.
+![ccc - Open exported .csv file Screenshot](https://marksmurphy.github.io/img/ccc.example.open.gif)
 
 ### Changed
 

@@ -134,6 +134,19 @@ ccc https://www.amazon.com https://www.amazon.co.uk --list-response-headers
 
 ![cdn-cache-check - Example listing response headers](https://marksmurphy.github.io/img/ccc.example.list-response-headers.gif)
 
+### --export
+
+`--export` accepts a boolean value and allows you control whether the results are also written to a `.csv` file. The default is `true`; to switch it off use:
+
+```text
+ccc https://example.com --export false
+```
+
+### --open
+
+If the results are exported to a `.csv` file then `--open` will automatically open the file in whatever the registered application for `.csv` files is.
+![ccc - Open exported .csv file Screenshot](https://marksmurphy.github.io/img/ccc.example.open.gif)
+
 ### --no-color
 
 Switches off colour output.  Useful if piping output somewhere which doesn't handle the unicode control codes.

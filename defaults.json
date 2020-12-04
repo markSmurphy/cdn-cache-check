@@ -135,6 +135,11 @@
             "domains": ["*.maxcdn-edge.com"],
             "title": "Max CDN",
             "service": "CDN"
+        },
+        "StackPathCDN": {
+            "domains": ["*.stackpathcdn.com"],
+            "title": "StackPath CDN",
+            "service": "CDN"
         }
     },
     "options" : {

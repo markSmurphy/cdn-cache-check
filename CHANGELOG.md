@@ -5,6 +5,7 @@
 ### Added
 
 * Updated CDN Detection to include **Max CDN**.
+* Updated CDN Detection to include **StackPath CDN**.
 
 ---
 

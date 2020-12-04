@@ -30,6 +30,7 @@
     "fastly",
     "KeyCDN",
     "MaxCDN",
+    "StackPath",
     "fbcdn",
     "aws",
     "s3",

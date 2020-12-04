@@ -7,6 +7,10 @@
 * Updated CDN Detection to include **Max CDN**.
 * Updated CDN Detection to include **StackPath CDN**.
 
+### Changed
+
+* Removed the ~~strikethrough~~ formatting when reporting `Undetermined` because what it conveyed was confusing.
+
 ---
 
 ## [1.1.0] - 1<sup>st</sup> December 2020

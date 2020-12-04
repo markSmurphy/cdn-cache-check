@@ -489,7 +489,7 @@ try {
                                     // Add colour to the message depending upon the success of otherwise of the determination
                                     switch (cdn.status) {
                                         case CCC_CDN_DETERMINATION_STATUS.INDETERMINATE:
-                                            cdnDeduction[0].message = chalk.grey.strikethrough(cdn.message);
+                                            cdnDeduction[0].message = chalk.grey(cdn.message);
                                         break;
 
                                         case CCC_CDN_DETERMINATION_STATUS.ERROR:

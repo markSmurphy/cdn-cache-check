@@ -33,6 +33,7 @@
 
 ## Features
 
+* [ ] Improve CDN Detection by examining telltale response headers (such as `server: cloudfront`)
 * [ ] Detect if `--list-header-collections` is being piped to a file and output raw `json` (i.e. only use `prettyjson` for console output)
 * [ ] Add colour indicators for the response headers:
   * [ ] `vary` - where `*`, `user-agent`, `cookie` are all anti-patterns for CDN caching

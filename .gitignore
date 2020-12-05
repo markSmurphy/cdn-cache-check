@@ -10,12 +10,16 @@ auth.edgerc
 
 # Local batch file emulating shebang
 ccc.cmd
+ccc.ps1
 
 # Test URLs
 url*.txt
 
 # Screenshots folder
 screenshots/*
+
+# Spikes
+spike/*
 
 # Logs
 logs

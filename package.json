@@ -69,6 +69,6 @@
     "tlds": "^1.214.0",
     "unique-filename": "^1.1.1",
     "valid-url": "^1.0.9",
-    "yargs": "^16.1.1"
+    "yargs": "^16.2.0"
   }
 }

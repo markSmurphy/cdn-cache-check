@@ -28,6 +28,9 @@ if (argv.debug) {
 // cdn-cache-check's own DNS helper functions
 const cccDNS = require('./ccc-dns');
 
+// HTTP Archive Parsers
+const harParser = require('./harparser');
+
 // Initialise console colours
 const chalk = require('chalk');
 
@@ -40,8 +43,11 @@ const fs = require('fs');
 // For exporting JSON to CSV
 const jsonexport = require('jsonexport');
 
-// Cache=control header parser
+// Cache-control header parser
 const {parse} = require('@tusbar/cache-control');
+
+// File path parsing object
+const path = require('path');
 
 // Platform independent new line character and path separator
 const EOL = require('os').EOL;
@@ -122,51 +128,58 @@ try {
 
     // Iterate through all parameters looking for ones that are URLs or files
     for (let i = 2; i < process.argv.length; ++i) {
+        let currentArgument = process.argv[i];
         // Check if it's a valid file
         try {
-            debug('Checking if [%s] is a file, URL or bare domain ...', process.argv[i]);
-            if (fs.existsSync(process.argv[i])) {
-                // File exists.  Extract URLs from it
+            debug('Checking if [%s] is a file, URL or bare domain ...', currentArgument);
+            if (fs.existsSync(currentArgument)) { // File exists.  Extract URLs from it
                 try {
-                    // Read contents of the file
-                    debug('It\'s a file. Reading its contents ...');
-                    let data = fs.readFileSync(process.argv[i], 'UTF-8');
+                    if (path.extname(currentArgument).toLowerCase() === '.har') {
+                        debug('It\'s a HTTP Archive (.har) file. Reading its contents ...');
+                        let harURLs = harParser.getURLs(currentArgument); // Parse HAR file for a list of URLs
+                        debug('The HAR file referenced %s URLs', harURLs.length);
+                        urls.push(...harURLs); // Append the HAR's URLs to the global URL array
+                    } else {
+                        // Read the text file
+                        debug('It\'s a file. Reading its contents ...');
+                        let data = fs.readFileSync(currentArgument, 'UTF-8');
 
-                    // Split the contents by new line
-                    let lines = data.split(EOL);
+                        // Split the contents by new line
+                        let lines = data.split(EOL);
 
-                    // Examine each line
-                    debug('Examining %i lines looking for URLs...', lines.length);
-                    for (let i = 0; i < lines.length; ++i) {
-                        if (validUrl.isWebUri(lines[i])) {
-                            debug('Found a URL [%s]', lines[i]);
-                            urls.push(lines[i]);
+                        // Examine each line
+                        debug('Examining %i lines looking for URLs...', lines.length);
+                        for (let i = 0; i < lines.length; ++i) {
+                            if (validUrl.isWebUri(lines[i])) {
+                                debug('Found a URL [%s]', lines[i]);
+                                urls.push(lines[i]);
 
-                        } else if (isValidDomain(lines[i], {subdomain: true, wildcard: false})) {
-                            debug('Found a bare domain [%s]', lines[i]);
-                            urls.push('https://' + lines[i]);
+                            } else if (isValidDomain(lines[i], {subdomain: true, wildcard: false})) {
+                                debug('Found a bare domain [%s]', lines[i]);
+                                urls.push('https://' + lines[i]);
 
-                        } else if (lines[i].length > 0) {
-                            // This line didn't pass any tests so log it to debug output, but only if it's not a blank line
-                            debug('Ignoring [%s]', lines[i]);
+                            } else if (lines[i].length > 0) {
+                                // This line didn't pass any tests so log it to debug output, but only if it's not a blank line
+                                debug('Ignoring [%s]', lines[i]);
+                            }
                         }
                     }
                 } catch (err) {
-                    debug('An error occurred when parsing the file [%s]: %O', process.argv[i], err);
+                    debug('An error occurred when parsing the file [%s]: %O', currentArgument, err);
                 }
-            } else if (validUrl.isWebUri(process.argv[i])) {
+            } else if (validUrl.isWebUri(currentArgument)) {
                 // It's a valid URL.  Add it to the urls array
                 debug('It\'s a valid URL');
-                urls.push(process.argv[i]);
+                urls.push(currentArgument);
 
-            } else if (isValidDomain(process.argv[i], {subdomain: true, wildcard: false})) {
+            } else if (isValidDomain(currentArgument, {subdomain: true, wildcard: false})) {
                 // It's a bare domain (i.e. there's no protocol)
                 debug('It\'s a valid domain but not a URL. Adding "https://" to it');
-                urls.push('https://' + process.argv[i]);
+                urls.push('https://' + currentArgument);
 
             } else {
                 // It doesn't pass any tests. Ignore it
-                debug('Ignoring [%s]', process.argv[i]);
+                debug('Ignoring [%s]', currentArgument);
             }
         } catch(err) {
             console.error(pe.render(err));

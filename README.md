@@ -94,6 +94,16 @@ ccc example.com
 
 The file should be a plain text file with a URL on each line. Lines which do not contain a valid URL or valid domain name are ignored, so you can have comments and annotation in the file if you so wish.
 
+#### HTTP Archive (HAR) File Support
+
+As of version 1.3.0 cdn-cache-check supports parsing `.har` files. These can be saved from your browser's Dev Tools:
+
+![ccc - Save as HAR file](https://marksmurphy.github.io/img/ccc.SaveAsHAR.small.png)
+
+You can then pass that `.har` file to `cdn-cache-check` and it will extract the URLs and make fresh requests for them:
+
+![ccc - Example HAR file](https://marksmurphy.github.io/img/ccc.example.file.har.gif)
+
 ### --method
 
 The default HTTP method is `GET` but you can modify this

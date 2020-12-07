@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.3.0] - 7<sup>th</sup> December 2020
+
+### Added
+
+* Added support for parsing HTTP Archive file format (`HAR`).
+If you create a `.har` file via your browser's dev tools ...
+
+![ccc - Save as HAR file](https://marksmurphy.github.io/img/ccc.SaveAsHAR.small.png)
+
+You can then pass that `.har` file to `cdn-cache-check` and it will extract the URLs and make fresh requests for them:
+
+![ccc - Example HAR file](https://marksmurphy.github.io/img/ccc.example.file.har.gif)
+
+### Changed
+
+* Updated dependency `yargs` to v16.2.0
+
+---
+
 ## [1.2.0] - 4<sup>th</sup> December 2020
 
 ### Added

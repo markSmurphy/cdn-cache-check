@@ -15,6 +15,9 @@ ccc.ps1
 # Test URLs
 url*.txt
 
+# HTTP Archive files
+*.har
+
 # Screenshots folder
 screenshots/*
 

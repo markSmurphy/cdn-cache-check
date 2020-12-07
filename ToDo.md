@@ -41,7 +41,6 @@
 * [ ] HTTP/2 Support (or reporting support against each unique domain)
 * [ ] Change the `exportToCSV()` function to save files to a `ccc` specific subfolder
 * [ ] Add a modifier to `--open` which opens the folder
-* [ ] Add support for input file type `.har` to extract resource URLs from
 * [ ] Add support for input file type Lighthouse `.json` to extract resource URLs from
 * [ ] Allow modification of DNS question (`resolver` etc) and move defaults to config file.
 * [ ] Report on CNAME TTL for each unique domain
@@ -69,6 +68,7 @@
 
 ## Fixed
 
+* [X] Add support for input file type `.har` to extract resource URLs from it
 * [X] ~~`--open` doesn't work as intended (it doesn't open the csv file)~~
 * [X] ~~`--export` doesn't work as intended (it doesn't turn exportToCSV on or off)~~
 * [X] ~~`--headers [collection]` is case sensitive meaning `ccc https://www.mozilla.org/ --headers cors` causes a warning while `ccc https://www.mozilla.org/ --headers CORS` succeeds~~

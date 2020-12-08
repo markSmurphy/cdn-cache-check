@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.4.0] - *Unreleased*
+
+### Changed
+
+* Updated detection rules for `MaxCDN/StackPath` and `AWS ELB`.
+
+---
+
 ## [1.3.0] - 7<sup>th</sup> December 2020
 
 ### Added

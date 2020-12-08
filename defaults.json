@@ -132,14 +132,14 @@
             "service": "DNS"
         },
         "MaxCDN": {
-            "domains": ["*.maxcdn-edge.com"],
-            "title": "Max CDN",
+            "domains": ["*.maxcdn-edge.com", "*.netdna-cdn.com", "*.stackpathcdn.com"],
+            "title": "MaxCDN/StackPath",
             "service": "CDN"
         },
-        "StackPathCDN": {
-            "domains": ["*.stackpathcdn.com"],
-            "title": "StackPath CDN",
-            "service": "CDN"
+        "AWSELB": {
+            "domains": ["*.elb.amazonaws.com"],
+            "title": "AWS Elastic Load Balancer",
+            "service": "Cloud"
         }
     },
     "options" : {

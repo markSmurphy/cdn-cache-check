@@ -260,9 +260,18 @@ try {
 
                         // Log error to JSON result
                         result.error=true;
-                        result.statusCode = error.code;
                         result.response.headers = [];
 
+                        // The 'error' object may have different properties depending on its cause (e.g. HTTP error vs network error)
+                        if (Object.prototype.hasOwnProperty.call(error, 'code')) {
+                            result.statusCode = error.code;
+                        } else if (Object.prototype.hasOwnProperty.call(error, 'message')) {
+                            result.statusCode = error.message;
+                        } else {
+                            result.statusCode = 'error';
+                            debug('A response error occurred when requesting [%s] but the specific error code could not be extracted from the error object:', urls[i]);
+                            debug(error);
+                        }
                     } else {
                         // We got a HTTP response
                         debug(response.statusCode + ' ' + urls[i]);

@@ -2,10 +2,18 @@
 
 ## [1.4.0] - *Unreleased*
 
+### Added
+
+* Add detection rules for `AWS ELB`.
+
 ### Changed
 
-* Updated detection rules for `MaxCDN/StackPath` and `AWS ELB`.
+* Updated detection rules for `MaxCDN/StackPath`.
 * Changed `Undetermined` to `Unknown` when CDN detection is inconclusive.
+
+### Fixed
+
+* Fixed handling of network level exception handling where a TCP timeout would result in `undefined` being shown in the `Status` column.
 
 ---
 

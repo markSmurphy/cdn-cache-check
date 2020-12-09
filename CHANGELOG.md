@@ -5,6 +5,7 @@
 ### Changed
 
 * Updated detection rules for `MaxCDN/StackPath` and `AWS ELB`.
+* Changed `Undetermined` to `Unknown` when CDN detection is inconclusive.
 
 ---
 

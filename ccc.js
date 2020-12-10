@@ -238,7 +238,9 @@ try {
                     statusCode: 0,
                     request: {},
                     response: {},
-                    redirectCount: 0
+                    redirectCount: 0,
+                    ipAddress: null,
+                    ipFamily: null
                 };
 
                 // Parse URL into component parts (since we don't have a response object when there's an error)
@@ -282,6 +284,16 @@ try {
                         result.request.host = response.req.host;
                         result.request.path = response.req.path;
                         result.response.headers = response.headers;
+                        // Get IP Address from response if it exists
+                        if (typeof(response.socket.remoteAddress) === 'string') {
+                            result.ipAddress = response.socket.remoteAddress;
+                        }
+
+                        // Get the IP Family (IPv4 or IPv6) from the response if it exists
+                        if (typeof(response.socket.remoteFamily) === 'string') {
+                            result.ipFamily = response.socket.remoteFamily;
+                        }
+
                     }
 
                     // Add request/response result to array (for later parsing once we have them all)

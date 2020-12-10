@@ -19,6 +19,12 @@ const isValidDomain = require('is-valid-domain');
 // Import DNS library
 const dns = require('native-dns-multisocket');
 
+// File System library
+const fs = require('fs');
+
+// Library for working with CIDR
+const IPCIDR = require('ip-cidr');
+
 module.exports = {
     getUniqueDomains(urls) {
         try {
@@ -109,7 +115,8 @@ module.exports = {
             hostname: hostname,
             reason: '',
             service: 'Unknown',
-            status: CCC_CDN_DETERMINATION_STATUS.INDETERMINATE
+            status: CCC_CDN_DETERMINATION_STATUS.INDETERMINATE,
+            ipAddress: null
         };
 
         if (isValidDomain(hostname, {subdomain: true, wildcard: false})) { // Validate that the hostname conforms to DNS specifications
@@ -167,6 +174,41 @@ module.exports = {
                             }
                         }
                     }
+
+                    // Check if the DNS chain successfully identified the CDN service
+                    if (cdnResponse.status === CCC_CDN_DETERMINATION_STATUS.INDETERMINATE) {
+                        // Get the IP address from the DNS answer
+                        cdnResponse.ipAddress = module.exports.parseAnswer(answer.answer, {});
+                        // DNS didn't yield a conclusive answer. Check the IP Address against the AWS service list
+                        let awsServicesFile = './service.providers/aws/ip-ranges.json';
+                        let rawData = fs.readFileSync(awsServicesFile);  // Read the AWS services file
+                        let awsServices = JSON.parse(rawData); // Parse it into a JSON object
+
+                        // Loop through each service
+                        for (let i = 0; i < awsServices.prefixes.length; i++) {
+                            // Create a cidr object based on current service's IP prefix range
+                            const cidr = new IPCIDR(awsServices.prefixes[i].ip_prefix);
+
+                            // Check if the IP address exists within the cidr block
+                            if (cidr.contains(cdnResponse.ipAddress)) {
+                                cdnResponse.message = awsServices.prefixes[i].service; // Put the service name into the return object's message
+                                cdnResponse.reason = `${cdnResponse.ipAddress} is in the CIDR block ${awsServices.prefixes[i].ip_prefix} which is used by AWS ${awsServices.prefixes[i].service}`;
+
+                                if (String.prototype.toUpperCase.call(cdnResponse.message) === 'CLOUDFRONT') { // Check if the service is CloudFront
+                                    cdnResponse.message = 'CloudFront'; // Let's keep the case consistent
+                                    cdnResponse.service = 'CDN';
+                                    cdnResponse.status = CCC_CDN_DETERMINATION_STATUS.CDN;
+                                } else {
+                                    cdnResponse.status = CCC_CDN_DETERMINATION_STATUS.OTHER;
+                                    cdnResponse.service = awsServices.prefixes[i].service;
+                                    if (String.prototype.toUpperCase.call(awsServices.prefixes[i].region) != 'GLOBAL') { // Append the region if it's not ambiguous
+                                        cdnResponse.message+=' (' + awsServices.prefixes[i].region + ')';
+                                    }
+                                }
+                            }
+                        }
+                    }
+
                     debug('determineCDN(%s) returning: %O', hostname, cdnResponse);
                     callback(cdnResponse);
                 }

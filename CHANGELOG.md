@@ -4,12 +4,13 @@
 
 ### Added
 
-* Add detection rules for `AWS ELB`.
+* Add detection rules for `AWS ELB` DNS CNAME chain.
 
 ### Changed
 
 * Updated detection rules for `MaxCDN/StackPath`.
 * Changed `Undetermined` to `Unknown` when CDN detection is inconclusive.
+* Updated dependency `tlds` to v1.215.0
 
 ### Fixed
 

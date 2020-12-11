@@ -34,6 +34,7 @@
 
 ## Features
 
+* [ ] Add an asynchronous update of AWS [ip-ranges.json](https://ip-ranges.amazonaws.com/ip-ranges.json) based on the `syncToken` property
 * [ ] Add DNS options to `defaults.json`
   * [ ] Allow command line override for DNS options
 * [ ] Add a mechanism to provide advice - when a `read_timeout` occurs inform the user of the argument to increase it

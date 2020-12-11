@@ -33,8 +33,7 @@
 
 ## Features
 
-* [ ] Add a mechanism to provide advice - when a `read_timeout` occurs inform the user of the argument to increase it.
-* [ ] Add AWS service detection based upon [AWS IP Ranges](https://ip-ranges.amazonaws.com/ip-ranges.json) and using [cidr.contains(address)](https://www.npmjs.com/package/ip-cidr#containsaddress)
+* [ ] Add a mechanism to provide advice - when a `read_timeout` occurs inform the user of the argument to increase it
 * [ ] Improve CDN Detection by examining telltale response headers (such as `server: cloudfront`)
 * [ ] Detect if `--list-header-collections` is being piped to a file and output raw `json` (i.e. only use `prettyjson` for console output)
 * [ ] Add colour indicators for the response headers:
@@ -70,6 +69,7 @@
 
 ## Fixed
 
+* [X] Add AWS service detection based upon [AWS IP Ranges](https://ip-ranges.amazonaws.com/ip-ranges.json) and using [cidr.contains(address)](https://www.npmjs.com/package/ip-cidr#containsaddress)
 * [X] ~~The status column may display `undefined` when the error occurred at the network level (not a HTTP response)~~
 * [X] ~~Add support for input file type `.har` to extract resource URLs from it~~
 * [X] ~~`--open` doesn't work as intended (it doesn't open the csv file)~~

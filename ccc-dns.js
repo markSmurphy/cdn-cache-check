@@ -22,6 +22,9 @@ const dns = require('native-dns-multisocket');
 // File System library
 const fs = require('fs');
 
+// Platform independent path separator
+const pathSeparator = require('path').sep;
+
 // Library for working with CIDR
 const IPCIDR = require('ip-cidr');
 
@@ -180,7 +183,7 @@ module.exports = {
                         // Get the IP address from the DNS answer
                         cdnResponse.ipAddress = module.exports.parseAnswer(answer.answer, {});
                         // DNS didn't yield a conclusive answer. Check the IP Address against the AWS service list
-                        let awsServicesFile = './service.providers/aws/ip-ranges.json';
+                        let awsServicesFile = __dirname + pathSeparator + 'service.providers/aws/ip-ranges.json';
                         let rawData = fs.readFileSync(awsServicesFile);  // Read the AWS services file
                         let awsServices = JSON.parse(rawData); // Parse it into a JSON object
 

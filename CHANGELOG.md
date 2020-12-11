@@ -1,6 +1,14 @@
 # Changelog
 
-## [1.4.0] - *Unreleased*
+## [1.4.1] - 11<sup>th</sup> December 2020
+
+### Fixed
+
+* Fixed `ENOENT` error when trying to read `/service.providers/aws/ip-ranges.json` when installed globally.
+
+---
+
+## [1.4.0] - 11<sup>th</sup> December 2020
 
 ### Added
 
@@ -14,7 +22,7 @@
 
 * Updated detection rules for `MaxCDN/StackPath`.
 * Changed `Undetermined` to `Unknown` when CDN detection is inconclusive.
-* Updated dependency `tlds` to v1.215.0
+* Updated dependency `tlds` to v1.216.0
 
 ### Fixed
 

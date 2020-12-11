@@ -4,6 +4,7 @@
 
 ### Added
 
+* Increased default DNS timeout to `5000`ms.
 * Added detection rules for `AWS ELB` DNS CNAME chain.
 * Added AWS service detection based upon finding a domain's IP address within the CIDR blocks listed in the [AWS IP Ranges](https://ip-ranges.amazonaws.com/ip-ranges.json).
   This was primarily added to enable detection of CloudFront domains which have been setup using a Route53 `ALIAS` record, but has the secondary benefit of detecting all AWS services not fronted by a CDN ... as demonstrated when executing a detection off a `.har` file recorded from the [AWS Speed Test site](http://awsspeedtest.xvf.dk/)

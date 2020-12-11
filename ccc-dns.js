@@ -129,7 +129,7 @@ module.exports = {
             let req = dns.Request({
                 question: question,
                 server: {address: '8.8.8.8', port: 53, type: 'udp'},
-                timeout: 2500
+                timeout: 5000
             });
 
             req.on('timeout', () => { // DNS timeout

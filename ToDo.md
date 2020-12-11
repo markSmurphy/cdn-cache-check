@@ -2,6 +2,7 @@
 
 ## Bugs
 
+* [ ] Default DNS resolver is hardcode to `8.8.8.8` but should be local DNS resolver `dns.getServers()`
 * [ ] The customised `user-agent` isn't being set properly in `needle` client request
 * [ ] If the input does not have a valid top level domain then assume it's a file, and report `file not found` accordingly; e.g. `ccc filename.txt` as `.txt` is not a valid TLD
 * [ ] A URL whose domain is not resolved (`ENOTFOUND`) is still included in the CDN Detection and is reported as `Indeterminate` - e.g. `node .\ccc.js iplayer.bbc.co.uk`
@@ -33,6 +34,8 @@
 
 ## Features
 
+* [ ] Add DNS options to `defaults.json`
+  * [ ] Allow command line override for DNS options
 * [ ] Add a mechanism to provide advice - when a `read_timeout` occurs inform the user of the argument to increase it
 * [ ] Improve CDN Detection by examining telltale response headers (such as `server: cloudfront`)
 * [ ] Detect if `--list-header-collections` is being piped to a file and output raw `json` (i.e. only use `prettyjson` for console output)

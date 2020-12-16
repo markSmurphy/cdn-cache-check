@@ -152,8 +152,9 @@ module.exports = {
             }
 
             // Use a client specific customised user-agent string
-            settings.options.headers['user-agent'] = this.getUserAgent();
-            debug('Using the user-agent: %s', settings.options.headers['user-agent']);
+            // settings.options.headers['user-agent'] = this.getUserAgent();
+            settings.options.httpOptions['user_agent'] = this.getUserAgent();
+            debug('Using the user-agent: %s', settings.options.httpOptions['user_agent']);
 
             return settings;
 

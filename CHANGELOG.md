@@ -1,6 +1,10 @@
 # Changelog
 
-## [1.4.2] - *Unreleased*
+## [1.5.0] - *Unreleased*
+
+### Fixed
+
+* Fixed the customised `user-agent` not being applied to `HTTP` requests.
 
 ### Added
 

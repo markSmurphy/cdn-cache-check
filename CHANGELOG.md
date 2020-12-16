@@ -2,6 +2,10 @@
 
 ## [1.4.2] - *Unreleased*
 
+### Added
+
+* Added [Yottaa](https://www.yottaa.com/) to CDN detection.
+
 ### Changed
 
 * Updated dependency `supports-color` to v8.1.0

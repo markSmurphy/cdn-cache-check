@@ -140,6 +140,11 @@
             "domains": ["*.elb.amazonaws.com"],
             "title": "AWS Elastic Load Balancer",
             "service": "Cloud"
+        },
+        "YOTTAA": {
+            "domains": ["*.yottaa.net"],
+            "title": "Yottaa",
+            "service": "CDN"
         }
     },
     "options" : {

@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.5.0] - *Unreleased*
+## [1.5.0] - 16<sup>th</sup> December 2020
 
 ### Fixed
 

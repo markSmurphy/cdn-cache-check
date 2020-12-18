@@ -12,11 +12,15 @@ HTTP caching is an important component in the delivery of a fast web site. This 
 
 ## Quick Start
 
+### Installation
+
 Install globally using:
 
 ```text
 npm -g install cdn-cache-check
 ```
+
+### Simple Usage
 
 Check a single URL using `ccc [URL]`:
 
@@ -26,7 +30,12 @@ ccc https://www.rolex.com/
 
 ![cdn-cache-check - Single URL](https://marksmurphy.github.io/img/ccc.single.url.gif)
 
----
+### Change Log
+
+See what's changed recently via the `CHANGELOG.md` which can be found [here](./CHANGELOG.md)
+
+### More Examples
+
 Check multiple URLs using `ccc [URL [URL […]]]`:
 
 ```text
@@ -35,7 +44,6 @@ ccc https://www.rolls-royce.com/ https://www.rolls-roycemotorcars.com/
 
 ![cdn-cache-check - Multiple URLs](https://marksmurphy.github.io/img/ccc.multiple.urls.gif)
 
----
 Check a list of URLs read from a text file using `ccc [filename]`:
 
 ```text

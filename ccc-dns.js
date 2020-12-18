@@ -9,6 +9,7 @@ const CCC_CDN_DETERMINATION_STATUS = {
     ERROR: 'Error',
     OTHER: 'Other Internet Service'
 };
+const CCC_DNS_DEFAULT_RESOLVER = '8.8.8.8';
 
 // Initialise wildcard string parser
 const matcher = require('multimatch');
@@ -29,6 +30,32 @@ const pathSeparator = require('path').sep;
 const IPCIDR = require('ip-cidr');
 
 module.exports = {
+    getDNSResolver() {
+        debug('getDNSResolver()::entry');
+        try {
+            // Check if the static variable is already defined
+            if (typeof(this.getDNSResolver.primaryDNSResolver) === 'undefined') {
+                // Import dns module
+                let dns = require('dns');
+
+                // Get array of local machine's DNS resolvers
+                let resolvers = dns.getServers();
+                debug('Obtained resolvers list: %O', resolvers );
+
+                // Pick the first one
+                this.getDNSResolver.primaryDNSResolver = resolvers[0];
+            }
+            
+            debug('Returning resolver: %s', this.getDNSResolver.primaryDNSResolver);
+            // Return resolver IP Address
+            return(this.getDNSResolver.primaryDNSResolver);
+        } catch (error) {
+            // An error occurred getting the locally configured resolver, so return default
+            debug('getDNSResolvers caught an error: %O', error);
+            debug('Returning default resolver: %s', CCC_DNS_DEFAULT_RESOLVER);
+            return(CCC_DNS_DEFAULT_RESOLVER);
+        }
+    },
     getUniqueDomains(urls) {
         try {
             // Using a Set() as it can only contain unique values
@@ -129,9 +156,11 @@ module.exports = {
                 type: CCC_DNS_REQUEST_RECORD_TYPE,
             });
 
+            //let resolverAddress = module.exports.getDNSResolver();
+            //console.log('DNS Resolver: %s', resolverAddress);
             let req = dns.Request({
                 question: question,
-                server: {address: '8.8.8.8', port: 53, type: 'udp'},
+                server: {address: module.exports.getDNSResolver(), port: 53, type: 'udp'},
                 timeout: 5000
             });
 

@@ -1,10 +1,14 @@
 # Changelog
 
-## [1.5.1] - *Unreleased**
+## [1.5.1] - 18<sup>th</sup> December 2020
 
 ### Added
 
 * Added `--debug` to help screen text.
+
+### Changed
+
+* Changed the DNS query to use the locally configured resolver via [dns.getServers()](https://nodejs.org/api/dns.html#dns_dns_getservers) instead of a hardcoded `8.8.8.8`, which is still the fallback if an error occurs.
 
 ---
 

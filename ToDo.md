@@ -29,7 +29,7 @@
   * [X] export
   * [X] open
   * [ ] http options
-  * [ ] debug
+  * [X] debug
 
 ## Features
 

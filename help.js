@@ -35,6 +35,7 @@ module.exports = {
         console.log('   ' + '--open                        ' + chalk.grey('Opens the exported .csv file automatically.'));
         //console.log('   ' + '--iterations <integer>        ' + chalk.grey('The number of times to request each URL. Default: 1'));
         //console.log('   ' + '--interval <integer>          ' + chalk.grey('The number of milliseconds in-between multiple http requests. Default: 3000'));
+        console.log('   ' + '--debug                       ' + chalk.grey('Enables verbose debugging output'));
         console.log('   ' + '--no-color                    ' + chalk.grey('Switches off colour output'));
         console.log('   ' + '--version                     ' + chalk.grey('Display version number'));
         console.log('   ' + '--help                        ' + chalk.grey('Display this help'));

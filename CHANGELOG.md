@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.5.1] - *Unreleased**
+
+### Added
+
+* Added `--debug` to help screen text.
+
+---
+
 ## [1.5.0] - 16<sup>th</sup> December 2020
 
 ### Fixed

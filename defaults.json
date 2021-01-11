@@ -131,6 +131,11 @@
             "title": "Highwinds Network Group CDN",
             "service": "CDN"
         },
+        "Shopify": {
+            "domains": ["*.myshopify.com"],
+            "title": "Shopify CDN",
+            "service": "CDN"
+        },
         "TrafficManager": {
             "domains": ["*.trafficmanager.net"],
             "title": "Azure Traffic Manager",

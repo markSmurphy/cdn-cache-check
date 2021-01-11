@@ -132,7 +132,7 @@
             "service": "CDN"
         },
         "Shopify": {
-            "domains": ["*.myshopify.com"],
+            "domains": ["*.myshopify.com", "*.shopifysvc.com", "*.shopifycloud.com"],
             "title": "Shopify CDN",
             "service": "CDN"
         },

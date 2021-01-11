@@ -126,6 +126,11 @@
             "title": "GitHub Pages",
             "service": "Static Hosting"
         },
+        "Highwinds": {
+            "domains": ["*.hwcdn.net"],
+            "title": "Highwinds Network Group CDN",
+            "service": "CDN"
+        },
         "TrafficManager": {
             "domains": ["*.trafficmanager.net"],
             "title": "Azure Traffic Manager",

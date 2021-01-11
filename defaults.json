@@ -117,7 +117,7 @@
             "service": "Static Hosting"
         },
         "FBCDN": {
-            "domains": ["*.c*.facebook.com"],
+            "domains": ["*.c*.facebook.com", "*.fbcdn.net"],
             "title": "Facebook Content Distribution Network",
             "service": "CDN"
         },

@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.6.0] - *unreleased**
+
+### Added
+
+* Added `*.fbcdn.net` apex domain to CDN detection for `Facebook CDN`.
+
+### Changed
+
+* Updated dependency `jsonexport` to version `3.1.0`.
+* Updated dependency `needle` to version `2.6.0`.
+* Updated dependency `open` to version `7.3.1`.
+* Updated dependency `ora` to version `5.2.0`.
+* Updated dependency `pretty-error` to version `3.0.3`.
+
+---
+
 ## [1.5.1] - 18<sup>th</sup> December 2020
 
 ### Added

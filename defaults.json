@@ -146,6 +146,11 @@
             "title": "MaxCDN/StackPath",
             "service": "CDN"
         },
+        "DigitalOcean": {
+            "domains": ["*.cdn.digitaloceanspaces.com"],
+            "title": "DigitalOcean Spaces CDN",
+            "service": "CDN"
+        },
         "AWSELB": {
             "domains": ["*.elb.amazonaws.com"],
             "title": "AWS Elastic Load Balancer",

@@ -7,6 +7,7 @@
 * Added `*.fbcdn.net` apex domain to CDN detection for `Facebook CDN`.
 * Added `Highwinds Network Group CDN` to CDN detection.
 * Added `Shopify CDN` to CDN detection.
+* Added `DigitalOcean Spaces` to CDN detection.
 
 ### Changed
 

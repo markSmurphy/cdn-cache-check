@@ -63,7 +63,7 @@
     "native-dns-multisocket": "^0.7.0",
     "needle": "^2.5.2",
     "open": "^7.3.0",
-    "ora": "^5.1.0",
+    "ora": "^5.2.0",
     "pretty-error": "^2.1.2",
     "prettyjson": "^1.2.1",
     "supports-color": "^8.1.0",

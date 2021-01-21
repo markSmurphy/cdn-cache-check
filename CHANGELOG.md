@@ -14,7 +14,7 @@
 * Updated dependency `jsonexport` to version `3.2.0`.
 * Updated dependency `needle` to version `2.6.0`.
 * Updated dependency `open` to version `7.3.1`.
-* Updated dependency `ora` to version `5.2.0`.
+* Updated dependency `ora` to version `5.3.0`.
 * Updated dependency `pretty-error` to version `3.0.3`.
 
 ---

@@ -109,12 +109,12 @@
         "S3": {
             "domains": ["s3.*.amazonaws.com", "*.s3.*.amazonaws.com", "s3*.amazonaws.com", "*.s3-accesspoint.*.amazonaws.com"],
             "title": "AWS S3 Bucket",
-            "service": "Static Hosting"
+            "service": "AWS"
         },
         "Blob": {
             "domains": ["*.blob.core.windows.net", "*.web.core.windows.net"],
             "title": "Azure Blob Storage",
-            "service": "Static Hosting"
+            "service": "Azure"
         },
         "FBCDN": {
             "domains": ["*.c*.facebook.com", "*.fbcdn.net"],
@@ -139,7 +139,7 @@
         "TrafficManager": {
             "domains": ["*.trafficmanager.net"],
             "title": "Azure Traffic Manager",
-            "service": "DNS"
+            "service": "Azure"
         },
         "MaxCDN": {
             "domains": ["*.maxcdn-edge.com", "*.netdna-cdn.com", "*.stackpathcdn.com"],
@@ -154,7 +154,7 @@
         "AWSELB": {
             "domains": ["*.elb.amazonaws.com"],
             "title": "AWS Elastic Load Balancer",
-            "service": "Cloud"
+            "service": "AWS"
         },
         "YOTTAA": {
             "domains": ["*.yottaa.net"],

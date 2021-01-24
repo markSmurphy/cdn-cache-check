@@ -9,6 +9,7 @@
 * Added `Highwinds Network Group CDN` to CDN detection.
 * Added `Shopify CDN` to CDN detection.
 * Added `DigitalOcean Spaces` to CDN detection.
+* Added Node.js version requirements to `README.md` badges.
 
 ### Changed
 

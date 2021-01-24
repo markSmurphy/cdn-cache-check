@@ -10,6 +10,7 @@
 * Added `Shopify CDN` to CDN detection.
 * Added `DigitalOcean Spaces` to CDN detection.
 * Added Node.js version requirements to `README.md` badges.
+  * ![node-current](https://img.shields.io/node/v/cdn-cache-check?style=plastic)
 
 ### Changed
 

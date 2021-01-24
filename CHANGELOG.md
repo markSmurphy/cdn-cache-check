@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.6.0] - *unreleased**
+## [1.6.0] - *unreleased*
 
 ### Added
 
@@ -12,6 +12,7 @@
 
 ### Changed
 
+* Updated [AWS IP Ranges](https://ip-ranges.amazonaws.com/ip-ranges.json) to `2021-01-22-18-04-19` (Sync Token: `1611338659`).
 * Updated dependency `jsonexport` to version `3.2.0`.
 * Updated dependency `needle` to version `2.6.0`.
 * Updated dependency `open` to version `7.3.1`.

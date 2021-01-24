@@ -45,7 +45,7 @@ module.exports = {
                 // Pick the first one
                 this.getDNSResolver.primaryDNSResolver = resolvers[0];
             }
-            
+
             debug('Returning resolver: %s', this.getDNSResolver.primaryDNSResolver);
             // Return resolver IP Address
             return(this.getDNSResolver.primaryDNSResolver);
@@ -207,15 +207,15 @@ module.exports = {
                         }
                     }
 
-                    // Check if the DNS chain successfully identified the CDN service
-                    if (cdnResponse.status === CCC_CDN_DETERMINATION_STATUS.INDETERMINATE) {
+                    // Check if the DNS chain inspection didn't identify it as a CDN
+                    if (cdnResponse.status != CCC_CDN_DETERMINATION_STATUS.CDN) {
                         // Get the IP address from the DNS answer
                         cdnResponse.ipAddress = module.exports.parseAnswer(answer.answer, {});
                         // DNS didn't yield a conclusive answer. Check the IP Address against the AWS service list
                         let awsServicesFile = __dirname + pathSeparator + 'service.providers/aws/ip-ranges.json';
                         let rawData = fs.readFileSync(awsServicesFile);  // Read the AWS services file
                         let awsServices = JSON.parse(rawData); // Parse it into a JSON object
-
+                        let message = new String; // Temporarily store the message because the AWS JSON might contain two matching  CIDR blocks, so we can't just concatenate
                         // Loop through each service
                         for (let i = 0; i < awsServices.prefixes.length; i++) {
                             // Create a cidr object based on current service's IP prefix range
@@ -223,22 +223,31 @@ module.exports = {
 
                             // Check if the IP address exists within the cidr block
                             if (cidr.contains(cdnResponse.ipAddress)) {
-                                cdnResponse.message = awsServices.prefixes[i].service; // Put the service name into the return object's message
+                                message = awsServices.prefixes[i].service;
+                                //cdnResponse.message = awsServices.prefixes[i].service; // Put the service name into the return object's message
                                 cdnResponse.reason = `${cdnResponse.ipAddress} is in the CIDR block ${awsServices.prefixes[i].ip_prefix} which is used by AWS ${awsServices.prefixes[i].service}`;
 
                                 if (String.prototype.toUpperCase.call(cdnResponse.message) === 'CLOUDFRONT') { // Check if the service is CloudFront
-                                    cdnResponse.message = 'CloudFront'; // Let's keep the case consistent
+                                    message = 'CloudFront';
+                                    //cdnResponse.message = 'CloudFront'; // Let's keep the case consistent
                                     cdnResponse.service = 'CDN';
                                     cdnResponse.status = CCC_CDN_DETERMINATION_STATUS.CDN;
                                 } else {
                                     cdnResponse.status = CCC_CDN_DETERMINATION_STATUS.OTHER;
                                     cdnResponse.service = awsServices.prefixes[i].service;
                                     if (String.prototype.toUpperCase.call(awsServices.prefixes[i].region) != 'GLOBAL') { // Append the region if it's not ambiguous
-                                        cdnResponse.message+=' (' + awsServices.prefixes[i].region + ')';
+                                        message += ' (' + awsServices.prefixes[i].region + ')';
+                                        //cdnResponse.message += ' (' + awsServices.prefixes[i].region + ')';
                                     }
                                 }
                             }
                         }
+                        if (cdnResponse.message === 'Unknown') {
+                            cdnResponse.message = message; // Replace the current message with a more precise AWS specific detection
+                        } else {
+                            cdnResponse.message += ', ' + message; // Append the AWS detection message to the DNS detection message
+                        }
+
                     }
 
                     debug('determineCDN(%s) returning: %O', hostname, cdnResponse);

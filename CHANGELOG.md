@@ -4,6 +4,7 @@
 
 ### Added
 
+* Improve clarity of service detection when both DNS chain inspection and AWS service CIDR block inspection yield information
 * Added `*.fbcdn.net` apex domain to CDN detection for `Facebook CDN`.
 * Added `Highwinds Network Group CDN` to CDN detection.
 * Added `Shopify CDN` to CDN detection.

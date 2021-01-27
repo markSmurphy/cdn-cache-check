@@ -508,7 +508,7 @@ try {
 
                         if (settings.CDNDetection) {
                             // Create and start the CDN Detection activity spinner
-                            const spinnerCDNDetection = ora('CDN detection being performed on ' + uniqueDomains.length + ' unique domains ...').start();
+                            const spinnerCDNDetection = ora('CDN detection being performed on ' + uniqueDomains.domains.length + ' unique domains ...').start();
 
                             // Determine the CDN or service behind each unique domain
                             uniqueDomains.domains.forEach((domain) => {
@@ -539,7 +539,7 @@ try {
                                         break;
                                     }
 
-                                    let hostnameColumnWidth = uniqueDomains.maxLength +5;
+                                    let hostnameColumnWidth = uniqueDomains.domainNameLength +5;
                                     // Format text into spaced columns
                                     let columns = columnify(cdnDeduction, {
                                         showHeaders: false,

@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.6.1] - *Unreleased*
+
+### Changed
+
+* Fixed a bug in `--debug` output which reported the number of unique domains as `undefined`.
+
+---
+
 ## [1.6.0] - 24<sup>th</sup> January 2021
 
 ### Added

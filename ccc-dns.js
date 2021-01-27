@@ -64,7 +64,8 @@ module.exports = {
             // Initialise the JSON return object
             let returnObject = {};
 
-            var maxLength = 0;
+            // Initialise length of the longest FQDN in the list
+            var domainNameLength = 0;
 
             // loop through array, extracting hostname from each URL
             for (let i = 0; i < urls.length; i++) {
@@ -75,11 +76,11 @@ module.exports = {
                 // Add the hostname to the Set
                 uniqueDomains.add(hostname);
                 // Record the length of the hostname if it's the largest yet
-                maxLength = (hostname.length > maxLength) ? hostname.length : maxLength;
+                domainNameLength = (hostname.length > domainNameLength) ? hostname.length : domainNameLength;
             }
 
             returnObject.domains = Array.from(uniqueDomains);
-            returnObject.maxLength = maxLength;
+            returnObject.domainNameLength = domainNameLength;
             returnObject.count = uniqueDomains.size;
             return(returnObject);
 

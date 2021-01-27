@@ -52,7 +52,7 @@ try {
             openAfterExport: false,
             headers: {
                 'user-agent': 'ccc/{version} {OS}/{OSRelease}',
-                Connection: 'close'
+                'Connection': 'close'
             },
             httpOptions: {
                 timeout: 6000,

@@ -5,6 +5,7 @@
 ### Changed
 
 * Fixed a bug in `--debug` output which reported the number of unique domains as `undefined`.
+* Fixed an incorrect JSON property name type in the internal default settings (i.e. the ones used if `default.json` isn't loaded correctly).
 
 ---
 
@@ -12,7 +13,7 @@
 
 ### Added
 
-* Improve clarity of service detection when both DNS chain inspection and AWS service CIDR block inspection yield information
+* Improve clarity of service detection when both DNS chain inspection and AWS service CIDR block inspection yield information.
 * Added `*.fbcdn.net` apex domain to CDN detection for `Facebook CDN`.
 * Added `Highwinds Network Group CDN` to CDN detection.
 * Added `Shopify CDN` to CDN detection.

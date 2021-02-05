@@ -7,6 +7,7 @@ const CCC_CDN_DETERMINATION_STATUS = {
     INDETERMINATE: 'Indeterminate',
     CDN: 'CDN',
     ERROR: 'Error',
+    AWS: 'AWS',
     OTHER: 'Other Internet Service'
 };
 const CCC_DNS_DEFAULT_RESOLVER = '8.8.8.8';
@@ -208,23 +209,30 @@ module.exports = {
                         }
                     }
 
+
                     // Check if the DNS chain inspection didn't identify it as a CDN
                     if (cdnResponse.status != CCC_CDN_DETERMINATION_STATUS.CDN) {
+                        debug('%s\'s DNS recursion didn\'t match a known CDN provider\'s domain');
                         // Get the IP address from the DNS answer
+                        debug('Extracting the IP address from the DNS answer');
                         cdnResponse.ipAddress = module.exports.parseAnswer(answer.answer, {});
                         // DNS didn't yield a conclusive answer. Check the IP Address against the AWS service list
                         let awsServicesFile = __dirname + pathSeparator + 'service.providers/aws/ip-ranges.json';
                         let rawData = fs.readFileSync(awsServicesFile);  // Read the AWS services file
                         let awsServices = JSON.parse(rawData); // Parse it into a JSON object
-                        let message = new String; // Temporarily store the message because the AWS JSON might contain two matching  CIDR blocks, so we can't just concatenate
+                        let message = '';//new String; // Temporarily store the message because the AWS JSON might contain two matching  CIDR blocks, so we can't just concatenate
+
                         // Loop through each service
+                        debug('Checking if the IP address [%s] matches a known AWS service');
                         for (let i = 0; i < awsServices.prefixes.length; i++) {
                             // Create a cidr object based on current service's IP prefix range
                             const cidr = new IPCIDR(awsServices.prefixes[i].ip_prefix);
 
                             // Check if the IP address exists within the cidr block
                             if (cidr.contains(cdnResponse.ipAddress)) {
+                                debug('%s is in the CIDR block %s, which is AWS service %s', cdnResponse.ipAddress, awsServices.prefixes[i].ip_prefix, awsServices.prefixes[i].service);
                                 message = awsServices.prefixes[i].service;
+                                cdnResponse.status = CCC_CDN_DETERMINATION_STATUS.AWS;
                                 //cdnResponse.message = awsServices.prefixes[i].service; // Put the service name into the return object's message
                                 cdnResponse.reason = `${cdnResponse.ipAddress} is in the CIDR block ${awsServices.prefixes[i].ip_prefix} which is used by AWS ${awsServices.prefixes[i].service}`;
 
@@ -243,10 +251,15 @@ module.exports = {
                                 }
                             }
                         }
-                        if (cdnResponse.message === 'Unknown') {
-                            cdnResponse.message = message; // Replace the current message with a more precise AWS specific detection
-                        } else {
-                            cdnResponse.message += ', ' + message; // Append the AWS detection message to the DNS detection message
+                        
+                        if (cdnResponse.status === CCC_CDN_DETERMINATION_STATUS.AWS) {
+                            if (cdnResponse.message === 'Unknown') {
+                                debug('Replacing the message [%s] with [%s]', cdnResponse.message, message);
+                                cdnResponse.message = message; // Replace the current message with a more precise AWS specific detection
+                            } else {
+                                debug('Replacing the message [%s] with [%s]', cdnResponse.message, cdnResponse.message += ', ' + message);
+                                cdnResponse.message += ', ' + message; // Append the AWS detection message to the DNS detection message
+                            }
                         }
 
                     }

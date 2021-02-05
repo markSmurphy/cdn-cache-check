@@ -1,12 +1,13 @@
 # Changelog
 
-## [1.6.1] - *Unreleased*
+## [1.6.1] - 5<sup>th</sup> February 2021
 
 ### Changed
 
 * Fixed a bug in `--debug` output which reported the number of unique domains as `undefined`.
 * Fixed an incorrect JSON property name type in the internal default settings (i.e. the ones used if `default.json` isn't loaded correctly).
 * Updated dependency `open` to version `7.4.0`.
+* Fixed a bug which would result in a blank CDN Determination status instead of `Unknown`.
 
 ---
 

@@ -2,6 +2,8 @@
 
 ## Bugs
 
+* [ ] Fix handling services which resolve to known DNS apex zones but are also AWS services (the AWS service details should enrich the DNS zone apex details rather than replace them)
+* [ ] Fix AWS service lookup where the IP address appears in multiple CIDR blocks
 * [ ] If the input does not have a valid top level domain then assume it's a file, and report `file not found` accordingly; e.g. `ccc filename.txt` as `.txt` is not a valid TLD
 * [ ] A URL whose domain is not resolved (`ENOTFOUND`) is still included in the CDN Detection and is reported as `Indeterminate` - e.g. `node .\ccc.js iplayer.bbc.co.uk`
   * [ ] Need to handle an empty `answer.answer[]` array, and parseAnswer() returning something more useful than `'no_address'`
@@ -15,6 +17,7 @@
     It's a valid URL
   ```
 
+* [ ] Fix the progress indicator flickering. Perhaps move to an alternative library like [Node.CLI-Progress](https://github.com/AndiDittrich/Node.CLI-Progress)
 * [ ] Investigate the wisdom of waiting for the external app to close before continuing when opening the `.csv` file. Perhaps make the behavior a switch:
 
   ```JavaScript
@@ -32,6 +35,7 @@
 
 ## Features
 
+* [ ] Add GEO location lookup of IP address hosting each resource via [IP Who Is](https://ipwhois.io/documentation#tabs-format)
 * [ ] Add option to emulate `user-agent` of popular browsers or provide a custom user-agent string
 * [ ] Add an asynchronous update of AWS [ip-ranges.json](https://ip-ranges.amazonaws.com/ip-ranges.json) based on the `syncToken` property
 * [ ] Add DNS options to `defaults.json`

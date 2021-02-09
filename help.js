@@ -27,7 +27,7 @@ module.exports = {
         console.log(chalk.grey('OPTIONS:'));
         console.log('   ' + '<url>                         ' + chalk.grey('A URL to query'));
         console.log('   ' + '<filename>                    ' + chalk.grey('Specify a file containing a list of URLs to query'));
-        console.log('   ' + '--method <head|get|options>   ' + chalk.grey('Specify the HTTP method.  Default: HEAD'));
+        console.log('   ' + '--method <head|get|options>   ' + chalk.grey('Specify the HTTP method.  Default: GET'));
         console.log('   ' + '--headers <collection>        ' + chalk.grey('Select which collection of headers to output.'));
         console.log('   ' + '--list-header-collections     ' + chalk.grey('List all Header Collections and the response headers they contain'));
         console.log('   ' + '--list-response-headers       ' + chalk.grey('List all unique response headers. Useful when creating a new header collection.'));

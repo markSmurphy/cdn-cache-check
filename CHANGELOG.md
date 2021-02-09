@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.6.2] - *Unreleased*
+
+### Changed
+
+* Fixed a help screen typo so that it now correctly states that the default HTTP method is `GET`.
+* Automatically show the help screen when there's a syntax error.
+
+---
+
 ## [1.6.1] - 5<sup>th</sup> February 2021
 
 ### Changed

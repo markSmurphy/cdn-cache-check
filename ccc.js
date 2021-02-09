@@ -91,7 +91,7 @@ try {
     if (argv.help) {
         debug('--help detected.  Showing help screen.');
         // Show help screen
-        const help = require('./help');
+        let help = require('./help');
         help.helpScreen(argv.verbose);
         //Exit to terminal
         return;
@@ -188,6 +188,10 @@ try {
 
     if (urls.length === 0) {
         console.log(chalk.red('Error: No URL(s) provided.'));
+        // Show help screen
+        let help = require('./help');
+        help.helpScreen(argv.verbose);
+        
     } else {
         // The main work starts here
         debug('Using settings: %O', settings);

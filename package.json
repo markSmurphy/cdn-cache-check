@@ -67,7 +67,7 @@
     "pretty-error": "^3.0.3",
     "prettyjson": "^1.2.1",
     "supports-color": "^8.1.1",
-    "tlds": "^1.216.0",
+    "tlds": "^1.217.0",
     "unique-filename": "^1.1.1",
     "valid-url": "^1.0.9",
     "yargs": "^16.2.0"

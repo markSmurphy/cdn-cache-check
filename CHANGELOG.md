@@ -9,6 +9,7 @@
 * Updated dependency `ip-cidr` to version `2.1.3`.
 * Updated dependency `open` to version `7.4.2`.
 * Updated dependency `tlds` to version `1.218.0`.
+* Updated dependency `ora` to version `5.4.0`.
 
 ---
 

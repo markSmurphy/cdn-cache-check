@@ -6,9 +6,9 @@
 
 * Fixed a help screen typo so that it now correctly states that the default HTTP method is `GET`.
 * Automatically show the help screen when there's a syntax error.
-* Updated dependency `ip-cidr` to version `2.1.3`.
+* Updated dependency `ip-cidr` to version `2.1.4`.
 * Updated dependency `open` to version `7.4.2`.
-* Updated dependency `tlds` to version `1.218.0`.
+* Updated dependency `tlds` to version `1.219.0`.
 * Updated dependency `ora` to version `5.4.0`.
 
 ---

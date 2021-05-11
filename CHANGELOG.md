@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.6.2] - *Unreleased*
+## [v1.6.2] - May 11<sup>th</sup> 2021
 
 ### Changed
 
@@ -13,7 +13,7 @@
 
 ---
 
-## [1.6.1] - 5<sup>th</sup> February 2021
+## [v1.6.1] - 5<sup>th</sup> February 2021
 
 ### Changed
 
@@ -24,7 +24,7 @@
 
 ---
 
-## [1.6.0] - 24<sup>th</sup> January 2021
+## [v1.6.0] - 24<sup>th</sup> January 2021
 
 ### Added
 
@@ -48,7 +48,7 @@
 
 ---
 
-## [1.5.1] - 18<sup>th</sup> December 2020
+## [v1.5.1] - 18<sup>th</sup> December 2020
 
 ### Added
 
@@ -60,7 +60,7 @@
 
 ---
 
-## [1.5.0] - 16<sup>th</sup> December 2020
+## [v1.5.0] - 16<sup>th</sup> December 2020
 
 ### Fixed
 
@@ -76,7 +76,7 @@
 
 ---
 
-## [1.4.1] - 11<sup>th</sup> December 2020
+## [v1.4.1] - 11<sup>th</sup> December 2020
 
 ### Fixed
 
@@ -84,7 +84,7 @@
 
 ---
 
-## [1.4.0] - 11<sup>th</sup> December 2020
+## [v1.4.0] - 11<sup>th</sup> December 2020
 
 ### Added
 
@@ -106,7 +106,7 @@
 
 ---
 
-## [1.3.0] - 7<sup>th</sup> December 2020
+## [v1.3.0] - 7<sup>th</sup> December 2020
 
 ### Added
 
@@ -125,7 +125,7 @@ You can then pass that `.har` file to `cdn-cache-check` and it will extract the 
 
 ---
 
-## [1.2.0] - 4<sup>th</sup> December 2020
+## [v1.2.0] - 4<sup>th</sup> December 2020
 
 ### Added
 
@@ -141,7 +141,7 @@ You can then pass that `.har` file to `cdn-cache-check` and it will extract the 
 
 ---
 
-## [1.1.0] - 1<sup>st</sup> December 2020
+## [v1.1.0] - 1<sup>st</sup> December 2020
 
 ### Changed
 
@@ -154,7 +154,7 @@ You can then pass that `.har` file to `cdn-cache-check` and it will extract the 
 
 ---
 
-## [1.0.1] - 29<sup>th</sup> November 2020
+## [v1.0.1] - 29<sup>th</sup> November 2020
 
 ### Changed
 
@@ -162,7 +162,7 @@ You can then pass that `.har` file to `cdn-cache-check` and it will extract the 
 
 ---
 
-## [1.0.0] - 29<sup>th</sup> November 2020
+## [v1.0.0] - 29<sup>th</sup> November 2020
 
 Initial release.
 

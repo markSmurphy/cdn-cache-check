@@ -53,11 +53,11 @@
   "license": "MIT",
   "dependencies": {
     "@tusbar/cache-control": "^0.5.0",
-    "chalk": "^4.1.0",
+    "chalk": "^4.1.1",
     "columnify": "^1.5.4",
     "debug": "^4.3.1",
     "ip-cidr": "^2.1.4",
-    "is-valid-domain": "0.0.17",
+    "is-valid-domain": "0.0.19",
     "jsonexport": "^3.2.0",
     "multimatch": "^5.0.0",
     "native-dns-multisocket": "^0.7.0",
@@ -67,7 +67,7 @@
     "pretty-error": "^3.0.3",
     "prettyjson": "^1.2.1",
     "supports-color": "^8.1.1",
-    "tlds": "^1.219.0",
+    "tlds": "^1.221.1",
     "unique-filename": "^1.1.1",
     "valid-url": "^1.0.9",
     "yargs": "^16.2.0"

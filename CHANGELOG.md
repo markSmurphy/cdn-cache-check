@@ -2,14 +2,20 @@
 
 ## [v1.6.2] - May 11<sup>th</sup> 2021
 
+### Security
+
+* Updated deep dependencies to apply `lodash` fix addressing [CVE-2021-23337](https://nvd.nist.gov/vuln/detail/CVE-2021-23337).
+
 ### Changed
 
 * Fixed a help screen typo so that it now correctly states that the default HTTP method is `GET`.
 * Automatically show the help screen when there's a syntax error.
 * Updated dependency `ip-cidr` to version `2.1.4`.
 * Updated dependency `open` to version `7.4.2`.
-* Updated dependency `tlds` to version `1.219.0`.
+* Updated dependency `tlds` to version `1.221.1`.
 * Updated dependency `ora` to version `5.4.0`.
+* Updated dependency `chalk` to version `4.1.1`.
+* Updated dependency `is-valid-domain` to version `0.0.19`.
 
 ---
 

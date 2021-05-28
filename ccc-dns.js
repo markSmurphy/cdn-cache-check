@@ -212,7 +212,7 @@ module.exports = {
 
                     // Check if the DNS chain inspection didn't identify it as a CDN
                     if (cdnResponse.status != CCC_CDN_DETERMINATION_STATUS.CDN) {
-                        debug('%s\'s DNS recursion didn\'t match a known CDN provider\'s domain');
+                        debug('%s\'s DNS recursion didn\'t match a known CDN provider\'s domain (cdnResponse.status: %s)', hostname, cdnResponse.status);
                         // Get the IP address from the DNS answer
                         debug('Extracting the IP address from the DNS answer');
                         cdnResponse.ipAddress = module.exports.parseAnswer(answer.answer, {});
@@ -223,7 +223,7 @@ module.exports = {
                         let message = '';//new String; // Temporarily store the message because the AWS JSON might contain two matching  CIDR blocks, so we can't just concatenate
 
                         // Loop through each service
-                        debug('Checking if the IP address [%s] matches a known AWS service');
+                        debug('Checking if the IP address [%s] matches a known AWS service', cdnResponse.ipAddress);
                         for (let i = 0; i < awsServices.prefixes.length; i++) {
                             // Create a cidr object based on current service's IP prefix range
                             const cidr = new IPCIDR(awsServices.prefixes[i].ip_prefix);
@@ -251,7 +251,7 @@ module.exports = {
                                 }
                             }
                         }
-                        
+
                         if (cdnResponse.status === CCC_CDN_DETERMINATION_STATUS.AWS) {
                             if (cdnResponse.message === 'Unknown') {
                                 debug('Replacing the message [%s] with [%s]', cdnResponse.message, message);

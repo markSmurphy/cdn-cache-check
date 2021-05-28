@@ -164,7 +164,7 @@ module.exports = {
         }
     },
     getHeaderCollection(collectionName, settings) {
-        debug('getHeaderCollection(%s)');
+        debug('getHeaderCollection(%s)', collectionName);
         // Iterate through each header collection definition
         for (let i = 0; i < settings.headersCollections.length; i++) {
             let currentCollection = Object.keys(settings.headersCollections[i])[0];

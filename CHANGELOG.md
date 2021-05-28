@@ -1,5 +1,13 @@
 # Changelog
 
+## [v1.6.3] - MMM DD<sup>th</sup> 2021
+
+### Changed
+
+* Fixed a few string substitution bugs in `debug` logging output.
+
+---
+
 ## [v1.6.2] - May 11<sup>th</sup> 2021
 
 ### Security

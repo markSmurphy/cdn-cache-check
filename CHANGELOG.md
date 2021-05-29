@@ -1,5 +1,13 @@
 # Changelog
 
+## [v1.6.4] - MMM DD<sup>th</sup> 2021
+
+### Changed
+
+* Fixed a few `debug` logging output code warnings by converting to Template Literals.
+
+---
+
 ## [v1.6.3] - May 29<sup>th</sup> 2021
 
 ### Changed

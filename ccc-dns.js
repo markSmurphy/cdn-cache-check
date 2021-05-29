@@ -170,7 +170,7 @@ module.exports = {
                 debug('DNS timeout occurred resolving [%s]', hostname);
                 cdnResponse.message = 'DNS Timeout';
                 cdnResponse.reason = 'DNS Timeout';
-                cdnResponse.error = ('Timeout after %d milliseconds', req.timeout);
+                cdnResponse.error = `Timeout after ${req.timeout} milliseconds`;
                 cdnResponse.status = CCC_CDN_DETERMINATION_STATUS.ERROR;
                 callback(cdnResponse);
             });
@@ -274,7 +274,7 @@ module.exports = {
 
         } else { // hostname didn't pass the validate-domain check
             cdnResponse.message = 'Invalid DNS domain';
-            cdnResponse.reason = ('The hostname "%s" doesn\'t conform to DNS specifications', hostname);
+            cdnResponse.reason = `The hostname "${hostname}" doesn\'t conform to DNS specifications`;
             cdnResponse.service = 'None';
             cdnResponse.status = CCC_CDN_DETERMINATION_STATUS.ERROR;
         }

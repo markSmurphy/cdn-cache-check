@@ -5,6 +5,7 @@
 ### Changed
 
 * Fixed a few string substitution bugs in `debug` logging output.
+* Fixed a bug where AWS services would be reported as `Unknown` even though the IP address was in the `ip-ranges.json`
 
 ---
 

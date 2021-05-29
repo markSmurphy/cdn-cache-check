@@ -238,7 +238,6 @@ module.exports = {
 
                                 if (String.prototype.toUpperCase.call(cdnResponse.message) === 'CLOUDFRONT') { // Check if the service is CloudFront
                                     message = 'CloudFront';
-                                    //cdnResponse.message = 'CloudFront'; // Let's keep the case consistent
                                     cdnResponse.service = 'CDN';
                                     cdnResponse.status = CCC_CDN_DETERMINATION_STATUS.CDN;
                                 } else {
@@ -246,10 +245,12 @@ module.exports = {
                                     cdnResponse.service = awsServices.prefixes[i].service;
                                     if (String.prototype.toUpperCase.call(awsServices.prefixes[i].region) != 'GLOBAL') { // Append the region if it's not ambiguous
                                         message += ' (' + awsServices.prefixes[i].region + ')';
-                                        //cdnResponse.message += ' (' + awsServices.prefixes[i].region + ')';
+
                                     }
                                 }
                             }
+                            // Save the generated message into the response object
+                            cdnResponse.message = message;
                         }
 
                         if (cdnResponse.status === CCC_CDN_DETERMINATION_STATUS.AWS) {

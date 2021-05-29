@@ -6,6 +6,7 @@
 
 * Fixed a few string substitution bugs in `debug` logging output.
 * Fixed a bug where AWS services would be reported as `Unknown` even though the IP address was in the `ip-ranges.json`
+* Updated [AWS IP Ranges](https://ip-ranges.amazonaws.com/ip-ranges.json) to `2021-05-28-19-24-13` (Sync Token: `1622229853`).
 
 ---
 

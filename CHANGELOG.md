@@ -1,6 +1,6 @@
 # Changelog
 
-## [v1.6.3] - MMM DD<sup>th</sup> 2021
+## [v1.6.3] - May 29<sup>th</sup> 2021
 
 ### Changed
 

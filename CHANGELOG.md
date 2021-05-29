@@ -4,7 +4,7 @@
 
 ### Changed
 
-* Fixed a few `debug` logging output code warnings by converting to Template Literals.
+* Fixed a few `debug` logging output DeppScan code warnings by converting to Template Literals.
 
 ---
 

@@ -274,7 +274,7 @@ module.exports = {
 
         } else { // hostname didn't pass the validate-domain check
             cdnResponse.message = 'Invalid DNS domain';
-            cdnResponse.reason = `The hostname "${hostname}" doesn\'t conform to DNS specifications`;
+            cdnResponse.reason = `The hostname "${hostname}" doesn't conform to DNS specifications`;
             cdnResponse.service = 'None';
             cdnResponse.status = CCC_CDN_DETERMINATION_STATUS.ERROR;
         }

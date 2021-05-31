@@ -4,7 +4,9 @@
 
 ### Changed
 
-* Fixed a CDN/Service Detection bug which could result in known AWS services being listed as `Unknown`
+* Fixed a CDN/Service Detection bug which could result in known AWS services being listed as `Unknown`.
+* Fixed a CDN/Service Detection bug which could result in a blank response for known services.
+* Added HubSpot CMS Website Hosting to Service Detection
 
 ---
 

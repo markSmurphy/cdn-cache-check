@@ -160,6 +160,11 @@
             "domains": ["*.yottaa.net"],
             "title": "Yottaa",
             "service": "CDN"
+        },
+        "HubSpot": {
+            "domains": ["*.sites.hubspot.net"],
+            "title": "HubSpot Website Hosting",
+            "service": "CMS Hosting"
         }
     },
     "options" : {

@@ -191,7 +191,7 @@ try {
         // Show help screen
         let help = require('./help');
         help.helpScreen(argv.verbose);
-        
+
     } else {
         // The main work starts here
         debug('Using settings: %O', settings);
@@ -518,7 +518,6 @@ try {
                             uniqueDomains.domains.forEach((domain) => {
                                 cccDNS.determineCDN(domain, settings.ApexDomains, (cdn) => {
                                     debug('determineCDN(%s) returned: %O', domain, cdn);
-
                                     // Construct the console message
                                     var cdnDeduction = [{
                                         hostname: chalk.cyan(cdn.hostname)
@@ -528,19 +527,18 @@ try {
                                     switch (cdn.status) {
                                         case CCC_CDN_DETERMINATION_STATUS.INDETERMINATE:
                                             cdnDeduction[0].message = chalk.grey(cdn.message);
-                                        break;
-
+                                            break;
                                         case CCC_CDN_DETERMINATION_STATUS.ERROR:
                                             cdnDeduction[0].message = chalk.redBright(cdn.message);
-                                        break;
-
+                                            break;
                                         case CCC_CDN_DETERMINATION_STATUS.CDN:
                                             cdnDeduction[0].message = chalk.greenBright(cdn.message);
-                                        break;
-
+                                            break;
                                         case CCC_CDN_DETERMINATION_STATUS.OTHER:
                                             cdnDeduction[0].message = chalk.yellowBright(cdn.message);
-                                        break;
+                                            break;
+                                        default:
+                                            cdnDeduction[0].message = chalk.yellowBright(cdn.message);
                                     }
 
                                     let hostnameColumnWidth = uniqueDomains.domainNameLength +5;

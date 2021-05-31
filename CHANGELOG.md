@@ -4,7 +4,7 @@
 
 ### Changed
 
-* Fixed a few `debug` logging output DeppScan code warnings by converting to Template Literals.
+* Fixed a CDN/Service Detection bug which could result in known AWS services being listed as `Unknown`
 
 ---
 

@@ -35,9 +35,13 @@
 
 ## Features
 
-* [ ] Add Azure IP range `json` to `service.providers`
+* [ ] Add Azure IP ranges `json` to `service.providers`
   * [specific json file](https://download.microsoft.com/download/7/1/D/71D86715-5596-4529-9B13-DA13A5DE5B63/ServiceTags_Public_20210524.json)
   * [download page](https://www.microsoft.com/en-us/download/details.aspx?id=56519)
+* [ ] Add CloudFlare IP ranges to `service.providers`
+  * [ ] [https://www.cloudflare.com/en-gb/ips/] (https://www.cloudflare.com/en-gb/ips/)
+* [ ] Add Fastly IP ranges to `service.providers`
+  * [ ] [https://api.fastly.com/public-ip-list] (https://api.fastly.com/public-ip-list)
 * [ ] Add GEO location lookup of IP address hosting each resource via [IP Who Is](https://ipwhois.io/documentation#tabs-format)
 * [ ] Add option to emulate `user-agent` of popular browsers or provide a custom user-agent string
 * [ ] Add an asynchronous update of AWS [ip-ranges.json](https://ip-ranges.amazonaws.com/ip-ranges.json) based on the `syncToken` property

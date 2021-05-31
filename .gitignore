@@ -15,8 +15,8 @@ ccc.ps1
 # Test URLs
 url*.txt
 
-# HTTP Archive files
-*.har
+# HTTP Archive files in the root folder
+./*.har
 
 # Screenshots folder
 screenshots/*

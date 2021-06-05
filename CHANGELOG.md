@@ -1,5 +1,13 @@
 # Changelog
 
+## [v1.6.5] - MMM DD<sup>st</sup> 2021
+
+### Changed
+
+* Updated dependency `ip-cidr` to version `2.1.5`.
+
+---
+
 ## [v1.6.4] - May 31<sup>st</sup> 2021
 
 ### Changed

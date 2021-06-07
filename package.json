@@ -47,7 +47,11 @@
     "headers",
     "offload",
     "web",
-    "performance"
+    "performance",
+    "service detection",
+    "http caching",
+    "http cache",
+    "cache-control"
   ],
   "author": "Mark Murphy",
   "license": "MIT",

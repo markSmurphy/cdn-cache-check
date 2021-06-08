@@ -92,7 +92,7 @@
             "service": "CDN"
         },
         "Fastly": {
-            "domains": ["*.fastly.net", "*.fastly.com"],
+            "domains": ["*.fastly.net"],
             "title": "Fastly",
             "service": "CDN"
         },
@@ -165,6 +165,11 @@
             "domains": ["*.sites.hubspot.net"],
             "title": "HubSpot Website Hosting",
             "service": "CMS Hosting"
+        },
+        "Atlassian Status Page": {
+            "domains": ["*.stspg-customer.com"],
+            "title": "Atlassian Status Page Hosting",
+            "service": "Status Page Hosting"
         }
     },
     "options" : {

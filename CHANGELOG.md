@@ -6,6 +6,8 @@
 
 * Updated dependency `ip-cidr` to version `2.1.5`.
 * `Atlassian Status Page` added to service detection.
+* Updated dependency `ora` to version `5.4.1`.
+* Updated dependency `pretty-error` to version `3.0.4`.
 
 ---
 

@@ -8,6 +8,7 @@
 * `Atlassian Status Page` added to service detection.
 * Updated dependency `ora` to version `5.4.1`.
 * Updated dependency `pretty-error` to version `3.0.4`.
+* Updated [AWS IP Ranges](https://ip-ranges.amazonaws.com/ip-ranges.json) to `"2021-06-09-19-14-14"` (Sync Token: `1623266054`).
 
 ---
 

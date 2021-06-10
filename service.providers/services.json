@@ -1,0 +1,10 @@
+{
+    "services" : [
+        {
+            "providerName" : "AWS",
+            "homeDirectory" : "./aws",
+            "dataFile" : "ip-ranges.json",
+            "updateURL" : "https://ip-ranges.amazonaws.com/ip-ranges.json"
+        }
+    ]
+}

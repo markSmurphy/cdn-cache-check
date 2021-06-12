@@ -4,6 +4,7 @@
 
 ### Changed
 
+* A much improved service detection engine and reporting of domains/IP addresses which trigger detection from multiple sources.
 * Updated dependency `ip-cidr` to version `2.1.5`.
 * `Atlassian Status Page` added to service detection.
 * Updated dependency `ora` to version `5.4.1`.

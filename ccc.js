@@ -517,27 +517,29 @@ try {
                             uniqueDomains.domains.forEach((domain) => {
                                 cccDNS.determineCDN(domain, settings.ApexDomains, (cdn) => {
                                     debug('determineCDN(%s) returned: %O', domain, cdn);
-                                    // Construct the console message
+                                    // Construct the console message array
                                     var cdnDeduction = [{
                                         hostname: chalk.cyan(cdn.hostname)
                                     }];
 
+                                    // Join the message array into a string (we may detected multiple services like a CDN over a Cloud provider)
+                                    let messageStr = cdn.message.join(' || ');
                                     // Add colour to the message depending upon the success of otherwise of the determination
                                     switch (cdn.status) {
                                         case CCC_CDN_DETERMINATION_STATUS.INDETERMINATE:
-                                            cdnDeduction[0].message = chalk.grey(cdn.message);
+                                            cdnDeduction[0].message = chalk.grey(messageStr);
                                             break;
                                         case CCC_CDN_DETERMINATION_STATUS.ERROR:
-                                            cdnDeduction[0].message = chalk.redBright(cdn.message);
+                                            cdnDeduction[0].message = chalk.redBright(messageStr);
                                             break;
                                         case CCC_CDN_DETERMINATION_STATUS.CDN:
-                                            cdnDeduction[0].message = chalk.greenBright(cdn.message);
+                                            cdnDeduction[0].message = chalk.greenBright(messageStr);
                                             break;
                                         case CCC_CDN_DETERMINATION_STATUS.OTHER:
-                                            cdnDeduction[0].message = chalk.yellowBright(cdn.message);
+                                            cdnDeduction[0].message = chalk.yellowBright(messageStr);
                                             break;
                                         default:
-                                            cdnDeduction[0].message = chalk.yellowBright(cdn.message);
+                                            cdnDeduction[0].message = chalk.yellowBright(messageStr);
                                     }
 
                                     let hostnameColumnWidth = uniqueDomains.domainNameLength +5;
@@ -555,7 +557,7 @@ try {
                                 });
                             });
 
-                            // Stop the DNS Detection spinner
+                            // Stop the CDN Detection spinner
                             spinnerCDNDetection.succeed(chalk.green('CDN detection complete on ' + uniqueDomains.domains.length + ' unique domains'));
                         }
 

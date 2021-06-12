@@ -331,11 +331,11 @@ try {
                             // Indicate if a redirect was followed
                             if (settings.options.httpOptions.follow > 0) {
                                 // Add the column and a placeholder for the redirects indicator
-                                row['Redirects'] = ' ';
+                                row.Redirects = ' ';
                                 // Add the integer value to the raw results
-                                rowRaw['Redirects'] = responses[i].redirectCount;
+                                rowRaw.Redirects = responses[i].redirectCount;
                                 if(responses[i].redirectCount > 0){ // If the request resulted in one or more redirects, add the indicator character to the results
-                                    row['Redirects'] = CCC_OUTPUT_REDIRECT_INDICATOR;
+                                    row.Redirects = CCC_OUTPUT_REDIRECT_INDICATOR;
                                 }
                             }
                             // Populate basic request details
@@ -343,41 +343,40 @@ try {
                             // let responseTimestamp = `${timestamp.getHours()}:${timestamp.getMinutes()}:${timestamp.getSeconds()}:${timestamp.getMilliseconds()}`;
                             // Pad the hours/mins/secs/mSecs with a leading '0' and then return (trim) the last 2 rightmost characters to ensure a leading zero for 1 digit numbers
                             let responseTimestamp = ('0' + timestamp.getHours()).slice(-2) + ':' + ('0' + timestamp.getMinutes()).slice(-2) + ':' + ('0' + timestamp.getSeconds()).slice(-2) + ':' + ('0' + timestamp.getMilliseconds()).slice(-2);
-                            row['Time'] = chalk.reset(responseTimestamp);
-                            rowRaw['Time'] = responseTimestamp;
+                            row.Time = chalk.reset(responseTimestamp);
+                            rowRaw.Time = responseTimestamp;
 
                             // Populate response status code, with colour indicator of success or failure
                             if (Number.isInteger(responses[i].statusCode)) {
 
                                 if (responses[i].statusCode >= 400) {
                                     // Failure response code, 4xx & 5xx
-                                    row['Status'] = chalk.red(responses[i].statusCode);
+                                    row.Status = chalk.red(responses[i].statusCode);
 
                                 } else if (responses[i].statusCode >= 300) {
                                     // Redirect response code (3xx)
-                                    row['Status'] = chalk.yellow(responses[i].statusCode);
+                                    row.Status = chalk.yellow(responses[i].statusCode);
 
                                 } else {
                                     // Success response code (1xx, 2xx)
-                                    row['Status'] = chalk.green(responses[i].statusCode);
+                                    row.Status = chalk.green(responses[i].statusCode);
                                 }
                             } else if (responses[i].error) {
-                                row['Status'] = chalk.bgRed.whiteBright(responses[i].statusCode);
+                                row.Status = chalk.bgRed.whiteBright(responses[i].statusCode);
                             }
                             // Write it to the raw output row regardless of its value
-                            rowRaw['Status'] = responses[i].statusCode;
+                            rowRaw.Status = responses[i].statusCode;
 
-                            row['Host'] = chalk.cyan(responses[i].request.host);
-                            rowRaw['Host'] = responses[i].request.host;
+                            row.Host = chalk.cyan(responses[i].request.host);
+                            rowRaw.Host = responses[i].request.host;
 
-                            row['Path'] = chalk.cyan(responses[i].request.path);
-                            rowRaw['Path'] = responses[i].request.path
-                            ;
-                            // row['Protocol'] = chalk.cyan(responses[i].request.protocol);
-                            rowRaw['Protocol'] = responses[i].request.protocol;
+                            row.Path = chalk.cyan(responses[i].request.path);
+                            rowRaw.Path = responses[i].request.path;
+                            // row.Protocol = chalk.cyan(responses[i].request.protocol);
+                            rowRaw.Protocol = responses[i].request.protocol;
 
                             // row['URL'] = chalk.cyan(responses[i].request.url);
-                            rowRaw['URL'] = responses[i].request.url;
+                            rowRaw.URL = responses[i].request.url;
 
                             // ***** Copy rowRaw into new rowDebug here *****
                             // Pull out select response headers

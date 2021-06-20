@@ -5,15 +5,7 @@ debug('Entry: [%s]', __filename);
 debug('Command line arguments: %O', process.argv);
 
 // Global Constants
-const CCC_REQUEST_WARNING_THRESHOLD = 5;
-const CCC_CDN_DETERMINATION_STATUS = {
-    INDETERMINATE: 'Indeterminate',
-    CDN: 'CDN',
-    ERROR: 'Error',
-    OTHER: 'Other Internet Service'
-};
-const CCC_OUTPUT_REDIRECT_INDICATOR = '\u00AE'; // "\u00AE" = ®
-const CCC_OUTPUT_PADDING_CHARACTER = '·';
+const constants = require('./constants.json');
 
 // Command line options parser
 const argv = require('yargs')
@@ -206,7 +198,7 @@ try {
 
         // Calculate how many requests we're going to make and display a notification if it exceeds the threshold
         debug('Checking these %s URLs %s times (%s requests in total across %s domain(s)): %O', urls.length, settings.iterations, totalRequests, uniqueDomains.count, urls);
-        if (totalRequests > CCC_REQUEST_WARNING_THRESHOLD) {
+        if (totalRequests > constants.CCC_REQUEST.WARNING_THRESHOLD) {
             // Display a subtly different notification if there are multiple iterations and/or multiple domains
             let notification = chalk.cyan('Checking ' + urls.length + ' URLs');
 
@@ -335,7 +327,7 @@ try {
                                 // Add the integer value to the raw results
                                 rowRaw.Redirects = responses[i].redirectCount;
                                 if(responses[i].redirectCount > 0){ // If the request resulted in one or more redirects, add the indicator character to the results
-                                    row.Redirects = CCC_OUTPUT_REDIRECT_INDICATOR;
+                                    row.Redirects = constants.CCC_OUTPUT.REDIRECT_INDICATOR;
                                 }
                             }
                             // Populate basic request details
@@ -526,16 +518,16 @@ try {
                                     let messageStr = cdn.message.join(' || ');
                                     // Add colour to the message depending upon the success of otherwise of the determination
                                     switch (cdn.status) {
-                                        case CCC_CDN_DETERMINATION_STATUS.INDETERMINATE:
+                                        case constants.CCC_CDN_DETERMINATION_STATUS.INDETERMINATE:
                                             cdnDeduction[0].message = chalk.grey(messageStr);
                                             break;
-                                        case CCC_CDN_DETERMINATION_STATUS.ERROR:
+                                        case constants.CCC_CDN_DETERMINATION_STATUS.ERROR:
                                             cdnDeduction[0].message = chalk.redBright(messageStr);
                                             break;
-                                        case CCC_CDN_DETERMINATION_STATUS.CDN:
+                                        case constants.CCC_CDN_DETERMINATION_STATUS.CDN:
                                             cdnDeduction[0].message = chalk.greenBright(messageStr);
                                             break;
-                                        case CCC_CDN_DETERMINATION_STATUS.OTHER:
+                                        case constants.CCC_CDN_DETERMINATION_STATUS.OTHER:
                                             cdnDeduction[0].message = chalk.yellowBright(messageStr);
                                             break;
                                         default:
@@ -546,7 +538,7 @@ try {
                                     // Format text into spaced columns
                                     let columns = columnify(cdnDeduction, {
                                         showHeaders: false,
-                                        paddingChr: CCC_OUTPUT_PADDING_CHARACTER,
+                                        paddingChr: constants.CCC_OUTPUT.PADDING_CHARACTER,
                                         config: {
                                             hostname: {minWidth: hostnameColumnWidth}
                                         }

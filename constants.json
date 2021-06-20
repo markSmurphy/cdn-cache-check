@@ -1,0 +1,21 @@
+{
+    "CCC_CDN_DETERMINATION_ENUM_STATUS": {
+        "INDETERMINATE": "Indeterminate",
+        "CDN": "CDN",
+        "ERROR": "Error",
+        "AWS": "AWS",
+        "AZURE": "Azure",
+        "OTHER": "Other Internet Service"
+    },
+    "CCC_DNS" : {
+        "REQUEST_RECORD_TYPE": "A",
+        "DEFAULT_RESOLVER": "8.8.8.8"
+    },
+    "CCC_REQUEST": {
+        "WARNING_THRESHOLD": 5
+    },
+    "CCC_OUTPUT": {
+        "REDIRECT_INDICATOR": "\u00AE",
+        "PADDING_CHARACTER": "."
+    }
+}

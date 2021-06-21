@@ -1,0 +1,16 @@
+#CloudFront
+https://assets.fuseuniversal.com/assets/companies/20200316173614-ihglive-v3-58-6-fuse.css
+
+#S3 buckets
+https://fuse-public-assets.s3-eu-west-1.amazonaws.com/lxd/ihg/css/login-custom.min.css
+https://s3.eu-west-1.amazonaws.com/fuse-new-webclient/myLearningPlansClient/prod/assets/lp-placeholder.svg
+https://s3-eu-west-1.amazonaws.com/fuse-new-webclient/myLearningPlansClient/prod/assets/lp-placeholder.svg
+
+#Fastly
+https://resources-hotfix.fuseuniversal.com/test-all-scorm-12-05-2015.csv
+
+#Fastly; nested CNAME records
+https://m.media-amazon.com/images/I/51nwLD0Yk3L._AC_SY200_.jpg
+
+#Akamai
+https://www.akamai.com/images/favicons/favicon-32x32.png

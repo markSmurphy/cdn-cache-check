@@ -13,7 +13,7 @@ ccc.cmd
 ccc.ps1
 
 # Test URLs
-url*.txt
+./url*.txt
 
 # HTTP Archive files in the root folder
 ./*.har

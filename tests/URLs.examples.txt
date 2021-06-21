@@ -1,0 +1,7 @@
+#List of example URLs
+www.twitch.tv
+www.reddit.com
+www.stackoverflow.com
+www.adobe.com
+https://www.wired.com/
+https://www.rolex.com/

@@ -64,7 +64,7 @@
     "needle": "^2.6.0",
     "open": "^7.4.2",
     "ora": "^5.4.0",
-    "pretty-error": "^3.0.3",
+    "pretty-error": "^3.0.4",
     "prettyjson": "^1.2.1",
     "supports-color": "^8.1.1",
     "tlds": "^1.221.1",

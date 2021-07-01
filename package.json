@@ -57,7 +57,7 @@
     "columnify": "^1.5.4",
     "debug": "^4.3.1",
     "ip-cidr": "^2.1.4",
-    "is-valid-domain": "0.0.19",
+    "is-valid-domain": "0.0.20",
     "jsonexport": "^3.2.0",
     "multimatch": "^5.0.0",
     "native-dns-multisocket": "^0.7.0",

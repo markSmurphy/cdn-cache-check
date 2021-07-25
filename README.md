@@ -8,6 +8,7 @@
 ![Libraries.io dependency status for latest release](https://img.shields.io/librariesio/release/npm/cdn-cache-check?style=plastic)
 ![Downloads Total](https://badgen.net/npm/dt/cdn-cache-check)
 ![Downloads/Month](https://img.shields.io/npm/dm/cdn-cache-check.svg?style=plastic)
+![Last Commit](https://badgen.net/github/last-commit/markSmurphy/cdn-cache-check)
 ![Licence](https://img.shields.io/npm/l/cdn-cache-check.svg?style=plastic)
 
 HTTP caching is an important component in the delivery of a fast web site. This command line utility helps to analyse URLs to determine if they're served via a CDN and the caching behaviours of both the CDN and the user-agent.

@@ -5,8 +5,9 @@
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/9036b897af074a8ba94d5a22e24e5680)](https://www.codacy.com?utm_source=bitbucket.org&amp;utm_medium=referral&amp;utm_content=MarkSMurphy/cdn-cache-check&amp;utm_campaign=Badge_Grade)
 ![GitHub issues](https://img.shields.io/github/issues/markSmurphy/cdn-cache-check?style=plastic)
 [![Known Vulnerabilities](https://snyk.io/test/github/markSmurphy/cdn-cache-check/badge.svg?targetFile=package.json)](https://snyk.io/test/github/markSmurphy/cdn-cache-check?targetFile=package.json)
-![Libraries.io dependency status for latest release](https://img.shields.io/librariesio/release/npm/cdn-cache-check.svg?style=plastic)
-![Downloads](https://img.shields.io/npm/dm/cdn-cache-check.svg?style=plastic)
+![Libraries.io dependency status for latest release](https://img.shields.io/librariesio/release/npm/cdn-cache-check?style=plastic)
+![Downloads Total](https://badgen.net/npm/dt/cdn-cache-check)
+![Downloads/Month](https://img.shields.io/npm/dm/cdn-cache-check.svg?style=plastic)
 ![Licence](https://img.shields.io/npm/l/cdn-cache-check.svg?style=plastic)
 
 HTTP caching is an important component in the delivery of a fast web site. This command line utility helps to analyse URLs to determine if they're served via a CDN and the caching behaviours of both the CDN and the user-agent.

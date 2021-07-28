@@ -51,7 +51,9 @@
     "service detection",
     "http caching",
     "http cache",
-    "cache-control"
+    "cache-control",
+    "cloud",
+    "cloud provider"
   ],
   "author": "Mark Murphy",
   "license": "MIT",

@@ -60,7 +60,7 @@ module.exports = {
             let returnObject = {};
 
             // Initialise length of the longest FQDN in the list
-            var domainNameLength = 0;
+            let domainNameLength = 0;
 
             // loop through array, extracting hostname from each URL
             for (let i = 0; i < urls.length; i++) {
@@ -181,7 +181,7 @@ module.exports = {
                     cdnResponse.dnsAnswer = module.exports.parseAnswer(answer.answer, {operation: 'getRecursion'});
 
                     // Iterate through each nested address in the DNS answer to check if matches a known CDN
-                    for (var i = 0; i < cdnResponse.dnsAnswer.length; i++) {
+                    for (let i = 0; i < cdnResponse.dnsAnswer.length; i++) {
                         for (let cdn in apexDomains) {
                             debug('Evaluating [%s] against [%s]: %O', cdnResponse.dnsAnswer[i], cdn, apexDomains[cdn].domains);
                             let matchingDomains = matcher(cdnResponse.dnsAnswer[i], apexDomains[cdn].domains);

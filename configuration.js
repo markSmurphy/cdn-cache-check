@@ -18,13 +18,14 @@ const chalk = require('chalk');
 
 // Initialise collection of Utilities
 const utils = require('./utils');
-const { settings } = require('cluster');
+//const { settings } = require('cluster');
 
 // Initialise default settings
 var defaultSettings = {};
 
 try {
     defaultSettings = require('./defaults.json'); // Load the defaults
+
 } catch (error) {
     debug('An error occurred loading the defaults.json file: %O', error);
     // The defaults.json didn't load.  Return a bare and very basic config
@@ -47,7 +48,7 @@ try {
             }
         ],
         ApexDomains: {},
-        options : {
+        options: {
             exportToCSV: true,
             openAfterExport: false,
             headers: {
@@ -69,10 +70,12 @@ try {
 module.exports = {
     getSettings() {
         debug('Entry::getSettings()');
+
+        // Load the defaults
+        let settings = defaultSettings;
+        debug('Loaded default settings: %O', settings);
+
         try {
-            // Load the defaults
-            let settings = defaultSettings;
-            debug('Loaded default settings: %O', settings);
 
             // Check command line parameters for overrides...
             debug('Looking for overrides to default settings');
@@ -114,7 +117,7 @@ module.exports = {
                 }
             }
 
-            // Interval in-between requests
+            // Interval between requests
             if (argv.interval) {
                 // Validate that an integer was specified
                 if (Number.isInteger(argv.interval)) {
@@ -123,6 +126,23 @@ module.exports = {
                     console.log(chalk.blue('The interval between iterations is set to %s'), utils.millisecondsToHms(settings.interval));
                 } else {
                     console.log(chalk.blue('Warning: Ignoring "--interval %s" because interval must be an integer. Using the default "%s" instead'), argv.interval, settings.interval);
+                }
+            }
+
+            // Number of HTTP redirects to follow
+            if (argv.follow != undefined) {
+
+                // Validate that an integer was specified
+                if (Number.isInteger(argv.follow)) {
+                    settings.options.httpOptions.follow = argv.follow;
+                    debug('The number of HTTP redirects to follow is set to %s', settings.options.httpOptions.follow);
+
+                    if (settings.options.httpOptions.follow === 0) {
+                        console.log(chalk.blue('HTTP redirects will not be followed'));
+                    }
+
+                } else {
+                    console.log(chalk.yellow('Warning: Ignoring "--follow %s" because "follow" must be an integer specifying the number of chained HTTP redirects to follow. Using the default %s instead'), argv.follow, settings.options.httpOptions.follow);
                 }
             }
 
@@ -153,8 +173,8 @@ module.exports = {
 
             // Use a client specific customised user-agent string
             // settings.options.headers['user-agent'] = this.getUserAgent();
-            settings.options.httpOptions['user_agent'] = this.getUserAgent();
-            debug('Using the user-agent: %s', settings.options.httpOptions['user_agent']);
+            settings.options.httpOptions.user_agent = this.getUserAgent();
+            debug('Using the user-agent: %s', settings.options.httpOptions.user_agent);
 
             return settings;
 

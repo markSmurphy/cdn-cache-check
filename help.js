@@ -33,6 +33,7 @@ module.exports = {
         console.log('   ' + '--list-response-headers       ' + chalk.grey('List all unique response headers. Useful when creating a new header collection.'));
         console.log('   ' + '--export <true|false>         ' + chalk.grey('Exports output to a .csv file.  Default: true'));
         console.log('   ' + '--open                        ' + chalk.grey('Opens the exported .csv file automatically.'));
+        console.log('   ' + '--follow <integer>            ' + chalk.grey('The number of HTTP redirects to follow. Default: 5'));
         //console.log('   ' + '--iterations <integer>        ' + chalk.grey('The number of times to request each URL. Default: 1'));
         //console.log('   ' + '--interval <integer>          ' + chalk.grey('The number of milliseconds in-between multiple http requests. Default: 3000'));
         console.log('   ' + '--debug                       ' + chalk.grey('Enables verbose debugging output'));

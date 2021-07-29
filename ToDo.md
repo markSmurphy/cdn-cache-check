@@ -70,7 +70,7 @@
   * [ ] `timeout`
   * [ ] `response_timeout`
   * [ ] `read_timeout`
-  * [ ] `follow`
+  * [X] `follow`
   * [ ] `compress`
   * [ ] et al
 * [ ] Implement full debug request/response logging

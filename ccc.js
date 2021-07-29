@@ -249,7 +249,7 @@ try {
                 result.request.url = urls[i];
 
                 // Send HTTP request for current URL
-                let resp = needle.request(settings.method, urls[i], '', settings.options.httpOptions, function(error, response) {
+                let resp = needle.request(settings.method, urls[i], '', settings.options.httpOptions, (error, response) => {
 
                     debug('Callback for [%s] received', urls[i]);
 
@@ -570,7 +570,7 @@ try {
                     }
                 });
 
-                resp.on('redirect', function(url) {
+                resp.on('redirect', (url) => {
                     result.redirectCount += 1;
                     debug('redirectCount incremented to %s by redirect event to [%s] ', result.redirectCount, url);
                 });

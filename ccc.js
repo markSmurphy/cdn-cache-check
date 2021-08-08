@@ -5,7 +5,8 @@ debug('Entry: [%s]', __filename);
 debug('Command line arguments: %O', process.argv);
 
 // Global Constants
-const constants = require('./constants.json');
+const constants = require('./constants');
+constants.init();
 
 // Command line options parser
 const argv = require('yargs')
@@ -198,7 +199,7 @@ try {
 
         // Calculate how many requests we're going to make and display a notification if it exceeds the threshold
         debug('Checking these %s URLs %s times (%s requests in total across %s domain(s)): %O', urls.length, settings.iterations, totalRequests, uniqueDomains.count, urls);
-        if (totalRequests > constants.CCC_REQUEST.WARNING_THRESHOLD) {
+        if (totalRequests > global.CCC_REQUEST.WARNING_THRESHOLD) {
             // Display a subtly different notification if there are multiple iterations and/or multiple domains
             let notification = chalk.cyan('Checking ' + urls.length + ' URLs');
 
@@ -327,7 +328,7 @@ try {
                                 // Add the integer value to the raw results
                                 rowRaw.Redirects = responses[i].redirectCount;
                                 if(responses[i].redirectCount > 0){ // If the request resulted in one or more redirects, add the indicator character to the results
-                                    row.Redirects = constants.CCC_OUTPUT.REDIRECT_INDICATOR;
+                                    row.Redirects = global.CCC_OUTPUT.REDIRECT_INDICATOR;
                                 }
                             }
                             // Populate basic request details
@@ -518,16 +519,16 @@ try {
                                     let messageStr = cdn.message.join(' || ');
                                     // Add colour to the message depending upon the success of otherwise of the determination
                                     switch (cdn.status) {
-                                        case constants.CCC_CDN_DETERMINATION_STATUS.INDETERMINATE:
+                                        case global.CCC_CDN_DETERMINATION_ENUM_STATUS.INDETERMINATE:
                                             cdnDeduction[0].message = chalk.grey(messageStr);
                                             break;
-                                        case constants.CCC_CDN_DETERMINATION_STATUS.ERROR:
+                                        case global.CCC_CDN_DETERMINATION_ENUM_STATUS.ERROR:
                                             cdnDeduction[0].message = chalk.redBright(messageStr);
                                             break;
-                                        case constants.CCC_CDN_DETERMINATION_STATUS.CDN:
+                                        case global.CCC_CDN_DETERMINATION_ENUM_STATUS.CDN:
                                             cdnDeduction[0].message = chalk.greenBright(messageStr);
                                             break;
-                                        case constants.CCC_CDN_DETERMINATION_STATUS.OTHER:
+                                        case global.CCC_CDN_DETERMINATION_ENUM_STATUS.OTHER:
                                             cdnDeduction[0].message = chalk.yellowBright(messageStr);
                                             break;
                                         default:
@@ -538,7 +539,7 @@ try {
                                     // Format text into spaced columns
                                     let columns = columnify(cdnDeduction, {
                                         showHeaders: false,
-                                        paddingChr: constants.CCC_OUTPUT.PADDING_CHARACTER,
+                                        paddingChr: global.CCC_OUTPUT.PADDING_CHARACTER,
                                         config: {
                                             hostname: {minWidth: hostnameColumnWidth}
                                         }

@@ -1,9 +1,6 @@
 const debug = require('debug')('cdn-cache-check-service-provider-azure');
 debug('Entry: [%s]', __filename);
 
-// Global Constants
-const constants = require('../constants.json');
-
 // Library for working with CIDR
 const IPCIDR = require('ip-cidr');
 
@@ -25,7 +22,7 @@ module.exports = {
             service: '',
             regionId: 0,
             region: null,
-            status: constants.CCC_CDN_DETERMINATION_ENUM_STATUS.INDETERMINATE,
+            status: global.CCC_CDN_DETERMINATION_ENUM_STATUS.INDETERMINATE,
             ipAddress: ipAddress
         };
 
@@ -50,7 +47,7 @@ module.exports = {
                         strMessage += ` (${services.values[i].properties.region})`;
                     }
                     response.messages.push(strMessage);
-                    response.status = constants.CCC_CDN_DETERMINATION_ENUM_STATUS.AZURE;
+                    response.status = global.CCC_CDN_DETERMINATION_ENUM_STATUS.AZURE;
 
                     if (options.verbose === false) { // Check if verbose mode is disabled, because we'll log everything if it's not
 

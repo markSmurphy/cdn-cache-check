@@ -42,10 +42,18 @@ module.exports = {
         console.log('   ' + '--help                        ' + chalk.grey('Display this help'));
         console.log(endOfLine);
         console.log(chalk.grey('EXAMPLES:'));
+        console.log(chalk.grey('   Check a single URL'));
         console.log('   ccc https://www.rolex.com/');
+        console.log(chalk.grey('   Check two URLs'));
         console.log('   ccc https://www.rolls-royce.com/ https://www.rolls-roycemotorcars.com/');
+        console.log(chalk.grey('   Check all URLs listed in `URLS.txt`'));
         console.log('   ccc URLs.txt');
-        console.log('   ccc https://www.mozilla.org/ --headers security -method head');
+        console.log(chalk.grey('   Check one URL with a HEAD request & output all `security` headers'));
+        console.log('   ccc https://www.mozilla.org/ --headers security --method head');
+        console.log(chalk.grey('   List all configured header collections and the headers they\'ll each output'));
+        console.log('   ccc --list-header-collections');
+        console.log(chalk.grey('   Check all URLs in `login.urls.txt` without following redirects and output all headers'));
+        console.log('   ccc login.urls.txt --headers all --follow 0');
         // Display more information if `verbose` is enabled
         if (verbose) {
             const os = require('os');

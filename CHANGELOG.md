@@ -15,6 +15,7 @@
 * Updated dependency `is-valid-domain` to version `0.0.20`.
 * Updated dependency `debug` to version `4.3.2`.
 * Updated dependency `needle` to version `2.8.0`.
+* Improved `EXAMPLES` in `--help` screen.
 
 ---
 

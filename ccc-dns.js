@@ -1,9 +1,6 @@
 const debug = require('debug')('cdn-cache-check-dns');
 debug('Entry: [%s]', __filename);
 
-// Global Constants
-const constants = require('./constants.json');
-
 // Initialise wildcard string parser
 const matcher = require('multimatch');
 
@@ -47,8 +44,8 @@ module.exports = {
         } catch (error) {
             // An error occurred getting the locally configured resolver, so return default
             debug('getDNSResolvers caught an error: %O', error);
-            debug('Returning default resolver: %s', constants.CCC_DNS.DEFAULT_RESOLVER);
-            return(constants.CCC_DNS.DEFAULT_RESOLVER);
+            debug('Returning default resolver: %s', global.CCC_DNS.DEFAULT_RESOLVER);
+            return(global.CCC_DNS.DEFAULT_RESOLVER);
         }
     },
     getUniqueDomains(urls) {
@@ -141,7 +138,7 @@ module.exports = {
             hostname: hostname,
             reason: '',
             service: 'Unknown',
-            status: constants.CCC_CDN_DETERMINATION_STATUS.INDETERMINATE,
+            status: global.CCC_CDN_DETERMINATION_ENUM_STATUS.INDETERMINATE,
             ipAddress: null
         };
 
@@ -149,7 +146,7 @@ module.exports = {
 
             let question = dns.Question({
                 name: hostname,
-                type: constants.CCC_DNS_REQUEST_RECORD_TYPE,
+                type: global.CCC_DNS_REQUEST_RECORD_TYPE,
             });
 
             let req = dns.Request({
@@ -163,7 +160,7 @@ module.exports = {
                 cdnResponse.message.push('DNS Timeout');
                 cdnResponse.reason = 'DNS Timeout';
                 cdnResponse.error = `Timeout after ${req.timeout} milliseconds`;
-                cdnResponse.status = constants.CCC_CDN_DETERMINATION_STATUS.ERROR;
+                cdnResponse.status = global.CCC_CDN_DETERMINATION_ENUM_STATUS.ERROR;
                 callback(cdnResponse);
             });
 
@@ -173,7 +170,7 @@ module.exports = {
                     cdnResponse.message.push('DNS Error');
                     cdnResponse.reason = 'DNS Error';
                     cdnResponse.error = error;
-                    cdnResponse.status = constants.CCC_CDN_DETERMINATION_STATUS.ERROR;
+                    cdnResponse.status = global.CCC_CDN_DETERMINATION_ENUM_STATUS.ERROR;
                 } else {
                     debug('Received DNS answer lookup for [%s]: %O', hostname, answer);
 
@@ -193,16 +190,16 @@ module.exports = {
                                 cdnResponse.matchingDomains = matchingDomains[0];
                                 cdnResponse.service = apexDomains[cdn].service.toUpperCase();
                                 cdnResponse.message.push(apexDomains[cdn].title);
-                                cdnResponse.status = constants.CCC_CDN_DETERMINATION_STATUS.CDN;
+                                cdnResponse.status = global.CCC_CDN_DETERMINATION_ENUM_STATUS.CDN;
                                 if (apexDomains[cdn].service.toUpperCase() !== 'CDN') {
-                                    cdnResponse.status = constants.CCC_CDN_DETERMINATION_STATUS.OTHER;
+                                    cdnResponse.status = global.CCC_CDN_DETERMINATION_ENUM_STATUS.OTHER;
                                 }
                             }
                         }
                     }
 
                     // Check if the DNS chain inspection didn't identify it as a CDN
-                    if (cdnResponse.status != constants.CCC_CDN_DETERMINATION_STATUS.CDN) {
+                    if (cdnResponse.status != global.CCC_CDN_DETERMINATION_ENUM_STATUS.CDN) {
                         // DNS didn't yield a conclusive answer. Check the IP Address against each of the service providers' list
                         debug('%s\'s DNS recursion didn\'t match a known provider\'s domain (cdnResponse.status: %s)', hostname, cdnResponse.status);
                         // Get the IP address from the DNS answer first
@@ -229,12 +226,12 @@ module.exports = {
                             if (cidr.contains(cdnResponse.ipAddress)) {
                                 debug('%s is in the CIDR block %s, which is AWS service %s', cdnResponse.ipAddress, awsServices.prefixes[i].ip_prefix, awsServices.prefixes[i].service);
                                 awsServicesMessage.push(awsServices.prefixes[i].service);
-                                cdnResponse.status = constants.CCC_CDN_DETERMINATION_STATUS.AWS;
+                                cdnResponse.status = global.CCC_CDN_DETERMINATION_ENUM_STATUS.AWS;
                                 cdnResponse.reason = `${cdnResponse.ipAddress} is in the CIDR block ${awsServices.prefixes[i].ip_prefix} which is used by AWS ${awsServices.prefixes[i].service}`;
 
                                 if (String.prototype.toUpperCase.call(awsServicesMessage[awsServicesMessage.length - 1]) === 'CLOUDFRONT') { // Check if the service is CloudFront
                                     cdnResponse.service = 'CDN';
-                                    cdnResponse.status = constants.CCC_CDN_DETERMINATION_STATUS.CDN;
+                                    cdnResponse.status = global.CCC_CDN_DETERMINATION_ENUM_STATUS.CDN;
                                 }
                             }
                         }
@@ -263,7 +260,7 @@ module.exports = {
             cdnResponse.message = 'Invalid DNS domain';
             cdnResponse.reason = `The hostname "${hostname}" doesn't conform to DNS specifications`;
             cdnResponse.service = 'None';
-            cdnResponse.status = constants.CCC_CDN_DETERMINATION_STATUS.ERROR;
+            cdnResponse.status = global.CCC_CDN_DETERMINATION_ENUM_STATUS.ERROR;
             // TO DO *** test if this is actually passed back in the callback if this condition is met
         }
     }

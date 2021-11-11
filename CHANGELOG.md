@@ -14,7 +14,12 @@
 * Updated dependency `pretty-error` to version `3.0.4`.
 * Updated dependency `is-valid-domain` to version `0.0.20`.
 * Updated dependency `debug` to version `4.3.2`.
-* Updated dependency `needle` to version `2.8.0`.
+* Updated dependency `needle` to version `2.9.1`.
+* Updated dependency `chalk` to version `4.1.2`.
+* Updated dependency `tlds` to version `1.226.0`.
+* Updated dependency `@tusbar/cache-control` to version `0.6.0`.
+* Updated dependency `ip-cidr` to version `3.0.4`.
+* Updated dependency `is-valid-domain` to version `0.1.4`.
 * Improved `EXAMPLES` in `--help` screen.
 
 ---

@@ -254,6 +254,8 @@ module.exports = {
                 }
             });
 
+            debug('Sending DNS Request: %O', req);
+            
             req.send();
 
         } else { // hostname didn't pass the validate-domain check

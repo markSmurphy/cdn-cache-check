@@ -19,7 +19,7 @@ const pathSeparator = require('path').sep;
 // Library for working with CIDR
 const IPCIDR = require('ip-cidr');
 
-const serviceDetectionAzure = require('./service.providers/azure');
+//const serviceDetectionAzure = require('./service.providers/azure');
 
 module.exports = {
     getDNSResolver() {
@@ -206,8 +206,8 @@ module.exports = {
                         debug('Extracting the IP address from the DNS answer');
                         cdnResponse.ipAddress = module.exports.parseAnswer(answer.answer, {});
 
-                        let azureResponse = serviceDetectionAzure.lookupIpAddress(cdnResponse.ipAddress);
-                        console.log('AZURE SERVICE DETECTION: %O', azureResponse);
+                        //let azureResponse = serviceDetectionAzure.lookupIpAddress(cdnResponse.ipAddress);
+                        //console.log('AZURE SERVICE DETECTION: %O', azureResponse);
 
                         // ***** Service Providers' Detection *****
                         // Check the IP Address against the AWS service list
@@ -255,7 +255,7 @@ module.exports = {
             });
 
             debug('Sending DNS Request: %O', req);
-            
+
             req.send();
 
         } else { // hostname didn't pass the validate-domain check

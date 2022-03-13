@@ -9,17 +9,18 @@
 * `Atlassian Status Page` added to service detection.
 * Updated [AWS IP Ranges](https://ip-ranges.amazonaws.com/ip-ranges.json) to `"2021-06-09-19-14-14"` (Sync Token: `1623266054`).
 * Added the option `--follow` which specifies the number of chained HTTP requests to follow (`0` to disable following redirects).
-* Updated dependency `ip-cidr` to version `2.1.5`.
+* Updated dependency `prettyjson` to version `1.2.5`.
+* Updated dependency `ip-cidr` to version `3.0.4`.
 * Updated dependency `ora` to version `5.4.1`.
 * Updated dependency `pretty-error` to version `3.0.4`.
-* Updated dependency `is-valid-domain` to version `0.0.20`.
-* Updated dependency `debug` to version `4.3.2`.
+* Updated dependency `is-valid-domain` to version `0.1.6`.
+* Updated dependency `debug` to version `4.3.3`.
 * Updated dependency `needle` to version `2.9.1`.
 * Updated dependency `chalk` to version `4.1.2`.
-* Updated dependency `tlds` to version `1.226.0`.
-* Updated dependency `@tusbar/cache-control` to version `0.6.0`.
-* Updated dependency `ip-cidr` to version `3.0.4`.
+* Updated dependency `tlds` to version `1.230.0`.
+* Updated dependency `@tusbar/cache-control` to version `0.6.1`.
 * Updated dependency `is-valid-domain` to version `0.1.4`.
+* Updated dependency `columnify` to version `1.6.0`.
 * Improved `EXAMPLES` in `--help` screen.
 
 ---

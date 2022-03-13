@@ -1,5 +1,14 @@
 # Changelog
 
+## [v1.8.0] - MMM DD<sup>th</sup> 2022
+
+### Added
+
+* A much improved service detection engine, and reporting of domains/IP addresses which trigger detection from multiple sources (i.e. cloud providers as well as CDNs).
+* Added `Azure Service Detection`.
+
+---
+
 ## [v1.7.0] - March 13<sup>th</sup> 2022
 
 ### Added

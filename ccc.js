@@ -87,7 +87,7 @@ try {
         let help = require('./help');
         help.helpScreen(argv.verbose);
         //Exit to terminal
-        return;
+        process.exit();
     }
 
     // Check for '--header-collections' command line parameters
@@ -112,7 +112,7 @@ try {
 
         console.log(EOL + chalk.grey('Config file:') + chalk.yellowBright(configFile));
         // Exit to terminal
-        return;
+        process.exit();
     }
 
     debug('Looking for URLs to check...');

@@ -5,10 +5,11 @@
 ### Added
 
 * Added the option `--follow` which specifies the number of chained HTTP requests to follow (`0` to disable following redirects).
+* Improved `EXAMPLES` in `--help` screen.
+* `Atlassian Status Page` added to service detection.
 
 ### Changed
 
-* `Atlassian Status Page` added to service detection.
 * Updated [AWS IP Ranges](https://ip-ranges.amazonaws.com/ip-ranges.json) to `"2021-06-09-19-14-14"` (Sync Token: `1623266054`).
 * Updated dependency `prettyjson` to version `1.2.5`.
 * Updated dependency `ip-cidr` to version `3.0.4`.
@@ -22,7 +23,6 @@
 * Updated dependency `@tusbar/cache-control` to version `0.6.1`.
 * Updated dependency `is-valid-domain` to version `0.1.4`.
 * Updated dependency `columnify` to version `1.6.0`.
-* Improved `EXAMPLES` in `--help` screen.
 
 ---
 

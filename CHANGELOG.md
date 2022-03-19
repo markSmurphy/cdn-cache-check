@@ -4,8 +4,12 @@
 
 ### Added
 
-* A much improved service detection engine, and reporting of domains/IP addresses which trigger detection from multiple sources (i.e. cloud providers as well as CDNs).
+* A much improved service detection engine which queries cloud providers' publish IP address ranges
 * Added `Azure Service Detection`.
+
+### Changed
+
+* Updated dependency `debug` to version `4.3.4`.
 
 ---
 

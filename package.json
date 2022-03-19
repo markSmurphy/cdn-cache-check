@@ -1,6 +1,6 @@
 {
   "name": "cdn-cache-check",
-  "version": "1.7.1",
+  "version": "1.8.0",
   "description": "Makes HTTP requests to URLs and parses response headers to determine caching behaviour",
   "main": "ccc.js",
   "scripts": {
@@ -61,7 +61,7 @@
     "@tusbar/cache-control": "^0.6.1",
     "chalk": "^4.1.2",
     "columnify": "^1.6.0",
-    "debug": "^4.3.3",
+    "debug": "^4.3.4",
     "ip-cidr": "^3.0.4",
     "is-valid-domain": "^0.1.6",
     "jsonexport": "^3.2.0",

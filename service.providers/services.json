@@ -9,8 +9,8 @@
     "Azure" : {
             "providerName" : "Azure",
             "homeDirectory" : "./azure",
-            "dataFile" : "./azure/ServiceTags_Public_20210607.json",
+            "dataFile" : "./azure/ServiceTags_Public_20220314.json",
             "sourceURL" : "https://www.microsoft.com/en-us/download/details.aspx?id=56519",
-            "versionTag" : "2021.06.07"
+            "versionTag" : "2022-03-14"
         }
 }

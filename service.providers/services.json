@@ -4,7 +4,7 @@
         "homeDirectory" : "./aws",
         "dataFile" : "./aws/ip-ranges.json",
         "sourceURL" : "https://ip-ranges.amazonaws.com/ip-ranges.json",
-        "versionTag" : "2021-06-09-19-14-14"
+        "versionTag" : "2022-03-17-23-23-26"
     },
     "Azure" : {
             "providerName" : "Azure",

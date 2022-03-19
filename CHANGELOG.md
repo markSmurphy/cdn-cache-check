@@ -9,6 +9,7 @@
 
 ### Changed
 
+* Updated [AWS IP Ranges](https://ip-ranges.amazonaws.com/ip-ranges.json) to `"2022-03-17-23-23-26"` (Sync Token: `1647559406`).
 * Updated dependency `debug` to version `4.3.4`.
 
 ---

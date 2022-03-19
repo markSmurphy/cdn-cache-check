@@ -61,7 +61,8 @@ try {
                 read_timeout: 6000,
                 follow: 5,
                 compressed: true
-            }
+            },
+            verbose: false
         }
     };
 }
@@ -158,6 +159,11 @@ module.exports = {
             // Check for '--open' argument
             if (argv.open) {
                 settings.options.openAfterExport = true;
+            }
+
+            // Check for '--verbose' argument
+            if (argv.verbose) {
+                settings.options.verbose = true;
             }
 
             // Check for '--export false' argument

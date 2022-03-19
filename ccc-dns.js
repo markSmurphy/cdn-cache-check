@@ -129,6 +129,7 @@ module.exports = {
             return(response);
         }
     },
+
     determineCDN(hostname, apexDomains, callback) {
         debug('determineCDN(%s)', hostname);
 
@@ -207,7 +208,9 @@ module.exports = {
                         cdnResponse.ipAddress = module.exports.parseAnswer(answer.answer, {});
 
                         let azureResponse = serviceDetectionAzure.lookupIpAddress(cdnResponse.ipAddress);
-                        console.log('AZURE SERVICE DETECTION: %O', azureResponse);
+                        //console.log('AZURE SERVICE DETECTION for %s: %O', cdnResponse.ipAddress, azureResponse);
+
+                        /* console.log('AZURE SERVICE DETECTION: %s', azureResponse.reason); */
 
                         // ***** Service Providers' Detection *****
                         // Check the IP Address against the AWS service list

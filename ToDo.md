@@ -65,7 +65,7 @@
     * [ ] i.e. Add `fastly-debug:1` to all requests when the Fastly header collection is used
 * [ ] Add console width warning if it's too narrow (`process.stdout.columns`)
 * [ ] Some sites (such as `www.etsy.com` & `www.amazon.co.uk`) use multiple CDNs for the domain depending where the client is. Mention this in a *README* section, but fix it by turning `ddig` into a library and querying multiple resolvers for the full `CNAME` chain before performing CDN detection.
-* [ ] Add a **reason** to `cdnDetection()` output when `--verbose` is enabled
+* [X] Add a **reason** to `cdnDetection()` output when `--verbose` is enabled
 * [ ] Command line arguments for `needle` http options:
   * [ ] `timeout`
   * [ ] `response_timeout`

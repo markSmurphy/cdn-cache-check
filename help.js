@@ -36,7 +36,8 @@ module.exports = {
         console.log('   ' + '--follow <integer>            ' + chalk.grey('The number of HTTP redirects to follow. Default: 5'));
         //console.log('   ' + '--iterations <integer>        ' + chalk.grey('The number of times to request each URL. Default: 1'));
         //console.log('   ' + '--interval <integer>          ' + chalk.grey('The number of milliseconds in-between multiple http requests. Default: 3000'));
-        console.log('   ' + '--debug                       ' + chalk.grey('Enables verbose debugging output'));
+        console.log('   ' + '--verbose                     ' + chalk.grey('Enables verbose output'));
+        console.log('   ' + '--debug                       ' + chalk.grey('Enables debugging output'));
         console.log('   ' + '--no-color                    ' + chalk.grey('Switches off colour output'));
         console.log('   ' + '--version                     ' + chalk.grey('Display version number'));
         console.log('   ' + '--help                        ' + chalk.grey('Display this help'));

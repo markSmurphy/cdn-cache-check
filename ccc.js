@@ -511,33 +511,44 @@ try {
                                 cccDNS.determineCDN(domain, settings.ApexDomains, (cdn) => {
                                     debug('determineCDN(%s) returned: %O', domain, cdn);
                                     // Construct the console message array
-                                    var cdnDeduction = [{
+                                    var cdnDetection = [{
                                         hostname: chalk.cyan(cdn.hostname)
                                     }];
+                                    // Join the message array into a string (we may have detected multiple services e.g. a CDN over a Cloud provider)
+                                    // let messageStr = cdn.message.join(' || ');
 
-                                    // Join the message array into a string (we may detected multiple services like a CDN over a Cloud provider)
-                                    let messageStr = cdn.message.join(' || ');
+                                    // Get the last message from the "message" array
+                                    let messageStr = cdn.message[cdn.message.length - 1];
+                                    // Get the reason for the detection
+                                    let reasonStr = cdn.reason;
+                                    debug(reasonStr);
                                     // Add colour to the message depending upon the success of otherwise of the determination
                                     switch (cdn.status) {
                                         case global.CCC_CDN_DETERMINATION_ENUM_STATUS.INDETERMINATE:
-                                            cdnDeduction[0].message = chalk.grey(messageStr);
+                                            cdnDetection[0].message = chalk.grey(messageStr);
                                             break;
                                         case global.CCC_CDN_DETERMINATION_ENUM_STATUS.ERROR:
-                                            cdnDeduction[0].message = chalk.redBright(messageStr);
+                                            cdnDetection[0].message = chalk.redBright(messageStr);
                                             break;
                                         case global.CCC_CDN_DETERMINATION_ENUM_STATUS.CDN:
-                                            cdnDeduction[0].message = chalk.greenBright(messageStr);
+                                            cdnDetection[0].message = chalk.greenBright(messageStr);
                                             break;
                                         case global.CCC_CDN_DETERMINATION_ENUM_STATUS.OTHER:
-                                            cdnDeduction[0].message = chalk.yellowBright(messageStr);
+                                            cdnDetection[0].message = chalk.yellowBright(messageStr);
                                             break;
                                         default:
-                                            cdnDeduction[0].message = chalk.yellowBright(messageStr);
+                                            cdnDetection[0].message = chalk.yellowBright(messageStr);
+                                    }
+
+                                    // Record the reason against the message if verbose output is enabled
+                                    if (settings.options.verbose) {
+                                        cdnDetection[0].reason = reasonStr;
                                     }
 
                                     let hostnameColumnWidth = uniqueDomains.domainNameLength +5;
+
                                     // Format text into spaced columns
-                                    let columns = columnify(cdnDeduction, {
+                                    let columns = columnify(cdnDetection, {
                                         showHeaders: false,
                                         paddingChr: global.CCC_OUTPUT.PADDING_CHARACTER,
                                         config: {

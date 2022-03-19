@@ -4,8 +4,9 @@
 
 ### Added
 
-* A much improved service detection engine which queries cloud providers' publish IP address ranges
+* A much improved service detection engine which queries cloud providers' publish IP address ranges.
 * Added `Azure Service Detection`.
+* Added `--verbose` option which includes a descriptive reason for the service detection results.
 
 ### Changed
 

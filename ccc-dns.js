@@ -19,7 +19,10 @@ const pathSeparator = require('path').sep;
 // Library for working with CIDR
 const IPCIDR = require('ip-cidr');
 
+// Initialise Service Provider Detection Libraries
 const serviceDetectionAzure = require('./service.providers/azure');
+const serviceDetectionAWS = require('./service.providers/aws');
+
 
 module.exports = {
     getDNSResolver() {
@@ -207,43 +210,15 @@ module.exports = {
                         debug('Extracting the IP address from the DNS answer');
                         cdnResponse.ipAddress = module.exports.parseAnswer(answer.answer, {});
 
+                        // Azure Service Detection
                         let azureResponse = serviceDetectionAzure.lookupIpAddress(cdnResponse.ipAddress);
-                        //console.log('AZURE SERVICE DETECTION for %s: %O', cdnResponse.ipAddress, azureResponse);
+                        /* console.log('AZURE SERVICE DETECTION for %s: %O', cdnResponse.ipAddress, azureResponse);
+                        console.log('AZURE SERVICE DETECTION: %s', azureResponse.reason); */
 
-                        /* console.log('AZURE SERVICE DETECTION: %s', azureResponse.reason); */
-
-                        // ***** Service Providers' Detection *****
-                        // Check the IP Address against the AWS service list
-                        let awsServicesFile = __dirname + pathSeparator + 'service.providers/aws/ip-ranges.json';
-                        let rawData = fs.readFileSync(awsServicesFile); // Read the AWS services file
-                        let awsServices = JSON.parse(rawData); // Parse it into a JSON object
-                        let awsServicesMessage = []; // Temporarily store the message because the AWS JSON might contain two matching CIDR blocks, so we can't just concatenate
-
-                        // Loop through each service
-                        debug('Checking if the IP address [%s] matches a known AWS service', cdnResponse.ipAddress);
-                        for (let i = 0; i < awsServices.prefixes.length; i++) {
-                            // Create a cidr object based on current service's IP prefix range
-                            const cidr = new IPCIDR(awsServices.prefixes[i].ip_prefix);
-
-                            // Check if the IP address exists within the cidr block
-                            if (cidr.contains(cdnResponse.ipAddress)) {
-                                debug('%s is in the CIDR block %s, which is AWS service %s', cdnResponse.ipAddress, awsServices.prefixes[i].ip_prefix, awsServices.prefixes[i].service);
-                                awsServicesMessage.push(awsServices.prefixes[i].service);
-                                cdnResponse.status = global.CCC_CDN_DETERMINATION_ENUM_STATUS.AWS;
-                                cdnResponse.reason = `${cdnResponse.ipAddress} is in the CIDR block ${awsServices.prefixes[i].ip_prefix} which is used by AWS ${awsServices.prefixes[i].service}`;
-
-                                if (String.prototype.toUpperCase.call(awsServicesMessage[awsServicesMessage.length - 1]) === 'CLOUDFRONT') { // Check if the service is CloudFront
-                                    cdnResponse.service = 'CDN';
-                                    cdnResponse.status = global.CCC_CDN_DETERMINATION_ENUM_STATUS.CDN;
-                                }
-                            }
-                        }
-
-                        if (awsServicesMessage.length > 0) {
-                            // Save the generated message into the response object
-                            cdnResponse.message.push('[' + awsServicesMessage.join(' -> ') + ']');
-                        }
-
+                        // AWS Service Detection
+                        let awsResponse = serviceDetectionAWS.lookupIpAddress(cdnResponse.ipAddress);
+                        /* console.log('AWS SERVICE DETECTION for %s: %O', cdnResponse.ipAddress, awsResponse);
+                        console.log('AWS SERVICE DETECTION: %s', awsResponse.reason); */
                     }
 
                     debug('determineCDN(%s) returning: %O', hostname, cdnResponse);

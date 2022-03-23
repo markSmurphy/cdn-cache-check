@@ -11,6 +11,7 @@
 * A much improved service detection engine which queries cloud providers' publish IP address ranges.
 * Added `Azure Service Detection`.
 * Added `--verbose` option which includes a descriptive reason for the service detection results.
+* Added reporting of **Application Path** to `--help --verbose` output to aid finding the `defaults.json` configuration file.
 
 ### Changed
 

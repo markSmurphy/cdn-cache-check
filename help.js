@@ -61,6 +61,7 @@ module.exports = {
             const utils = require('./utils');
             console.log(endOfLine);
             console.log(chalk.grey('SYSTEM:'));
+            console.log('   App Path           ' + chalk.blueBright(utils.getAppPath()));
             console.log('   Hostname           ' + chalk.blueBright(os.hostname()));
             console.log('   Uptime             ' + chalk.blueBright(utils.secondsToHms(os.uptime())));
             console.log('   Platform           ' + chalk.blueBright(os.platform()));

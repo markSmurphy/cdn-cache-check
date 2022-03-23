@@ -165,5 +165,11 @@ module.exports = {
             let filename = os.tmpdir() + path.sep +  prefix + Math.random().toString().substring(2,10) + defaultExtension;
             return(filename);
         }
+    },
+
+    getAppPath() {
+        let path = require('path');
+        let AppPath = path.resolve(__dirname);
+        return(AppPath);
     }
 };

@@ -18,7 +18,6 @@ const chalk = require('chalk');
 
 // Initialise collection of Utilities
 const utils = require('./utils');
-//const { settings } = require('cluster');
 
 // Initialise default settings
 var defaultSettings = {};

@@ -15,16 +15,9 @@ module.exports = {
         debug('lookupIpAddress(%s)::entry', ipAddress, options);
 
         // Initialise response object
-        let response = {
-            message: '',
-            messages: [],
-            reason: [],
-            service: '',
-            regionId: 0,
-            region: null,
-            status: global.CCC_CDN_DETERMINATION_ENUM_STATUS.INDETERMINATE,
-            ipAddress: ipAddress
-        };
+        let response = global.CCC_SERVICE_DETERMINATION_DEFAULT_RESPONSE;
+        response.ipAddress = ipAddress;
+        response.status = global.CCC_SERVICE_DETERMINATION_LABELS.INDETERMINATE;
 
         // Loop through each service
         debug('Checking if the IP address [%s] matches one of %s known Azure services', ipAddress, services.values.length);
@@ -47,7 +40,7 @@ module.exports = {
                         strMessage += ` (${services.values[i].properties.region})`;
                     }
                     response.messages.push(strMessage);
-                    response.status = global.CCC_CDN_DETERMINATION_ENUM_STATUS.AZURE;
+                    response.status = global.CCC_SERVICE_DETERMINATION_LABELS.AZURE;
 
                     if (options.verbose === false) { // Check if verbose mode is disabled, because we'll log everything if it's not
 
@@ -75,34 +68,34 @@ module.exports = {
 };
 
 function previousAWS(){
-                            // Check the IP Address against the AWS service list
-                            let awsServicesFile = __dirname + pathSeparator + 'service.providers/aws/ip-ranges.json';
-                            let rawData = fs.readFileSync(awsServicesFile); // Read the AWS services file
-                            let awsServices = JSON.parse(rawData); // Parse it into a JSON object
-                            let awsServicesMessage = []; // Temporarily store the message because the AWS JSON might contain two matching CIDR blocks, so we can't just concatenate
+    // Check the IP Address against the AWS service list
+    let awsServicesFile = __dirname + pathSeparator + 'service.providers/aws/ip-ranges.json';
+    let rawData = fs.readFileSync(awsServicesFile); // Read the AWS services file
+    let awsServices = JSON.parse(rawData); // Parse it into a JSON object
+    let awsServicesMessage = []; // Temporarily store the message because the AWS JSON might contain two matching CIDR blocks, so we can't just concatenate
 
-                            // Loop through each service
-                            debug('Checking if the IP address [%s] matches a known AWS service', cdnResponse.ipAddress);
-                            for (let i = 0; i < awsServices.prefixes.length; i++) {
-                                // Create a cidr object based on current service's IP prefix range
-                                const cidr = new IPCIDR(awsServices.prefixes[i].ip_prefix);
+    // Loop through each service
+    debug('Checking if the IP address [%s] matches a known AWS service', cdnResponse.ipAddress);
+    for (let i = 0; i < awsServices.prefixes.length; i++) {
+        // Create a cidr object based on current service's IP prefix range
+        const cidr = new IPCIDR(awsServices.prefixes[i].ip_prefix);
 
-                                // Check if the IP address exists within the cidr block
-                                if (cidr.contains(cdnResponse.ipAddress)) {
-                                    debug('%s is in the CIDR block %s, which is AWS service %s', cdnResponse.ipAddress, awsServices.prefixes[i].ip_prefix, awsServices.prefixes[i].service);
-                                    awsServicesMessage.push(awsServices.prefixes[i].service);
-                                    cdnResponse.status = global.CCC_CDN_DETERMINATION_ENUM_STATUS.AWS;
-                                    cdnResponse.reason = `${cdnResponse.ipAddress} is in the CIDR block ${awsServices.prefixes[i].ip_prefix} which is used by AWS ${awsServices.prefixes[i].service}`;
+        // Check if the IP address exists within the cidr block
+        if (cidr.contains(cdnResponse.ipAddress)) {
+            debug('%s is in the CIDR block %s, which is AWS service %s', cdnResponse.ipAddress, awsServices.prefixes[i].ip_prefix, awsServices.prefixes[i].service);
+            awsServicesMessage.push(awsServices.prefixes[i].service);
+            cdnResponse.status = global.CCC_SERVICE_DETERMINATION_LABELS.AWS;
+            cdnResponse.reason = `${cdnResponse.ipAddress} is in the CIDR block ${awsServices.prefixes[i].ip_prefix} which is used by AWS ${awsServices.prefixes[i].service}`;
 
-                                    if (String.prototype.toUpperCase.call(awsServicesMessage[awsServicesMessage.length - 1]) === 'CLOUDFRONT') { // Check if the service is CloudFront
-                                        cdnResponse.service = 'CDN';
-                                        cdnResponse.status = global.CCC_CDN_DETERMINATION_ENUM_STATUS.CDN;
-                                    }
-                                }
-                            }
+            if (String.prototype.toUpperCase.call(awsServicesMessage[awsServicesMessage.length - 1]) === 'CLOUDFRONT') { // Check if the service is CloudFront
+                cdnResponse.service = 'CDN';
+                cdnResponse.status = global.CCC_SERVICE_DETERMINATION_LABELS.CDN;
+            }
+        }
+    }
 
-                            if (awsServicesMessage.length > 0) {
-                                // Save the generated message into the response object
-                                cdnResponse.message.push('[' + awsServicesMessage.join(' -> ') + ']');
-                            }
-};
+    if (awsServicesMessage.length > 0) {
+        // Save the generated message into the response object
+        cdnResponse.message.push('[' + awsServicesMessage.join(' -> ') + ']');
+    }
+}

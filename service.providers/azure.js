@@ -15,16 +15,9 @@ module.exports = {
         debug('lookupIpAddress(%s)::entry', ipAddress, options);
 
         // Initialise response object
-        let response = {
-            message: '',
-            messages: [],
-            reason: [],
-            service: '',
-            regionId: 0,
-            region: null,
-            status: global.CCC_CDN_DETERMINATION_ENUM_STATUS.INDETERMINATE,
-            ipAddress: ipAddress
-        };
+        let response = global.CCC_SERVICE_DETERMINATION_DEFAULT_RESPONSE;
+        response.ipAddress = ipAddress;
+        response.status = global.CCC_SERVICE_DETERMINATION_LABELS.INDETERMINATE;
 
         // Loop through each service
         debug('Checking if the IP address [%s] matches one of %s known Azure services', ipAddress, services.values.length);
@@ -47,7 +40,7 @@ module.exports = {
                         strMessage += ` (${services.values[i].properties.region})`;
                     }
                     response.messages.push(strMessage);
-                    response.status = global.CCC_CDN_DETERMINATION_ENUM_STATUS.AZURE;
+                    response.status = global.CCC_SERVICE_DETERMINATION_LABELS.AZURE;
 
                     if (options.verbose === false) { // Check if verbose mode is disabled, because we'll log everything if it's not
 

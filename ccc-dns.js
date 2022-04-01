@@ -142,7 +142,7 @@ module.exports = {
             hostname: hostname,
             reason: '',
             service: 'Unknown',
-            status: global.CCC_CDN_DETERMINATION_ENUM_STATUS.INDETERMINATE,
+            status: global.CCC_SERVICE_DETERMINATION_LABELS.INDETERMINATE,
             ipAddress: null
         };
 
@@ -164,7 +164,7 @@ module.exports = {
                 cdnResponse.message.push('DNS Timeout');
                 cdnResponse.reason = 'DNS Timeout';
                 cdnResponse.error = `Timeout after ${req.timeout} milliseconds`;
-                cdnResponse.status = global.CCC_CDN_DETERMINATION_ENUM_STATUS.ERROR;
+                cdnResponse.status = global.CCC_SERVICE_DETERMINATION_LABELS.ERROR;
                 callback(cdnResponse);
             });
 
@@ -174,7 +174,7 @@ module.exports = {
                     cdnResponse.message.push('DNS Error');
                     cdnResponse.reason = 'DNS Error';
                     cdnResponse.error = error;
-                    cdnResponse.status = global.CCC_CDN_DETERMINATION_ENUM_STATUS.ERROR;
+                    cdnResponse.status = global.CCC_SERVICE_DETERMINATION_LABELS.ERROR;
                 } else {
                     debug('Received DNS answer lookup for [%s]: %O', hostname, answer);
 
@@ -194,16 +194,16 @@ module.exports = {
                                 cdnResponse.matchingDomains = matchingDomains[0];
                                 cdnResponse.service = apexDomains[cdn].service.toUpperCase();
                                 cdnResponse.message.push(apexDomains[cdn].title);
-                                cdnResponse.status = global.CCC_CDN_DETERMINATION_ENUM_STATUS.CDN;
+                                cdnResponse.status = global.CCC_SERVICE_DETERMINATION_LABELS.CDN;
                                 if (apexDomains[cdn].service.toUpperCase() !== 'CDN') {
-                                    cdnResponse.status = global.CCC_CDN_DETERMINATION_ENUM_STATUS.OTHER;
+                                    cdnResponse.status = global.CCC_SERVICE_DETERMINATION_LABELS.OTHER;
                                 }
                             }
                         }
                     }
 
                     // Check if the DNS chain inspection didn't identify it as a CDN
-                    if (cdnResponse.status != global.CCC_CDN_DETERMINATION_ENUM_STATUS.CDN) {
+                    if (cdnResponse.status != global.CCC_SERVICE_DETERMINATION_LABELS.CDN) {
                         // DNS didn't yield a conclusive answer. Check the IP Address against each of the service providers' list
                         debug('%s\'s DNS recursion didn\'t match a known provider\'s domain (cdnResponse.status: %s)', hostname, cdnResponse.status);
                         // Get the IP address from the DNS answer first
@@ -240,7 +240,7 @@ module.exports = {
             cdnResponse.message = 'Invalid DNS domain';
             cdnResponse.reason = `The hostname "${hostname}" doesn't conform to DNS specifications`;
             cdnResponse.service = 'None';
-            cdnResponse.status = global.CCC_CDN_DETERMINATION_ENUM_STATUS.ERROR;
+            cdnResponse.status = global.CCC_SERVICE_DETERMINATION_LABELS.ERROR;
             // TO DO *** test if this is actually passed back in the callback if this condition is met
         }
     }

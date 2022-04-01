@@ -524,16 +524,16 @@ try {
                                     debug(reasonStr);
                                     // Add colour to the message depending upon the success of otherwise of the determination
                                     switch (cdn.status) {
-                                        case global.CCC_CDN_DETERMINATION_ENUM_STATUS.INDETERMINATE:
+                                        case global.CCC_SERVICE_DETERMINATION_LABELS.INDETERMINATE:
                                             cdnDetection[0].message = chalk.grey(messageStr);
                                             break;
-                                        case global.CCC_CDN_DETERMINATION_ENUM_STATUS.ERROR:
+                                        case global.CCC_SERVICE_DETERMINATION_LABELS.ERROR:
                                             cdnDetection[0].message = chalk.redBright(messageStr);
                                             break;
-                                        case global.CCC_CDN_DETERMINATION_ENUM_STATUS.CDN:
+                                        case global.CCC_SERVICE_DETERMINATION_LABELS.CDN:
                                             cdnDetection[0].message = chalk.greenBright(messageStr);
                                             break;
-                                        case global.CCC_CDN_DETERMINATION_ENUM_STATUS.OTHER:
+                                        case global.CCC_SERVICE_DETERMINATION_LABELS.OTHER:
                                             cdnDetection[0].message = chalk.yellowBright(messageStr);
                                             break;
                                         default:

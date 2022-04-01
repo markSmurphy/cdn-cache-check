@@ -1,5 +1,5 @@
 function init() {
-    global.CCC_CDN_DETERMINATION_ENUM_STATUS = {
+    global.CCC_SERVICE_DETERMINATION_LABELS = {
         'INDETERMINATE': 'Indeterminate',
         'CDN': 'CDN',
         'ERROR': 'Error',
@@ -20,6 +20,17 @@ function init() {
     global.CCC_OUTPUT = {
         'REDIRECT_INDICATOR': '\u00AE',
         'PADDING_CHARACTER': '.'
+    };
+
+    global.CCC_SERVICE_DETERMINATION_DEFAULT_RESPONSE = {
+        message: '',
+        messages: [],
+        reason: [],
+        service: '',
+        regionId: 0,
+        region: null,
+        status: '',
+        ipAddress: ''
     };
 }
 

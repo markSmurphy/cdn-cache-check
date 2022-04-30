@@ -19,6 +19,7 @@
 * Updated [Azure IP Ranges](https://www.microsoft.com/en-us/download/details.aspx?id=56519) to `"2022-03-14"` (changeNumber: `193`).
 * Updated dependency `debug` to version `4.3.4`.
 * Updated dependency `TLDS` to version `1.231.0`.
+* Updated dependency `ip-cidr` to version `3.0.7`.
 
 ---
 

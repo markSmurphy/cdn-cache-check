@@ -508,14 +508,12 @@ try {
 
                             // Determine the CDN or service behind each unique domain
                             uniqueDomains.domains.forEach((domain) => {
-                                cccDNS.determineCDN(domain, settings.ApexDomains, (cdn) => {
+                                cccDNS.determineCDN(domain, settings, (cdn) => {
                                     debug('determineCDN(%s) returned: %O', domain, cdn);
                                     // Construct the console message array
                                     var cdnDetection = [{
                                         hostname: chalk.cyan(cdn.hostname)
                                     }];
-                                    // Join the message array into a string (we may have detected multiple services e.g. a CDN over a Cloud provider)
-                                    // let messageStr = cdn.message.join(' || ');
 
                                     // Get the last message from the "message" array
                                     let messageStr = cdn.message[cdn.message.length - 1];

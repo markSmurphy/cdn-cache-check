@@ -4,6 +4,7 @@
     "interval": 5000,
     "headersCollection": "default",
     "CDNDetection": true,
+    "IPScan": true,
     "headersCollections": [
         {
             "all": [

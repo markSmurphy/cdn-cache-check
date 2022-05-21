@@ -8,18 +8,18 @@ module.exports = {
         // console colours
         const chalk = require('chalk');
         // parse package.json for the version number
-        const package = require('./package.json');
+        const npmPackage = require('./package.json');
 
         // Display help screen
-        console.log(chalk.blueBright(package.name));
-        console.log(chalk.green('Read the docs: ') + package.homepage);
-        console.log(chalk.magenta('Support & bugs: ') + package.bugs.url);
+        console.log(chalk.blueBright(npmPackage.name));
+        console.log(chalk.green('Read the docs: ') + npmPackage.homepage);
+        console.log(chalk.magenta('Support & bugs: ') + npmPackage.bugs.url);
         console.log(endOfLine);
         console.log(chalk.grey('DESCRIPTION:'));
-        console.log(chalk.italic('   %s'), package.description);
+        console.log(chalk.italic('   %s'), npmPackage.description);
         console.log(endOfLine);
         console.log(chalk.grey('VERSION:'));
-        console.log('   ' + package.version);
+        console.log('   ' + npmPackage.version);
         console.log(endOfLine);
         console.log(chalk.grey('USAGE:'));
         console.log('   ' + 'node ccc.js [<url> | <filename> [<url> | <filename>] […] ] [options]');
@@ -34,6 +34,7 @@ module.exports = {
         console.log('   ' + '--export <true|false>         ' + chalk.grey('Exports output to a .csv file.  Default: true'));
         console.log('   ' + '--open                        ' + chalk.grey('Opens the exported .csv file automatically.'));
         console.log('   ' + '--follow <integer>            ' + chalk.grey('The number of HTTP redirects to follow. Default: 5'));
+        console.log('   ' + '--scanip <true|false>         ' + chalk.grey('Scan cloud providers\' CIDR blocks for IP address to identify service. Default: true'));
         //console.log('   ' + '--iterations <integer>        ' + chalk.grey('The number of times to request each URL. Default: 1'));
         //console.log('   ' + '--interval <integer>          ' + chalk.grey('The number of milliseconds in-between multiple http requests. Default: 3000'));
         console.log('   ' + '--verbose                     ' + chalk.grey('Enables verbose output'));

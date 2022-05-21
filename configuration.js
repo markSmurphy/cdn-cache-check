@@ -34,6 +34,7 @@ try {
         interval: 5000,
         headersCollection: 'default',
         CDNDetection: true,
+        IPScan: true,
         headersCollections: [
             {
                 default: [
@@ -76,7 +77,6 @@ module.exports = {
         debug('Loaded default settings: %O', settings);
 
         try {
-
             // Check command line parameters for overrides...
             debug('Looking for overrides to default settings');
 
@@ -176,6 +176,15 @@ module.exports = {
                 }
             }
 
+            // Check for '--ipscan false' argument
+            if (argv.ipscan){
+                if(typeof argv.ipscan === 'string') {
+                    if (argv.ipscan.toLowerCase() === 'false') {
+                        settings.IPScan = false;
+                    }
+                }
+            }
+
             // Use a client specific customised user-agent string
             // settings.options.headers['user-agent'] = this.getUserAgent();
             settings.options.httpOptions.user_agent = this.getUserAgent();
@@ -219,7 +228,7 @@ module.exports = {
     getUserAgent(){
         try {
             // Load package.json for the version number etc
-            const package = require('./package.json');
+            const npmPackage = require('./package.json');
             // Load O/S module to get client specifics
             const os = require('os');
 
@@ -227,7 +236,7 @@ module.exports = {
             let userAgent = defaultSettings.options.headers['user-agent'];
 
             // Replace embedded variables with platform specifics
-            userAgent = userAgent.replace('{version}', package.version);
+            userAgent = userAgent.replace('{version}', npmPackage.version);
 
             userAgent = userAgent.replace('{OS}', os.type());
 

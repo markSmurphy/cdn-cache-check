@@ -4,6 +4,12 @@ debug('Entry: [%s]', __filename);
 // Library for working with CIDR
 const IPCIDR = require('ip-cidr');
 
+// File System library
+const fs = require('fs');
+
+// Platform independent path separator
+const pathSeparator = require('path').sep;
+
 // Load the root service.providers configuration file
 const serviceProviders = require('./services.json');
 

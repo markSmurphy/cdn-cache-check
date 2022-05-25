@@ -70,7 +70,7 @@
     "needle": "^2.9.1",
     "open": "^7.4.2",
     "ora": "^5.4.1",
-    "pretty-error": "^3.0.4",
+    "pretty-error": "^4.0.0",
     "prettyjson": "^1.2.5",
     "supports-color": "^8.1.1",
     "tlds": "^1.231.0",

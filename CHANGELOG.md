@@ -1,6 +1,6 @@
 # Changelog
 
-## [v1.8.0] - MMM DD<sup>th</sup> 2022
+## v1.8.0 - MMM DD<sup>th</sup> 2022
 
 ### Security
 
@@ -12,6 +12,7 @@
 * Added `Azure Service Detection`.
 * Added `--verbose` option which includes a descriptive reason for the service detection results.
 * Added reporting of **Application Path** to `--help --verbose` output to aid finding the `defaults.json` configuration file.
+* Added `WordPress Hosting Engine` to CDN Detection
 
 ### Changed
 
@@ -23,7 +24,7 @@
 
 ---
 
-## [v1.7.0] - March 13<sup>th</sup> 2022
+## v1.7.0 - March 13<sup>th</sup> 2022
 
 ### Added
 
@@ -49,7 +50,7 @@
 
 ---
 
-## [v1.6.4] - May 31<sup>st</sup> 2021
+## v1.6.4 - May 31<sup>st</sup> 2021
 
 ### Changed
 
@@ -59,7 +60,7 @@
 
 ---
 
-## [v1.6.3] - May 29<sup>th</sup> 2021
+## v1.6.3 - May 29<sup>th</sup> 2021
 
 ### Changed
 
@@ -69,7 +70,7 @@
 
 ---
 
-## [v1.6.2] - May 11<sup>th</sup> 2021
+## v1.6.2 - May 11<sup>th</sup> 2021
 
 ### Security
 
@@ -88,7 +89,7 @@
 
 ---
 
-## [v1.6.1] - 5<sup>th</sup> February 2021
+## v1.6.1 - 5<sup>th</sup> February 2021
 
 ### Changed
 
@@ -99,7 +100,7 @@
 
 ---
 
-## [v1.6.0] - 24<sup>th</sup> January 2021
+## v1.6.0 - 24<sup>th</sup> January 2021
 
 ### Added
 
@@ -123,7 +124,7 @@
 
 ---
 
-## [v1.5.1] - 18<sup>th</sup> December 2020
+## v1.5.1 - 18<sup>th</sup> December 2020
 
 ### Added
 
@@ -135,7 +136,7 @@
 
 ---
 
-## [v1.5.0] - 16<sup>th</sup> December 2020
+## v1.5.0 - 16<sup>th</sup> December 2020
 
 ### Fixed
 
@@ -151,7 +152,7 @@
 
 ---
 
-## [v1.4.1] - 11<sup>th</sup> December 2020
+## v1.4.1 - 11<sup>th</sup> December 2020
 
 ### Fixed
 
@@ -159,7 +160,7 @@
 
 ---
 
-## [v1.4.0] - 11<sup>th</sup> December 2020
+## v1.4.0 - 11<sup>th</sup> December 2020
 
 ### Added
 
@@ -181,7 +182,7 @@
 
 ---
 
-## [v1.3.0] - 7<sup>th</sup> December 2020
+## v1.3.0 - 7<sup>th</sup> December 2020
 
 ### Added
 
@@ -200,7 +201,7 @@ You can then pass that `.har` file to `cdn-cache-check` and it will extract the 
 
 ---
 
-## [v1.2.0] - 4<sup>th</sup> December 2020
+## v1.2.0 - 4<sup>th</sup> December 2020
 
 ### Added
 
@@ -216,7 +217,7 @@ You can then pass that `.har` file to `cdn-cache-check` and it will extract the 
 
 ---
 
-## [v1.1.0] - 1<sup>st</sup> December 2020
+## v1.1.0 - 1<sup>st</sup> December 2020
 
 ### Changed
 
@@ -229,7 +230,7 @@ You can then pass that `.har` file to `cdn-cache-check` and it will extract the 
 
 ---
 
-## [v1.0.1] - 29<sup>th</sup> November 2020
+## v1.0.1 - 29<sup>th</sup> November 2020
 
 ### Changed
 
@@ -237,7 +238,7 @@ You can then pass that `.har` file to `cdn-cache-check` and it will extract the 
 
 ---
 
-## [v1.0.0] - 29<sup>th</sup> November 2020
+## v1.0.0 - 29<sup>th</sup> November 2020
 
 Initial release.
 

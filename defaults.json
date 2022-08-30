@@ -171,6 +171,11 @@
             "domains": ["*.stspg-customer.com"],
             "title": "Atlassian Status Page Hosting",
             "service": "Status Page Hosting"
+        },
+        "WPEngine": {
+            "domains": ["*.wpengine.com, *.wpengine.co.uk, *.wpengine.io, *.wpenginepowered.com"],
+            "title": "WordPress Hosting Engine",
+            "service": "WordPress Hosting"
         }
     },
     "options" : {

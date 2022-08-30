@@ -5,6 +5,7 @@
 ### Security
 
 * Updated `minimist` to version `1.2.6` to address [CVE-2021-44906](https://nvd.nist.gov/vuln/detail/CVE-2021-44906) (introduced via `prettyjson@1.2.5` --> `minimist@1.2.5`).
+* Update `ip-cidr` to version `3.0.10`.
 
 ### Added
 

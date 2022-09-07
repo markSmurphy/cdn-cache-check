@@ -8,18 +8,18 @@ module.exports = {
         // console colours
         const chalk = require('chalk');
         // parse package.json for the version number
-        const npmPackage = require('./package.json');
+        const packageJSON = require('./package.json');
 
         // Display help screen
-        console.log(chalk.blueBright(npmPackage.name));
-        console.log(chalk.green('Read the docs: ') + npmPackage.homepage);
-        console.log(chalk.magenta('Support & bugs: ') + npmPackage.bugs.url);
+        console.log(chalk.blueBright(packageJSON.name));
+        console.log(chalk.green('Read the docs: %s'), packageJSON?.homepage || '*not configured*');
+        console.log(chalk.magenta('Support & bugs: %s'), packageJSON?.bugs?.url || '*not configured*');
         console.log(endOfLine);
         console.log(chalk.grey('DESCRIPTION:'));
-        console.log(chalk.italic('   %s'), npmPackage.description);
+        console.log(chalk.italic('   %s'), packageJSON?.description || '*not configured*');
         console.log(endOfLine);
         console.log(chalk.grey('VERSION:'));
-        console.log('   ' + npmPackage.version);
+        console.log('   ' + packageJSON?.version || '*not configured*');
         console.log(endOfLine);
         console.log(chalk.grey('USAGE:'));
         console.log('   ' + 'node ccc.js [<url> | <filename> [<url> | <filename>] […] ] [options]');

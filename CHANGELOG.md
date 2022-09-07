@@ -1,6 +1,10 @@
 # Changelog
 
-## v1.8.0 - MMM DD<sup>th</sup> 2022
+## v2.0.0 - MMM DD<sup>th</sup> 2022
+
+### Breaking Change
+
+* `cdn-cache-check` now requires node version 14 or above (previously version 10 or above was supported).
 
 ### Security
 

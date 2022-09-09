@@ -17,7 +17,7 @@ function formatBytes(bytes, decimals = 2) {
         }
     } catch (error) {
         debug('formatBytes() caught an exception: %O', error);
-        return(bytes + ' Bytes');
+        return (bytes + ' Bytes');
     }
 }
 
@@ -34,17 +34,17 @@ function secondsToHms(seconds) {
         } catch (error) {
             debug('secondsToHms() caught an exception: %O', error);
             // an unexpected error occurred; return the original value
-            return(seconds + ' seconds');
+            return (seconds + ' seconds');
         }
     } else {
-        return('<invalid>');
+        return ('<invalid>');
     }
 }
 
 function millisecondsToHms(milliseconds) {
     if (milliseconds) {
         try {
-            let seconds = Number(milliseconds/1000);
+            let seconds = Number(milliseconds / 1000);
 
             let h = Math.floor(seconds / 3600);
             let m = Math.floor(seconds % 3600 / 60);
@@ -61,7 +61,7 @@ function millisecondsToHms(milliseconds) {
             }
 
             if (s > 0) {
-                if (s ===1) {
+                if (s === 1) {
                     returnString = returnString + ('0' + s).slice(-2) + ' second';
                 } else {
                     returnString = returnString + ('0' + s).slice(-2) + ' seconds';
@@ -72,10 +72,10 @@ function millisecondsToHms(milliseconds) {
         } catch (error) {
             debug('millisecondsToHms() caught an exception: %O', error);
             // an unexpected error occurred; return the original value
-            return(milliseconds + ' milliseconds');
+            return (milliseconds + ' milliseconds');
         }
     } else {
-        return('<invalid>');
+        return ('<invalid>');
     }
 }
 
@@ -118,14 +118,14 @@ function IsTLD(testString) {
         // Query array for supplied string
         if (tlds.indexOf(testString) > -1) {
             // `testString` exists
-            return(true);
+            return (true);
         } else {
             // `testString` does not exist
-            return(false);
+            return (false);
         }
     } catch (error) {
         debug('IsTLD() caught an error: %O', error);
-        return(false);
+        return (false);
     }
 }
 
@@ -147,7 +147,7 @@ function generateUniqueFilename(extension) {
                 extension = '.' + extension
             }
         } else {
-            extension  = defaultExtension;
+            extension = defaultExtension;
         }
 
         // Incorporate today's date into the prefix
@@ -157,20 +157,20 @@ function generateUniqueFilename(extension) {
         let filename = uniqueFilename(os.tmpdir(), prefix) + extension;
         debug('Generated the unique filename: %s', filename);
         // return the resulting filename
-        return(filename);
+        return (filename);
 
     } catch (error) {
         debug('generateUniqueFilename() caught an error: %O', error);
         // We need to return something, so generate a random 8 char string and apply prefix and extension
-        let filename = os.tmpdir() + path.sep +  prefix + Math.random().toString().substring(2,10) + defaultExtension;
-        return(filename);
+        let filename = os.tmpdir() + path.sep + prefix + Math.random().toString().substring(2, 10) + defaultExtension;
+        return (filename);
     }
 }
 
 function getAppPath() {
     let path = require('path');
     let AppPath = path.resolve(__dirname);
-    return(AppPath);
+    return (AppPath);
 }
 
-module.exports = {getAppPath, generateUniqueFilename, IsTLD, getHeadersCollections, getColourLevelDesc, millisecondsToHms, secondsToHms, formatBytes};
+module.exports = { getAppPath, generateUniqueFilename, IsTLD, getHeadersCollections, getColourLevelDesc, millisecondsToHms, secondsToHms, formatBytes };

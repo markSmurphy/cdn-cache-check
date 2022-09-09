@@ -17,7 +17,7 @@ const serviceProviders = require('./services.json');
 const services = require(serviceProviders.AWS.dataFile);
 
 module.exports = {
-    lookupIpAddress(ipAddress, options = {verbose: false}) {
+    lookupIpAddress(ipAddress, options = { verbose: false }) {
         debug('lookupIpAddress(%s)::entry', ipAddress, options);
 
         // Initialise response object
@@ -29,7 +29,7 @@ module.exports = {
         debug('Checking if the IP address [%s] matches one of %s known Azure services', ipAddress, services.values.length);
         for (let i = 0; i < services.values.length; i++) {
             // Checking against each service
-            debug('Checking against %s CIDR blocks for service ID: %s',services.values[i].properties.addressPrefixes.length, services.values[i].id);
+            debug('Checking against %s CIDR blocks for service ID: %s', services.values[i].properties.addressPrefixes.length, services.values[i].id);
             for (let ii = 0; ii < services.values[i].properties.addressPrefixes.length; ii++) {
                 // Checking within each CIDR block for the current service
                 let cidr = new IPCIDR(services.values[i].properties.addressPrefixes[ii]);
@@ -69,11 +69,11 @@ module.exports = {
         // Concatenate messages into one response string
         response.message = response.messages.join(' || ');
 
-        return(response);
+        return (response);
     }
 };
 
-function previousAWS(){
+function previousAWS() {
     // Check the IP Address against the AWS service list
     let awsServicesFile = __dirname + pathSeparator + 'service.providers/aws/ip-ranges.json';
     let rawData = fs.readFileSync(awsServicesFile); // Read the AWS services file

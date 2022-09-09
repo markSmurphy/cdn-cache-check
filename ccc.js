@@ -10,8 +10,8 @@ constants.init();
 
 // Command line options parser
 const argv = require('yargs')
-.help(false)
-.argv;
+    .help(false)
+    .argv;
 
 // check if "debug" mode is enabled via the command line
 if (argv.debug) {
@@ -37,7 +37,7 @@ const fs = require('fs');
 const jsonexport = require('jsonexport');
 
 // Cache-control header parser
-const {parse} = require('@tusbar/cache-control');
+const { parse } = require('@tusbar/cache-control');
 
 // File path parsing object
 const path = require('path');
@@ -76,7 +76,7 @@ var settings = config.getSettings();
 
 if (settings.listResponseHeaders) {
     // Array to store names of received response headers, used
-    var responseHeadersReceived= [];
+    var responseHeadersReceived = [];
 }
 
 try {
@@ -147,7 +147,7 @@ try {
                                 debug('Found a URL [%s]', lines[i]);
                                 urls.push(lines[i]);
 
-                            } else if (isValidDomain(lines[i], {subdomain: true, wildcard: false})) {
+                            } else if (isValidDomain(lines[i], { subdomain: true, wildcard: false })) {
                                 debug('Found a bare domain [%s]', lines[i]);
                                 urls.push('https://' + lines[i]);
 
@@ -165,7 +165,7 @@ try {
                 debug('It\'s a valid URL');
                 urls.push(currentArgument);
 
-            } else if (isValidDomain(currentArgument, {subdomain: true, wildcard: false})) {
+            } else if (isValidDomain(currentArgument, { subdomain: true, wildcard: false })) {
                 // It's a bare domain (i.e. there's no protocol)
                 debug('It\'s a valid domain but not a URL. Adding "https://" to it');
                 urls.push('https://' + currentArgument);
@@ -174,7 +174,7 @@ try {
                 // It doesn't pass any tests. Ignore it
                 debug('Ignoring [%s]', currentArgument);
             }
-        } catch(err) {
+        } catch (err) {
             console.error(pe.render(err));
         }
     }
@@ -258,7 +258,7 @@ try {
                         debug('Error for [%s]: %O', urls[i], error);
 
                         // Log error to JSON result
-                        result.error=true;
+                        result.error = true;
                         result.response.headers = [];
 
                         // The 'error' object may have different properties depending on its cause (e.g. HTTP error vs network error)
@@ -282,12 +282,12 @@ try {
                         result.request.path = response.req.path;
                         result.response.headers = response.headers;
                         // Get IP Address from response if it exists
-                        if (typeof(response.socket.remoteAddress) === 'string') {
+                        if (typeof (response.socket.remoteAddress) === 'string') {
                             result.ipAddress = response.socket.remoteAddress;
                         }
 
                         // Get the IP Family (IPv4 or IPv6) from the response if it exists
-                        if (typeof(response.socket.remoteFamily) === 'string') {
+                        if (typeof (response.socket.remoteFamily) === 'string') {
                             result.ipFamily = response.socket.remoteFamily;
                         }
 
@@ -327,7 +327,7 @@ try {
                                 row.Redirects = ' ';
                                 // Add the integer value to the raw results
                                 rowRaw.Redirects = responses[i].redirectCount;
-                                if(responses[i].redirectCount > 0){ // If the request resulted in one or more redirects, add the indicator character to the results
+                                if (responses[i].redirectCount > 0) { // If the request resulted in one or more redirects, add the indicator character to the results
                                     row.Redirects = global.CCC_OUTPUT.REDIRECT_INDICATOR;
                                 }
                             }
@@ -373,12 +373,12 @@ try {
 
                             // ***** Copy rowRaw into new rowDebug here *****
                             // Pull out select response headers
-                            for(let attributeName in responses[i].response.headers){
+                            for (let attributeName in responses[i].response.headers) {
                                 let attributeValue = responses[i].response.headers[attributeName];
                                 //debug('Examining header %s : %s', attributeName, attributeValue);
 
                                 // Save the name of the header in an array
-                                if (settings.listResponseHeaders){
+                                if (settings.listResponseHeaders) {
                                     responseHeadersReceived.push(attributeName);
                                 }
 
@@ -386,7 +386,7 @@ try {
 
 
                                 // Check if the response header's name matches one in the header collection
-                                if (matcher(attributeName, settings.headerCollection, {nocase: true}).length > 0) {
+                                if (matcher(attributeName, settings.headerCollection, { nocase: true }).length > 0) {
                                     debug('Extracting header ==> %s : %s', attributeName, attributeValue);
 
                                     // Add all response headers/values to raw collection here, for use in exportToCSV()
@@ -396,7 +396,7 @@ try {
                                     // Parse header value for cache-control directives (for use inside the following switch blocks)
                                     let clientCache = parse(attributeValue);
 
-                                    switch(attributeName.toLowerCase()) {
+                                    switch (attributeName.toLowerCase()) {
                                         case 'cache-control':
                                             if ((clientCache.noStore === false) && (clientCache.maxAge > 0)) {
                                                 // Response IS cacheable.  Colour it GREEN
@@ -429,7 +429,7 @@ try {
                                         default:
                                             // Add row with no formatting
                                             row[attributeName] = chalk.reset(attributeValue);
-                                      }
+                                    }
 
                                 } else {
                                     debug('Ignoring header --> %s', attributeName);
@@ -447,10 +447,10 @@ try {
                             preserveNewLines: true,
                             truncate: true,
                             config: {
-                                'vary': {maxWidth: 20},
-                                'Host': {maxWidth: 30},
-                                'Path': {maxWidth: 60},
-                                'Redirects': {showHeaders: false}
+                                'vary': { maxWidth: 20 },
+                                'Host': { maxWidth: 30 },
+                                'Path': { maxWidth: 60 },
+                                'Redirects': { showHeaders: false }
                             }
                         });
                         console.log(columns);
@@ -543,14 +543,14 @@ try {
                                         cdnDetection[0].reason = reasonStr;
                                     }
 
-                                    let hostnameColumnWidth = uniqueDomains.domainNameLength +5;
+                                    let hostnameColumnWidth = uniqueDomains.domainNameLength + 5;
 
                                     // Format text into spaced columns
                                     let columns = columnify(cdnDetection, {
                                         showHeaders: false,
                                         paddingChr: global.CCC_OUTPUT.PADDING_CHARACTER,
                                         config: {
-                                            hostname: {minWidth: hostnameColumnWidth}
+                                            hostname: { minWidth: hostnameColumnWidth }
                                         }
                                     });
 
@@ -565,12 +565,12 @@ try {
 
                         // Pause for configured interval (when we're looping through URLs more than once and there are still iterations left, and when the interval isn't zero) ...
                         debug('iterationCounter: %i ::: settings.iterations: %i', iterationCounter, settings.iterations);
-                        if ((iterationCounter < settings.iterations) && (settings.interval > 0)){
+                        if ((iterationCounter < settings.iterations) && (settings.interval > 0)) {
                             debug('Sleeping for %i milliseconds', settings.interval);
                             let resumeTime = Date.now() + settings.interval;
                             while (resumeTime > Date.now()) {
                                 //debug('waiting...');
-                                if (Number.isInteger((Date.now() - resumeTime) / 1000)){
+                                if (Number.isInteger((Date.now() - resumeTime) / 1000)) {
                                     process.stdout.write('.');
                                 }
                             }

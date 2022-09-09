@@ -19,13 +19,13 @@ module.exports = {
         debug('getDNSResolver()::entry');
         try {
             // Check if the static variable is already defined
-            if (typeof(this.getDNSResolver.primaryDNSResolver) === 'undefined') {
+            if (typeof (this.getDNSResolver.primaryDNSResolver) === 'undefined') {
                 // Import dns module
                 let dns = require('dns');
 
                 // Get array of local machine's DNS resolvers
                 let resolvers = dns.getServers();
-                debug('Obtained resolvers list: %O', resolvers );
+                debug('Obtained resolvers list: %O', resolvers);
 
                 // Pick the first one
                 this.getDNSResolver.primaryDNSResolver = resolvers[0];
@@ -33,13 +33,13 @@ module.exports = {
 
             debug('Returning resolver: %s', this.getDNSResolver.primaryDNSResolver);
             // Return resolver IP Address
-            return(this.getDNSResolver.primaryDNSResolver);
+            return (this.getDNSResolver.primaryDNSResolver);
 
         } catch (error) {
             // An error occurred getting the locally configured resolver, so return default
             debug('getDNSResolvers caught an error: %O', error);
             debug('Returning default resolver: %s', global.CCC_DNS.DEFAULT_RESOLVER);
-            return(global.CCC_DNS.DEFAULT_RESOLVER);
+            return (global.CCC_DNS.DEFAULT_RESOLVER);
         }
     },
     getUniqueDomains(urls) {
@@ -58,7 +58,7 @@ module.exports = {
                 // Load the URL into a parsed object
                 let currentUrl = new URL(urls[i]);
                 // Extract the hostname from the URL
-                let hostname =currentUrl.hostname;
+                let hostname = currentUrl.hostname;
                 // Add the hostname to the Set
                 uniqueDomains.add(hostname);
                 // Record the length of the hostname if it's the largest yet
@@ -68,11 +68,11 @@ module.exports = {
             returnObject.domains = Array.from(uniqueDomains);
             returnObject.domainNameLength = domainNameLength;
             returnObject.count = uniqueDomains.size;
-            return(returnObject);
+            return (returnObject);
 
         } catch (error) {
             debug('Exception caught in getUniqueDomains(): %O', error);
-            return(null);
+            return (null);
         }
     },
     parseAnswer(answer, options) {
@@ -82,13 +82,13 @@ module.exports = {
         if (Array.isArray(answer) && answer.length === 0) {
             debug('parseAnswer() answer[] is an empty array. Nothing to parse; returning "no_address"');
             // No IP addresses, `answer` is an empty array
-            return('no_address');
+            return ('no_address');
         } else {
             // Initialise the array we're going to return
             var response = [];
 
             // Add the hostname that was resolved to the response array (so we have a complete end-to-end chain in the recursive response)
-            if (Object.prototype.hasOwnProperty.call(answer[0], 'name')){
+            if (Object.prototype.hasOwnProperty.call(answer[0], 'name')) {
                 response.push(answer[0].name);
             }
 
@@ -96,9 +96,9 @@ module.exports = {
                 case 'getRecursion': // Get full recursive hostnames
 
                     // Get the whole nested recursion
-                    for (let i = 0; i < answer.length; i++){
+                    for (let i = 0; i < answer.length; i++) {
 
-                        if (Object.prototype.hasOwnProperty.call(answer[i], 'data')){ // Check if the answer element has a "data" property (which a CNAME record will have)
+                        if (Object.prototype.hasOwnProperty.call(answer[i], 'data')) { // Check if the answer element has a "data" property (which a CNAME record will have)
                             response.push(answer[i].data); // Extract CNAME record data
 
                         } else if ((options.includeIpAddresses) && (Object.prototype.hasOwnProperty.call(answer[i], 'address'))) { // Check if the answer element has an "address" property (which an A record will have)
@@ -113,14 +113,14 @@ module.exports = {
                     break;
 
                 default: // Extract the IP address by default
-                for (let i = 0; i < answer.length; i++) { // Iterate through recursive answer
-                    if (Object.prototype.hasOwnProperty.call(answer[i], 'address')) {
-                        response = answer[i].address;
+                    for (let i = 0; i < answer.length; i++) { // Iterate through recursive answer
+                        if (Object.prototype.hasOwnProperty.call(answer[i], 'address')) {
+                            response = answer[i].address;
+                        }
                     }
-                }
             }
 
-            return(response);
+            return (response);
         }
     },
 
@@ -137,7 +137,7 @@ module.exports = {
             ipAddress: null
         };
 
-        if (isValidDomain(hostname, {subdomain: true, wildcard: false})) { // Validate that the hostname conforms to DNS specifications
+        if (isValidDomain(hostname, { subdomain: true, wildcard: false })) { // Validate that the hostname conforms to DNS specifications
 
             let question = dns.Question({
                 name: hostname,
@@ -146,7 +146,7 @@ module.exports = {
 
             let req = dns.Request({
                 question: question,
-                server: {address: module.exports.getDNSResolver(), port: 53, type: 'udp'},
+                server: { address: module.exports.getDNSResolver(), port: 53, type: 'udp' },
                 timeout: 5000
             });
 
@@ -170,7 +170,7 @@ module.exports = {
                     debug('Received DNS answer lookup for [%s]: %O', hostname, answer);
 
                     // Expand the answer into an array of all nested addresses in the full recursion
-                    discoveryResponse.dnsAnswer = module.exports.parseAnswer(answer.answer, {operation: 'getRecursion'});
+                    discoveryResponse.dnsAnswer = module.exports.parseAnswer(answer.answer, { operation: 'getRecursion' });
 
                     // Iterate through each nested address in the DNS answer to check if matches a known CDN
                     for (let i = 0; i < discoveryResponse.dnsAnswer.length; i++) {
@@ -199,8 +199,8 @@ module.exports = {
                         debug('%s\'s DNS recursion didn\'t match a known provider\'s domain (discoveryResponse.status: %s)', hostname, discoveryResponse.status);
 
                         if (settings.IPScan === false)
-                        // Get the IP address from the DNS answer first
-                        debug('Extracting the IP address from the DNS answer');
+                            // Get the IP address from the DNS answer first
+                            debug('Extracting the IP address from the DNS answer');
                         discoveryResponse.ipAddress = module.exports.parseAnswer(answer.answer, {});
 
                         // Azure Service Detection

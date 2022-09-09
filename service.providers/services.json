@@ -1,16 +1,16 @@
 {
-    "AWS" : {
-        "providerName" : "AWS",
-        "homeDirectory" : "./aws",
-        "dataFile" : "./aws/ip-ranges.json",
-        "sourceURL" : "https://ip-ranges.amazonaws.com/ip-ranges.json",
-        "versionTag" : "2022-03-17-23-23-26"
+    "AWS": {
+        "providerName": "AWS",
+        "homeDirectory": "./aws",
+        "dataFile": "./aws/ip-ranges.json",
+        "sourceURL": "https://ip-ranges.amazonaws.com/ip-ranges.json",
+        "versionTag": "2022-03-17-23-23-26"
     },
-    "Azure" : {
-        "providerName" : "Azure",
-        "homeDirectory" : "./azure",
-        "dataFile" : "./azure/ServiceTags_Public_20220314.json",
-        "sourceURL" : "https://www.microsoft.com/en-us/download/details.aspx?id=56519",
-        "versionTag" : "2022-03-14"
+    "Azure": {
+        "providerName": "Azure",
+        "homeDirectory": "./azure",
+        "dataFile": "./azure/ServiceTags_Public_20220314.json",
+        "sourceURL": "https://www.microsoft.com/en-us/download/details.aspx?id=56519",
+        "versionTag": "2022-03-14"
     }
 }

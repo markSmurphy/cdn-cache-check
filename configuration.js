@@ -10,8 +10,8 @@ const pe = new PrettyError();
 
 // Command line options parser
 var argv = require('yargs')
-.help(false)
-.argv;
+    .help(false)
+    .argv;
 
 // Initialise console colours
 const chalk = require('chalk');
@@ -67,7 +67,6 @@ try {
     };
 }
 
-
 module.exports = {
     getSettings() {
         debug('Entry::getSettings()');
@@ -102,7 +101,7 @@ module.exports = {
                     settings.method = argv.method.toLowerCase();
                     debug('Setting HTTP method to: %s', settings.method);
                 } else {
-                    console.log(chalk.blue('Warning: %s is not a supported HTTP method. Using %s instead.',argv.method.toUpperCase() , settings.method.toUpperCase()));
+                    console.log(chalk.blue('Warning: %s is not a supported HTTP method. Using %s instead.', argv.method.toUpperCase(), settings.method.toUpperCase()));
                 }
             }
 
@@ -166,8 +165,8 @@ module.exports = {
             }
 
             // Check for '--export false' argument
-            if (argv.export){
-                if(typeof argv.export === 'string') {
+            if (argv.export) {
+                if (typeof argv.export === 'string') {
                     if (argv.export.toLowerCase() === 'false') {
                         settings.options.exportToCSV = false;
                         // Switch off openAfterExport because we're not exporting anything
@@ -177,8 +176,8 @@ module.exports = {
             }
 
             // Check for '--ipscan false' argument
-            if (argv.ipscan){
-                if(typeof argv.ipscan === 'string') {
+            if (argv.ipscan) {
+                if (typeof argv.ipscan === 'string') {
                     if (argv.ipscan.toLowerCase() === 'false') {
                         settings.IPScan = false;
                     }
@@ -194,7 +193,7 @@ module.exports = {
 
         } catch (error) {
             console.error(pe.render(error));
-            return(settings);
+            return (settings);
         }
     },
     getHeaderCollection(collectionName, settings) {
@@ -223,9 +222,9 @@ module.exports = {
 
         debug('Returning: %O', headersCollections);
 
-        return(headersCollections);
+        return (headersCollections);
     },
-    getUserAgent(){
+    getUserAgent() {
         try {
             // Load package.json for the version number etc
             const npmPackage = require('./package.json');
@@ -242,10 +241,10 @@ module.exports = {
 
             userAgent = userAgent.replace('{OSRelease}', os.release());
 
-            return(userAgent);
+            return (userAgent);
 
         } catch (error) {
-            return(CCC_DEFAULT_USERAGENT);
+            return (CCC_DEFAULT_USERAGENT);
         }
     }
 };

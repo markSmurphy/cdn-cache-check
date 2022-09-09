@@ -5,7 +5,7 @@ const fs = require('fs');
 
 module.exports = {
     // function to parse URLs from .har
-    getURLs(harFile){
+    getURLs(harFile) {
 
         // call readHar() which reads the supplied file path from disk and validates it is a HAR file
         let harData = readHar(harFile);
@@ -15,9 +15,9 @@ module.exports = {
             harData.log.entries.forEach(element => { // Loop through each entry in the HAR
                 URLs.push(element.request.url); // Add the URL to the list
             });
-            return(URLs); // Return the list of URLs
+            return (URLs); // Return the list of URLs
         } else {
-            return([]); // readHAR() didn't return a HTTP Archive so return a blank URL list
+            return ([]); // readHAR() didn't return a HTTP Archive so return a blank URL list
         }
     }
 }
@@ -32,15 +32,15 @@ function readHar(harFile) {
         let harData = JSON.parse(rawData);
 
         // Check that the JSON has basic HAR property
-        if ((Object.prototype.hasOwnProperty.call(harData.log,'version')) && (Object.prototype.hasOwnProperty.call(harData.log,'entries'))) {
+        if ((Object.prototype.hasOwnProperty.call(harData.log, 'version')) && (Object.prototype.hasOwnProperty.call(harData.log, 'entries'))) {
             console.log('HAR file is version %s and has %s entries', harData.log.version, harData.log.entries.length);
-            return(harData);
+            return (harData);
         } else {
             console.log('Not a HAR file');
-            return(null);
+            return (null);
         }
     } catch (error) {
         console.error('readHar() caught an error: %O', error);
-        return(null);
+        return (null);
     }
 }

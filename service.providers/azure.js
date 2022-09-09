@@ -14,7 +14,7 @@ const consoleUpdate = require('../consoleUpdate');
 const services = require(serviceProviders.Azure.dataFile);
 
 
-function lookupIpAddress(ipAddress, options = {verbose: false}) {
+function lookupIpAddress(ipAddress, options = { verbose: false }) {
     debug('lookupIpAddress(%s)::entry', ipAddress, options);
 
     // Initialise response object
@@ -27,11 +27,11 @@ function lookupIpAddress(ipAddress, options = {verbose: false}) {
     for (let i = 0; i < services.values.length; i++) {
         // Checking against each service
         let currentService = services.values[i].id;
-        debug('Checking against %s CIDR blocks for service ID: %s',services.values[i].properties.addressPrefixes.length, currentService);
+        debug('Checking against %s CIDR blocks for service ID: %s', services.values[i].properties.addressPrefixes.length, currentService);
 
         consoleUpdate.writeLn(`Scanning Azure Services for ${ipAddress}: ${currentService}`);
 
-            for (let ii = 0; ii < services.values[i].properties.addressPrefixes.length; ii++) {
+        for (let ii = 0; ii < services.values[i].properties.addressPrefixes.length; ii++) {
             // Checking within each CIDR block for the current service
             let cidr = new IPCIDR(services.values[i].properties.addressPrefixes[ii]);
 
@@ -74,7 +74,7 @@ function lookupIpAddress(ipAddress, options = {verbose: false}) {
     response.message = response.messages[response.messages.length - 1];
 
     // Return the response object
-    return(response);
+    return (response);
 }
 
-module.exports = {lookupIpAddress};
+module.exports = { lookupIpAddress };

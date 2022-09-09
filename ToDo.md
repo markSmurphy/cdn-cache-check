@@ -4,9 +4,9 @@
 
 * Improve "Scanning Azure services" UI
 * Make sure each domain gets:
-    - DNS resolution
-    - DNS inspection
-    - Service Scans
+  * DNS resolution
+  * DNS inspection
+  * Service Scans
 * Improve constants and general response object property names
 * WTF is previousAWS
 * `CDN detection complete on {total} unique domains` isn't an accurate message.  HTTP requests are complete, perhaps

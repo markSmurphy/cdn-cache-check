@@ -83,102 +83,152 @@
     ],
     "ApexDomains": {
         "CloudFront": {
-            "domains": ["*.cloudfront.net"],
+            "domains": [
+                "*.cloudfront.net"
+            ],
             "title": "CloudFront",
             "service": "CDN"
         },
         "Akamai": {
-            "domains": ["*.edgekey.net","*.edgesuite.net", "*.akamaiedge.net"],
+            "domains": [
+                "*.edgekey.net",
+                "*.edgesuite.net",
+                "*.akamaiedge.net"
+            ],
             "title": "Akamai",
             "service": "CDN"
         },
         "Fastly": {
-            "domains": ["*.fastly.net"],
+            "domains": [
+                "*.fastly.net"
+            ],
             "title": "Fastly",
             "service": "CDN"
         },
         "CloudFlare": {
-            "domains": ["*.cdn.cloudflare.net", "*.cloudflare.com"],
+            "domains": [
+                "*.cdn.cloudflare.net",
+                "*.cloudflare.com"
+            ],
             "title": "CloudFlare",
             "service": "CDN"
         },
         "KeyCDN": {
-            "domains": ["*.kxcdn.com"],
+            "domains": [
+                "*.kxcdn.com"
+            ],
             "title": "KeyCDN",
             "service": "CDN"
         },
         "S3": {
-            "domains": ["s3.*.amazonaws.com", "*.s3.*.amazonaws.com", "s3*.amazonaws.com", "*.s3-accesspoint.*.amazonaws.com"],
+            "domains": [
+                "s3.*.amazonaws.com",
+                "*.s3.*.amazonaws.com",
+                "s3*.amazonaws.com",
+                "*.s3-accesspoint.*.amazonaws.com"
+            ],
             "title": "AWS S3 Bucket",
             "service": "AWS"
         },
         "Blob": {
-            "domains": ["*.blob.core.windows.net", "*.web.core.windows.net"],
+            "domains": [
+                "*.blob.core.windows.net",
+                "*.web.core.windows.net"
+            ],
             "title": "Azure Blob Storage",
             "service": "Azure"
         },
         "FBCDN": {
-            "domains": ["*.c*.facebook.com", "*.fbcdn.net"],
+            "domains": [
+                "*.c*.facebook.com",
+                "*.fbcdn.net"
+            ],
             "title": "Facebook Content Distribution Network",
             "service": "CDN"
         },
         "GitHubPages": {
-            "domains": ["*.github.io"],
+            "domains": [
+                "*.github.io"
+            ],
             "title": "GitHub Pages",
             "service": "Static Hosting"
         },
         "Highwinds": {
-            "domains": ["*.hwcdn.net"],
+            "domains": [
+                "*.hwcdn.net"
+            ],
             "title": "Highwinds Network Group CDN",
             "service": "CDN"
         },
         "Shopify": {
-            "domains": ["*.myshopify.com", "*.shopifysvc.com", "*.shopifycloud.com"],
+            "domains": [
+                "*.myshopify.com",
+                "*.shopifysvc.com",
+                "*.shopifycloud.com"
+            ],
             "title": "Shopify CDN",
             "service": "CDN"
         },
         "TrafficManager": {
-            "domains": ["*.trafficmanager.net"],
+            "domains": [
+                "*.trafficmanager.net"
+            ],
             "title": "Azure Traffic Manager",
             "service": "Azure"
         },
         "MaxCDN": {
-            "domains": ["*.maxcdn-edge.com", "*.netdna-cdn.com", "*.stackpathcdn.com"],
+            "domains": [
+                "*.maxcdn-edge.com",
+                "*.netdna-cdn.com",
+                "*.stackpathcdn.com"
+            ],
             "title": "MaxCDN/StackPath",
             "service": "CDN"
         },
         "DigitalOcean": {
-            "domains": ["*.cdn.digitaloceanspaces.com"],
+            "domains": [
+                "*.cdn.digitaloceanspaces.com"
+            ],
             "title": "DigitalOcean Spaces CDN",
             "service": "CDN"
         },
         "AWSELB": {
-            "domains": ["*.elb.amazonaws.com"],
+            "domains": [
+                "*.elb.amazonaws.com"
+            ],
             "title": "AWS Elastic Load Balancer",
             "service": "AWS"
         },
         "YOTTAA": {
-            "domains": ["*.yottaa.net"],
+            "domains": [
+                "*.yottaa.net"
+            ],
             "title": "Yottaa",
             "service": "CDN"
         },
         "HubSpot": {
-            "domains": ["*.sites.hubspot.net"],
+            "domains": [
+                "*.sites.hubspot.net"
+            ],
             "title": "HubSpot Website Hosting",
             "service": "CMS Hosting"
         },
         "Atlassian Status Page": {
-            "domains": ["*.stspg-customer.com"],
+            "domains": [
+                "*.stspg-customer.com"
+            ],
             "title": "Atlassian Status Page Hosting",
             "service": "Status Page Hosting"
         },
         "WPEngine": {
-            "domains": ["*.wpengine.com, *.wpengine.co.uk, *.wpengine.io, *.wpenginepowered.com"],
+            "domains": [
+                "*.wpengine.com, *.wpengine.co.uk, *.wpengine.io, *.wpenginepowered.com"
+            ],
             "title": "WordPress Hosting Engine",
             "service": "WordPress Hosting"
         }
     },
-    "options" : {
+    "options": {
         "exportToCSV": true,
         "openAfterExport": false,
         "headers": {

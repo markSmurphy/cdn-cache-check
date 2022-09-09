@@ -1,11 +1,11 @@
 function init() {
     global.CCC_SERVICE_DETERMINATION_LABELS = {
-        'INDETERMINATE': 'Indeterminate',
         'CDN': 'CDN',
         'ERROR': 'Error',
         'AWS': 'AWS',
         'AZURE': 'Azure',
-        'OTHER': 'Other Internet Service'
+        'OTHER': 'Other Internet Service',
+        'UNKNOWN': 'Unknown'
     };
 
     global.CCC_DNS = {

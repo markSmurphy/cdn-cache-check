@@ -132,8 +132,8 @@ module.exports = {
             message: [],
             hostname: hostname,
             reason: '',
-            service: 'Unknown',
-            status: global.CCC_SERVICE_DETERMINATION_LABELS.INDETERMINATE,
+            service: global.CCC_SERVICE_DETERMINATION_LABELS.UNKNOWN,
+            status: global.CCC_SERVICE_DETERMINATION_LABELS.UNKNOWN,
             ipAddress: null
         };
 
@@ -194,7 +194,7 @@ module.exports = {
                     }
 
                     // Check if the DNS chain inspection didn't identify the service provider
-                    if (discoveryResponse.status === global.CCC_SERVICE_DETERMINATION_LABELS.INDETERMINATE) {
+                    if (discoveryResponse.status === global.CCC_SERVICE_DETERMINATION_LABELS.UNKNOWN) {
                         // DNS didn't yield a conclusive answer. Check the IP Address against each of the service providers' list
                         debug('%s\'s DNS recursion didn\'t match a known provider\'s domain (discoveryResponse.status: %s)', hostname, discoveryResponse.status);
 
@@ -220,10 +220,9 @@ module.exports = {
 
                     debug('determineCDN(%s) returning: %O', hostname, discoveryResponse);
 
-                    // Check if the message array is blank, and add the default message if it is
-                    if (discoveryResponse.message.length === 0) {
+                    if (!discoveryResponse?.message?.length) { // Check if the message array is blank
                         // We didn't identify the service behind the domain name or IP address
-                        discoveryResponse.message = ['Unknown'];
+                        discoveryResponse.message = [global.CCC_SERVICE_DETERMINATION_LABELS.UNKNOWN]; // add the default message
                     }
                     callback(discoveryResponse);
                 }

@@ -522,7 +522,7 @@ try {
                                     debug(reasonStr);
                                     // Add colour to the message depending upon the success of otherwise of the determination
                                     switch (cdn.status) {
-                                        case global.CCC_SERVICE_DETERMINATION_LABELS.INDETERMINATE:
+                                        case global.CCC_SERVICE_DETERMINATION_LABELS.UNKNOWN:
                                             cdnDetection[0].message = chalk.grey(messageStr);
                                             break;
                                         case global.CCC_SERVICE_DETERMINATION_LABELS.ERROR:

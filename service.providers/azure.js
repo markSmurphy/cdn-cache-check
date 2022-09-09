@@ -20,7 +20,7 @@ function lookupIpAddress(ipAddress, options = {verbose: false}) {
     // Initialise response object
     let response = global.CCC_SERVICE_DETERMINATION_DEFAULT_RESPONSE;
     response.ipAddress = ipAddress;
-    response.status = global.CCC_SERVICE_DETERMINATION_LABELS.INDETERMINATE;
+    response.status = global.CCC_SERVICE_DETERMINATION_LABELS.UNKNOWN;
 
     // Loop through each service
     debug('Checking if the IP address [%s] matches one of %s known Azure services', ipAddress, services.values.length);

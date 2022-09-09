@@ -2,6 +2,18 @@
 
 ## Bugs
 
+* Improve "Scanning Azure services" UI
+* Make sure each domain gets:
+    - DNS resolution
+    - DNS inspection
+    - Service Scans
+* Rename `CDN detection` to `Service detection`
+* Improve constants and general response object property names
+* WTF is previousAWS
+* `CDN detection complete on {total} unique domains` isn't an accurate message.  HTTP requests are complete, perhaps
+
+---
+
 * [ ] Fix handling services which resolve to known DNS apex zones but are also AWS services (the AWS service details should enrich the DNS zone apex details rather than replace them)
 * [ ] Fix AWS service lookup where the IP address appears in multiple CIDR blocks
 * [ ] If the input does not have a valid top level domain then assume it's a file, and report `file not found` accordingly; e.g. `ccc filename.txt` as `.txt` is not a valid TLD
@@ -35,6 +47,7 @@
 
 ## Features
 
+* Move DNS timeout (5000 - ccc-dnc.js:150) into configuration and give it a command line override
 * [ ] Add Azure IP ranges `json` to `service.providers`
   * [specific json file](https://download.microsoft.com/download/7/1/D/71D86715-5596-4529-9B13-DA13A5DE5B63/ServiceTags_Public_20210524.json)
   * [download page](https://www.microsoft.com/en-us/download/details.aspx?id=56519)
@@ -98,7 +111,7 @@
 * [X] ~~`--list-response-headers` also performs CDN detection but should probably be constrained to *just* listing the headers~~
 * [X] ~~Add padding character to CDN Detection table to aid readability~~
 * [X] ~~Display an activity indicator whilst the HTTP requests are being made (maybe [ora](https://www.npmjs.com/package/ora))~~
-* [X] ~~Add an indicator [®] to the response output row when it's followed a redirect, and the redirect count to the raw `csv` export file~~
+* [X] ~~Add an indicator (®) to the response output row when a redirect was followed, and add the redirect count to the raw `csv` export file~~
 * [X] ~~Add the actual `hostname` being resolved to `parseAnswer()` so that it's included in the `determineCDN()` logic~~
 * [X] ~~Export to CSV~~
 * [X] ~~Expand `settings` to incorporate `needle`'s options json~~

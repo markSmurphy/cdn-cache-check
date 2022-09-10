@@ -21,9 +21,9 @@ module.exports = {
         debug('lookupIpAddress(%s)::entry', ipAddress, options);
 
         // Initialise response object
-        let response = global.CCC_SERVICE_DETERMINATION_DEFAULT_RESPONSE;
+        let response = global.CCC_SERVICE_DETECTION_DEFAULT_RESPONSE;
         response.ipAddress = ipAddress;
-        response.status = global.CCC_SERVICE_DETERMINATION_LABELS.UNKNOWN;
+        response.status = global.CCC_SERVICE_DETECTION_LABELS.UNKNOWN;
 
         // Loop through each service
         debug('Checking if the IP address [%s] matches one of %s known Azure services', ipAddress, services.values.length);
@@ -46,7 +46,7 @@ module.exports = {
                         strMessage += ` (${services.values[i].properties.region})`;
                     }
                     response.messages.push(strMessage);
-                    response.status = global.CCC_SERVICE_DETERMINATION_LABELS.AZURE;
+                    response.status = global.CCC_SERVICE_DETECTION_LABELS.AZURE;
 
                     if (options.verbose === false) { // Check if verbose mode is disabled, because we'll log everything if it's not
 
@@ -90,12 +90,12 @@ function previousAWS() {
         if (cidr.contains(cdnResponse.ipAddress)) {
             debug('%s is in the CIDR block %s, which is AWS service %s', cdnResponse.ipAddress, awsServices.prefixes[i].ip_prefix, awsServices.prefixes[i].service);
             awsServicesMessage.push(awsServices.prefixes[i].service);
-            cdnResponse.status = global.CCC_SERVICE_DETERMINATION_LABELS.AWS;
+            cdnResponse.status = global.CCC_SERVICE_DETECTION_LABELS.AWS;
             cdnResponse.reason = `${cdnResponse.ipAddress} is in the CIDR block ${awsServices.prefixes[i].ip_prefix} which is used by AWS ${awsServices.prefixes[i].service}`;
 
             if (String.prototype.toUpperCase.call(awsServicesMessage[awsServicesMessage.length - 1]) === 'CLOUDFRONT') { // Check if the service is CloudFront
                 cdnResponse.service = 'CDN';
-                cdnResponse.status = global.CCC_SERVICE_DETERMINATION_LABELS.CDN;
+                cdnResponse.status = global.CCC_SERVICE_DETECTION_LABELS.CDN;
             }
         }
     }

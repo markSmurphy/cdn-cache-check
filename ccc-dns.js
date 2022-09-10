@@ -132,8 +132,8 @@ module.exports = {
             message: [],
             hostname: hostname,
             reason: '',
-            service: global.CCC_SERVICE_DETERMINATION_LABELS.UNKNOWN,
-            status: global.CCC_SERVICE_DETERMINATION_LABELS.UNKNOWN,
+            service: global.CCC_SERVICE_DETECTION_LABELS.UNKNOWN,
+            status: global.CCC_SERVICE_DETECTION_LABELS.UNKNOWN,
             ipAddress: null
         };
 
@@ -155,7 +155,7 @@ module.exports = {
                 discoveryResponse.message.push('DNS Timeout');
                 discoveryResponse.reason = 'DNS Timeout';
                 discoveryResponse.error = `Timeout after ${req.timeout} milliseconds`;
-                discoveryResponse.status = global.CCC_SERVICE_DETERMINATION_LABELS.ERROR;
+                discoveryResponse.status = global.CCC_SERVICE_DETECTION_LABELS.ERROR;
                 callback(discoveryResponse);
             });
 
@@ -165,7 +165,7 @@ module.exports = {
                     discoveryResponse.message.push('DNS Error');
                     discoveryResponse.reason = 'DNS Error';
                     discoveryResponse.error = error;
-                    discoveryResponse.status = global.CCC_SERVICE_DETERMINATION_LABELS.ERROR;
+                    discoveryResponse.status = global.CCC_SERVICE_DETECTION_LABELS.ERROR;
                 } else {
                     debug('Received DNS answer lookup for [%s]: %O', hostname, answer);
 
@@ -185,16 +185,16 @@ module.exports = {
                                 discoveryResponse.matchingDomains = matchingDomains[0];
                                 discoveryResponse.service = settings.apexDomains[cdn].service.toUpperCase();
                                 discoveryResponse.message.push(settings.apexDomains[cdn].title);
-                                discoveryResponse.status = global.CCC_SERVICE_DETERMINATION_LABELS.CDN;
+                                discoveryResponse.status = global.CCC_SERVICE_DETECTION_LABELS.CDN;
                                 if (settings.apexDomains[cdn].service.toUpperCase() !== 'CDN') {
-                                    discoveryResponse.status = global.CCC_SERVICE_DETERMINATION_LABELS.OTHER;
+                                    discoveryResponse.status = global.CCC_SERVICE_DETECTION_LABELS.OTHER;
                                 }
                             }
                         }
                     }
 
                     // Check if the DNS chain inspection didn't identify the service provider
-                    if (discoveryResponse.status === global.CCC_SERVICE_DETERMINATION_LABELS.UNKNOWN) {
+                    if (discoveryResponse.status === global.CCC_SERVICE_DETECTION_LABELS.UNKNOWN) {
                         // DNS didn't yield a conclusive answer. Check the IP Address against each of the service providers' list
                         debug('%s\'s DNS recursion didn\'t match a known provider\'s domain (discoveryResponse.status: %s)', hostname, discoveryResponse.status);
 
@@ -210,7 +210,7 @@ module.exports = {
                         // Populate `discoveryResponse` object properties
                         discoveryResponse.message = azureResponse.message;
                         discoveryResponse.reason = azureResponse.reason;
-                        discoveryResponse.status = global.CCC_SERVICE_DETERMINATION_LABELS.AZURE;
+                        discoveryResponse.status = global.CCC_SERVICE_DETECTION_LABELS.AZURE;
 
                         // AWS Service Detection
                         //let awsResponse = serviceDetectionAWS.lookupIpAddress(discoveryResponse.ipAddress);
@@ -222,7 +222,7 @@ module.exports = {
 
                     if (!discoveryResponse?.message?.length) { // Check if the message array is blank
                         // We didn't identify the service behind the domain name or IP address
-                        discoveryResponse.message = [global.CCC_SERVICE_DETERMINATION_LABELS.UNKNOWN]; // add the default message
+                        discoveryResponse.message = [global.CCC_SERVICE_DETECTION_LABELS.UNKNOWN]; // add the default message
                     }
                     callback(discoveryResponse);
                 }
@@ -236,7 +236,7 @@ module.exports = {
             discoveryResponse.message = 'Invalid DNS domain';
             discoveryResponse.reason = `The hostname "${hostname}" doesn't conform to DNS specifications`;
             discoveryResponse.service = 'None';
-            discoveryResponse.status = global.CCC_SERVICE_DETERMINATION_LABELS.ERROR;
+            discoveryResponse.status = global.CCC_SERVICE_DETECTION_LABELS.ERROR;
             // TO DO *** test if this is actually passed back in the callback if this condition is met
         }
     }

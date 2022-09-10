@@ -1,5 +1,5 @@
 function init() {
-    global.CCC_SERVICE_DETERMINATION_LABELS = {
+    global.CCC_SERVICE_DETECTION_LABELS = {
         'CDN': 'CDN',
         'ERROR': 'Error',
         'AWS': 'AWS',
@@ -22,7 +22,7 @@ function init() {
         'PADDING_CHARACTER': '.'
     };
 
-    global.CCC_SERVICE_DETERMINATION_DEFAULT_RESPONSE = {
+    global.CCC_SERVICE_DETECTION_DEFAULT_RESPONSE = {
         message: '',
         messages: [],
         reason: [],

@@ -32,6 +32,8 @@ function init() {
         status: '',
         ipAddress: ''
     };
+
+    global.CCC_DEFAULT_USERAGENT = 'ccc/1.0';
 }
 
 module.exports = { init };

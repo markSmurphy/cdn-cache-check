@@ -1,9 +1,6 @@
 const debug = require('debug')('cdn-cache-check-configuration');
 debug('Entry: [%s]', __filename);
 
-// Global Constants
-const CCC_DEFAULT_USERAGENT = 'ccc/1.0';
-
 // Error formatting module
 const PrettyError = require('pretty-error');
 const pe = new PrettyError();
@@ -245,7 +242,7 @@ module.exports = {
 
         } catch (error) {
             debug('getUserAgent() caught an error: %O', error);
-            return (CCC_DEFAULT_USERAGENT);
+            return (global.CCC_DEFAULT_USERAGENT);
         }
     }
 };

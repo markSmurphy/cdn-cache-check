@@ -30,7 +30,7 @@ try {
         iterations: 1,
         interval: 5000,
         headersCollection: 'default',
-        CDNDetection: true,
+        serviceDetection: true,
         IPScan: true,
         headersCollections: [
             {
@@ -146,7 +146,7 @@ module.exports = {
             if (argv.listResponseHeaders) {
                 settings.listResponseHeaders = true;
                 // We can switch off the CDN detection output because we're just listing response headers
-                settings.CDNDetection = false;
+                settings.serviceDetection = false;
             } else {
                 settings.listResponseHeaders = false;
             }

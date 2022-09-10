@@ -502,7 +502,7 @@ try {
                             console.log('%i unique response headers (from %i collected):%s%O', uniqueResponseHeaders.length, responseHeadersReceived.length, EOL, uniqueResponseHeaders);
                         }
 
-                        if (settings.CDNDetection) {
+                        if (settings.serviceDetection) {
                             // Create and start the CDN Detection activity spinner
                             const spinnerCDNDetection = ora(`CDN detection being performed on ${uniqueDomains.domains.length} unique domains ...`).start();
 

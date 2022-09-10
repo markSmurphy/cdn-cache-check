@@ -397,7 +397,7 @@ try {
                                     let clientCache = parse(attributeValue);
 
                                     switch (attributeName.toLowerCase()) {
-                                        case 'cache-control':
+                                        case 'cache-control': {
                                             if ((clientCache.noStore === false) && (clientCache.maxAge > 0)) {
                                                 // Response IS cacheable.  Colour it GREEN
                                                 row[attributeName] = chalk.green(attributeValue);
@@ -411,7 +411,8 @@ try {
                                                 row[attributeName] = chalk.yellow(attributeValue);
                                             }
                                             break;
-                                        case 'x-cache':
+                                        }
+                                        case 'x-cache': {
                                             // Examine x-cache value
                                             if (attributeValue.toLowerCase().search('hit') !== -1) {
                                                 // Cache HIT.  Colour it GREEN
@@ -426,6 +427,7 @@ try {
                                                 row[attributeName] = chalk.yellow(attributeValue);
                                             }
                                             break;
+                                        }
                                         default:
                                             // Add row with no formatting
                                             row[attributeName] = chalk.reset(attributeValue);
@@ -522,18 +524,22 @@ try {
                                     debug(reasonStr);
                                     // Add colour to the message depending upon the success of otherwise of the determination
                                     switch (cdn.status) {
-                                        case global.CCC_SERVICE_DETECTION_LABELS.UNKNOWN:
+                                        case global.CCC_SERVICE_DETECTION_LABELS.UNKNOWN: {
                                             cdnDetection[0].message = chalk.grey(messageStr);
                                             break;
-                                        case global.CCC_SERVICE_DETECTION_LABELS.ERROR:
+                                        }
+                                        case global.CCC_SERVICE_DETECTION_LABELS.ERROR: {
                                             cdnDetection[0].message = chalk.redBright(messageStr);
                                             break;
-                                        case global.CCC_SERVICE_DETECTION_LABELS.CDN:
+                                        }
+                                        case global.CCC_SERVICE_DETECTION_LABELS.CDN: {
                                             cdnDetection[0].message = chalk.greenBright(messageStr);
                                             break;
-                                        case global.CCC_SERVICE_DETECTION_LABELS.OTHER:
+                                        }
+                                        case global.CCC_SERVICE_DETECTION_LABELS.OTHER: {
                                             cdnDetection[0].message = chalk.yellowBright(messageStr);
                                             break;
+                                        }
                                         default:
                                             cdnDetection[0].message = chalk.yellowBright(messageStr);
                                     }

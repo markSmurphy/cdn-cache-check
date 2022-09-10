@@ -12,7 +12,7 @@ const dns = require('native-dns-multisocket');
 
 // Initialise Service Provider Detection Libraries
 const serviceDetectionAzure = require('./service.providers/azure');
-const serviceDetectionAWS = require('./service.providers/aws');
+//const serviceDetectionAWS = require('./service.providers/aws');
 
 module.exports = {
     getDNSResolver() {
@@ -93,7 +93,7 @@ module.exports = {
             }
 
             switch (options.operation) {
-                case 'getRecursion': // Get full recursive hostnames
+                case 'getRecursion': { // Get full recursive hostnames
 
                     // Get the whole nested recursion
                     for (let i = 0; i < answer.length; i++) {
@@ -106,11 +106,13 @@ module.exports = {
                         }
                     }
                     break;
-                case 'getTTL':
+                }
+                case 'getTTL': {
                     // Get the record's time-to-live value
                     response = answer[0].ttl;
                     debug('TTL: %s', answer[0].ttl);
                     break;
+                }
 
                 default: // Extract the IP address by default
                     for (let i = 0; i < answer.length; i++) { // Iterate through recursive answer
@@ -198,9 +200,11 @@ module.exports = {
                         // DNS didn't yield a conclusive answer. Check the IP Address against each of the service providers' list
                         debug('%s\'s DNS recursion didn\'t match a known provider\'s domain (discoveryResponse.status: %s)', hostname, discoveryResponse.status);
 
-                        if (settings.IPScan === false)
-                            // Get the IP address from the DNS answer first
-                            debug('Extracting the IP address from the DNS answer');
+                        /* // We might want to have a switch to disable the IP address scan
+                        if (settings.IPScan === true) {} */
+
+                        // Get the IP address from the DNS answer first
+                        debug('Extracting the IP address from the DNS answer');
                         discoveryResponse.ipAddress = module.exports.parseAnswer(answer.answer, {});
 
                         // Azure Service Detection

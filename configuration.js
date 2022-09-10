@@ -244,6 +244,7 @@ module.exports = {
             return (userAgent);
 
         } catch (error) {
+            debug('getUserAgent() caught an error: %O', error);
             return (CCC_DEFAULT_USERAGENT);
         }
     }

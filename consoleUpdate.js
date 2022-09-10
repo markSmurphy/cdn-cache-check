@@ -12,7 +12,7 @@ function writeLn(text = '') {
       // Move cursor to start of row
       process.stdout.cursorTo(0);
       // Write text with added end-of-line
-      process.stdout.write(text + '\r');
+      process.stdout.write(`${text}\r`);
    } catch (error) {
       debug('An error occurred in write(): %O', error);
    }

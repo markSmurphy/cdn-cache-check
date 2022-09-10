@@ -90,9 +90,9 @@ try {
         process.exit();
     }
 
-    // Check for '--header-collections' command line parameters
+    // '--header-collections' command line parameter is not valid. Suggest possible correction
     if (argv.headerCollections) {
-        console.log('Did you mean to use ' + chalk.cyan('--list-header-collections') + ' ?');
+        console.log(`--header-collections is not valid. Did you mean ${chalk.cyan('--list-header-collections')} ?`);
     }
 
     // Check for '--list-header-collections' command line parameters

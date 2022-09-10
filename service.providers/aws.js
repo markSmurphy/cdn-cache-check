@@ -75,7 +75,7 @@ module.exports = {
 
 function previousAWS() {
     // Check the IP Address against the AWS service list
-    let awsServicesFile = __dirname + pathSeparator + 'service.providers/aws/ip-ranges.json';
+    let awsServicesFile = `${__dirname}${pathSeparator}service.providers/aws/ip-ranges.json`;
     let rawData = fs.readFileSync(awsServicesFile); // Read the AWS services file
     let awsServices = JSON.parse(rawData); // Parse it into a JSON object
     let awsServicesMessage = []; // Temporarily store the message because the AWS JSON might contain two matching CIDR blocks, so we can't just concatenate
@@ -102,6 +102,6 @@ function previousAWS() {
 
     if (awsServicesMessage.length > 0) {
         // Save the generated message into the response object
-        cdnResponse.message.push('[' + awsServicesMessage.join(' -> ') + ']');
+        cdnResponse.message.push(`[${awsServicesMessage.join(' -> ')}]`);
     }
 }

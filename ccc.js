@@ -108,7 +108,7 @@ try {
         collections.forEach((element) => console.log(prettyJson.render(element)));
 
         // Display config file location
-        let configFile = __dirname + pathSeparator + 'defaults.json';
+        let configFile = `${__dirname}${pathSeparator}defaults.json`;
 
         console.log(EOL + chalk.grey('Config file:') + chalk.yellowBright(configFile));
         // Exit to terminal
@@ -149,7 +149,7 @@ try {
 
                             } else if (isValidDomain(lines[i], { subdomain: true, wildcard: false })) {
                                 debug('Found a bare domain [%s]', lines[i]);
-                                urls.push('https://' + lines[i]);
+                                urls.push(`https://${lines[i]}`);
 
                             } else if (lines[i].length > 0) {
                                 // This line didn't pass any tests so log it to debug output, but only if it's not a blank line
@@ -168,7 +168,7 @@ try {
             } else if (isValidDomain(currentArgument, { subdomain: true, wildcard: false })) {
                 // It's a bare domain (i.e. there's no protocol)
                 debug('It\'s a valid domain but not a URL. Adding "https://" to it');
-                urls.push('https://' + currentArgument);
+                urls.push(`https://${currentArgument}`);
 
             } else {
                 // It doesn't pass any tests. Ignore it
@@ -201,14 +201,14 @@ try {
         debug('Checking these %s URLs %s times (%s requests in total across %s domain(s)): %O', urls.length, settings.iterations, totalRequests, uniqueDomains.count, urls);
         if (totalRequests > global.CCC_REQUEST.WARNING_THRESHOLD) {
             // Display a subtly different notification if there are multiple iterations and/or multiple domains
-            let notification = chalk.cyan('Checking ' + urls.length + ' URLs');
+            let notification = chalk.cyan(`Checking ${urls.length} URLs`);
 
             if (uniqueDomains.count > 1) {
-                notification += chalk.cyan(' across ' + uniqueDomains.count + ' domains');
+                notification += chalk.cyan(` across ${uniqueDomains.count} domains`);
             }
 
             if (settings.iterations > 1) {
-                notification += chalk.cyan(' * ' + settings.iterations + ' times (totaling ' + totalRequests + ' requests)');
+                notification += chalk.cyan(` * ${settings.iterations} times (totaling ${totalRequests} requests)`);
             }
 
             console.log(notification);
@@ -273,7 +273,7 @@ try {
                         }
                     } else {
                         // We got a HTTP response
-                        debug(response.statusCode + ' ' + urls[i]);
+                        debug(`${response.statusCode} ${urls[i]}`);
 
                         // Save request details and HTTP response headers as JSON
                         result.statusCode = response.statusCode;
@@ -303,7 +303,7 @@ try {
                     debug('Received %i of %i responses', responses.length, urls.length);
                     if (responses.length === urls.length) {
                         // Stop the HTTP Requests spinner
-                        spinnerHTTPRequests.succeed(chalk.green('Completed ' + urls.length + ' HTTP requests'));
+                        spinnerHTTPRequests.succeed(chalk.green(`Completed ${urls.length} HTTP requests`));
                         debug('Parsing %s responses', responses.length);
 
                         // We'll collate the parsed results into an output array
@@ -335,7 +335,7 @@ try {
                             let timestamp = new Date();
                             // let responseTimestamp = `${timestamp.getHours()}:${timestamp.getMinutes()}:${timestamp.getSeconds()}:${timestamp.getMilliseconds()}`;
                             // Pad the hours/mins/secs/mSecs with a leading '0' and then return (trim) the last 2 rightmost characters to ensure a leading zero for 1 digit numbers
-                            let responseTimestamp = ('0' + timestamp.getHours()).slice(-2) + ':' + ('0' + timestamp.getMinutes()).slice(-2) + ':' + ('0' + timestamp.getSeconds()).slice(-2) + ':' + ('0' + timestamp.getMilliseconds()).slice(-2);
+                            let responseTimestamp = `${(`0${timestamp.getHours()}`).slice(-2)}:${(`0${timestamp.getMinutes()}`).slice(-2)}:${(`0${timestamp.getSeconds()}`).slice(-2)}:${(`0${timestamp.getMilliseconds()}`).slice(-2)}`;
                             row.Time = chalk.reset(responseTimestamp);
                             rowRaw.Time = responseTimestamp;
 
@@ -461,7 +461,7 @@ try {
                             jsonexport(outputTableRaw, (err, csv) => {
 
                                 if (err) { // Check for an error
-                                    console.error(chalk.redBright('An error occurred converting the results into a CSV format: ') + '%O', err);
+                                    console.error(`${chalk.redBright('An error occurred converting the results into a CSV format: ')}%O`, err);
                                 } else {
                                     let filename = utils.generateUniqueFilename('csv');
 
@@ -488,7 +488,7 @@ try {
                                     } catch (error) {
                                         settings.options.exportToCSV = false; // Switch off further exporting to a file seeing as it hasn't worked
                                         debug('An error occurred writing to results to disk. Switching off "exportToCSV".');
-                                        console.error(chalk.redBright('An error occurred writing to the file [%s]: ') + '%O', filename, error);
+                                        console.error(`${chalk.redBright('An error occurred writing to the file [%s]: ')}%O`, filename, error);
                                     }
                                 }
                             });
@@ -504,7 +504,7 @@ try {
 
                         if (settings.CDNDetection) {
                             // Create and start the CDN Detection activity spinner
-                            const spinnerCDNDetection = ora('CDN detection being performed on ' + uniqueDomains.domains.length + ' unique domains ...').start();
+                            const spinnerCDNDetection = ora(`CDN detection being performed on ${uniqueDomains.domains.length} unique domains ...`).start();
 
                             // Determine the CDN or service behind each unique domain
                             uniqueDomains.domains.forEach((domain) => {
@@ -560,7 +560,7 @@ try {
                             });
 
                             // Stop the CDN Detection spinner
-                            spinnerCDNDetection.succeed(chalk.green('DNS inspection complete on ' + uniqueDomains.domains.length + ' unique domains'));
+                            spinnerCDNDetection.succeed(chalk.green(`CDN inspection complete on ${uniqueDomains.domains.length} unique domains`));
                         }
 
                         // Pause for configured interval (when we're looping through URLs more than once and there are still iterations left, and when the interval isn't zero) ...

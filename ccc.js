@@ -506,14 +506,14 @@ try {
 
                         if (settings.serviceDetection) {
                             // Create and start the CDN Detection activity spinner
-                            const spinnerCDNDetection = ora(`CDN detection being performed on ${uniqueDomains.domains.length} unique domains ...`).start();
+                            const spinnerServiceDetection = ora(`CDN detection being performed on ${uniqueDomains.domains.length} unique domains ...`).start();
 
                             // Determine the CDN or service behind each unique domain
                             uniqueDomains.domains.forEach((domain) => {
                                 cccDNS.determineCDN(domain, settings, (cdn) => {
                                     debug('determineCDN(%s) returned: %O', domain, cdn);
                                     // Construct the console message array
-                                    var cdnDetection = [{
+                                    var serviceDetection = [{
                                         hostname: chalk.cyan(cdn.hostname)
                                     }];
 
@@ -525,34 +525,34 @@ try {
                                     // Add colour to the message depending upon the success of otherwise of the determination
                                     switch (cdn.status) {
                                         case global.CCC_SERVICE_DETECTION_LABELS.UNKNOWN: {
-                                            cdnDetection[0].message = chalk.grey(messageStr);
+                                            serviceDetection[0].message = chalk.grey(messageStr);
                                             break;
                                         }
                                         case global.CCC_SERVICE_DETECTION_LABELS.ERROR: {
-                                            cdnDetection[0].message = chalk.redBright(messageStr);
+                                            serviceDetection[0].message = chalk.redBright(messageStr);
                                             break;
                                         }
                                         case global.CCC_SERVICE_DETECTION_LABELS.CDN: {
-                                            cdnDetection[0].message = chalk.greenBright(messageStr);
+                                            serviceDetection[0].message = chalk.greenBright(messageStr);
                                             break;
                                         }
                                         case global.CCC_SERVICE_DETECTION_LABELS.OTHER: {
-                                            cdnDetection[0].message = chalk.yellowBright(messageStr);
+                                            serviceDetection[0].message = chalk.yellowBright(messageStr);
                                             break;
                                         }
                                         default:
-                                            cdnDetection[0].message = chalk.yellowBright(messageStr);
+                                            serviceDetection[0].message = chalk.yellowBright(messageStr);
                                     }
 
                                     // Record the reason against the message if verbose output is enabled
                                     if (settings.options.verbose) {
-                                        cdnDetection[0].reason = reasonStr;
+                                        serviceDetection[0].reason = reasonStr;
                                     }
 
                                     let hostnameColumnWidth = uniqueDomains.domainNameLength + 5;
 
                                     // Format text into spaced columns
-                                    let columns = columnify(cdnDetection, {
+                                    let columns = columnify(serviceDetection, {
                                         showHeaders: false,
                                         paddingChr: global.CCC_OUTPUT.PADDING_CHARACTER,
                                         config: {
@@ -566,7 +566,7 @@ try {
                             });
 
                             // Stop the CDN Detection spinner
-                            spinnerCDNDetection.succeed(chalk.green(`CDN inspection complete on ${uniqueDomains.domains.length} unique domains`));
+                            spinnerServiceDetection.succeed(chalk.green(`CDN inspection complete on ${uniqueDomains.domains.length} unique domains`));
                         }
 
                         // Pause for configured interval (when we're looping through URLs more than once and there are still iterations left, and when the interval isn't zero) ...

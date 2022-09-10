@@ -200,8 +200,8 @@ module.exports = {
                         // DNS didn't yield a conclusive answer. Check the IP Address against each of the service providers' list
                         debug('%s\'s DNS recursion didn\'t match a known provider\'s domain (discoveryResponse.status: %s)', hostname, discoveryResponse.status);
 
-                        /* // We might want to have a switch to disable the IP address scan
-                        if (settings.IPScan === true) {} */
+                        // We might want to have a switch to disable the IP address scan
+                        //if (settings.IPScan === true)
 
                         // Get the IP address from the DNS answer first
                         debug('Extracting the IP address from the DNS answer');

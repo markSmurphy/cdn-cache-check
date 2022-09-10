@@ -5,7 +5,7 @@ debug('Entry: [%s]', __filename);
 function writeLn(text = '') {
    try {
       // Convert input to text if required
-      if (typeof (text) != 'string') {
+      if (typeof (text) !== 'string') {
          text = text.toString();
       }
 

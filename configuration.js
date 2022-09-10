@@ -129,7 +129,7 @@ module.exports = {
             }
 
             // Number of HTTP redirects to follow
-            if (argv.follow != undefined) {
+            if (argv.follow !== undefined) {
 
                 // Validate that an integer was specified
                 if (Number.isInteger(argv.follow)) {

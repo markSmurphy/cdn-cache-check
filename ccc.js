@@ -212,15 +212,7 @@ try {
                 debug('(%s of %s) Issuing HTTP %s request to [%s]...', requestCounter, urls.length, settings.method.toUpperCase(), urls[i]);
 
                 // Initialise result object
-                let result = {
-                    error: false,
-                    statusCode: 0,
-                    request: {},
-                    response: {},
-                    redirectCount: 0,
-                    ipAddress: null,
-                    ipFamily: null
-                };
+                let result = config.initResponseObject();
 
                 // Parse URL into component parts (since we don't have a response object when there's an error)
                 let requestURL = new URL(urls[i]);

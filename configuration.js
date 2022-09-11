@@ -323,11 +323,26 @@ function displayConfigFileLocation() { // Display config file location
 	console.log(EOL + chalk.grey('Config file:') + chalk.yellowBright(configFilePath));
 }
 
+function initResponseObject() {
+   let defaultResponseObject =  {
+		error: false,
+		statusCode: 0,
+		request: {},
+		response: {},
+		redirectCount: 0,
+		ipAddress: null,
+		ipFamily: null
+  };
+
+  return(defaultResponseObject);
+}
+
 module.exports = {
 	displayConfigFileLocation,
+	displayHeaderCollections,
 	getHeaderCollection,
 	getSettings,
 	getUserAgent,
 	getHeaderCollections,
-	displayHeaderCollections
+	initResponseObject
 };

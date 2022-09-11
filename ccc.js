@@ -21,6 +21,9 @@ if (argv.debug) {
 // cdn-cache-check's own DNS helper functions
 const cccDNS = require('./ccc-dns');
 
+// cdn-cache-check's library functions
+const cccLibrary = require('./ccc-lib');
+
 // HTTP Archive Parsers
 const harParser = require('./harparser');
 
@@ -122,7 +125,7 @@ try {
                         urls.push(...harURLs); // Append the HAR's URLs to the global URL array
                     } else {
                         // Read the text file
-                        debug('It\'s a file. Reading its contents ...');
+                        debug('It\'s a text file. Reading its contents ...');
                         let data = fs.readFileSync(currentArgument, 'UTF-8');
 
                         // Split the contents by new line
@@ -168,6 +171,7 @@ try {
         }
     }
 
+    // We've got a list of URLs to check in the ${urls} array
     if (urls.length === 0) {
         console.log(chalk.red('Error: No URL(s) provided.'));
         // Show help screen
@@ -189,18 +193,8 @@ try {
         // Calculate how many requests we're going to make and display a notification if it exceeds the threshold
         debug('Checking these %s URLs %s times (%s requests in total across %s domain(s)): %O', urls.length, settings.iterations, totalRequests, uniqueDomains.count, urls);
         if (totalRequests > global.CCC_REQUEST.WARNING_THRESHOLD) {
-            // Display a subtly different notification if there are multiple iterations and/or multiple domains
-            let notification = chalk.cyan(`Checking ${urls.length} URLs`);
-
-            if (uniqueDomains.count > 1) {
-                notification += chalk.cyan(` across ${uniqueDomains.count} domains`);
-            }
-
-            if (settings.iterations > 1) {
-                notification += chalk.cyan(` * ${settings.iterations} times (totaling ${totalRequests} requests)`);
-            }
-
-            console.log(notification);
+            // Display how many requests we're about to make if it's a *lot* (there's no point saying we're about to make 2 requests)
+            cccLibrary.displayRequestSummary(urls.length,uniqueDomains.count, totalRequests, settings.iterations);
         }
 
         // Create and start the HTTP requests activity spinner

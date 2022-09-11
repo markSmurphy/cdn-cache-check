@@ -9,7 +9,6 @@
   * Service Scans
 * Improve constants and general response object property names
 * WTF is previousAWS
-* `CDN detection complete on {total} unique domains` isn't an accurate message.  HTTP requests are complete, perhaps
 
 ---
 
@@ -133,3 +132,4 @@
 * [X] ~~Implement `settings.options.httpOptions` passed through to `needle`~~
 * [X] ~~Attempt CDN detection based on `CNAME` apex domain.~~
 * [X] ~~Replace `CDN detection` with `DNS Inspection`~~
+* [X] ~~`CDN detection complete on {total} unique domains` isn't an accurate message.  *DNS inspection complete*, perhaps~~

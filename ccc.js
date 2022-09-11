@@ -44,7 +44,6 @@ const path = require('path');
 
 // Platform independent new line character and path separator
 const EOL = require('os').EOL;
-const pathSeparator = require('path').sep;
 
 // Initialise URL validation object
 const validUrl = require('valid-url');
@@ -94,19 +93,12 @@ try {
     // Check for '--list-header-collections' command line parameters
     if (argv.listHeaderCollections) {
         debug('--list-header-collections detected.  Retrieving all Headers Collections....');
-        // Get an array of Header Collections
-        let collections = config.listHeaderCollections();
-
-        // Initialise prettyJson object, to format output
-        let prettyJson = require('prettyjson');
-
-        // Output the formatted json contained within each array element
-        collections.forEach((element) => console.log(prettyJson.render(element)));
+        // Get an array of Header Collections and render them to the console
+        config.listHeaderCollections(config.getHeaderCollections());
 
         // Display config file location
-        let configFile = `${__dirname}${pathSeparator}configuration.json`;
+        config.displayConfigFileLocation();
 
-        console.log(EOL + chalk.grey('Config file:') + chalk.yellowBright(configFile));
         // Exit to terminal
         process.exit();
     }

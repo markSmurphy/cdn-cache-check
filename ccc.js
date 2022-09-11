@@ -97,7 +97,7 @@ try {
     if (argv.listHeaderCollections) {
         debug('--list-header-collections detected.  Retrieving all Headers Collections....');
         // Get an array of Header Collections and render them to the console
-        config.listHeaderCollections(config.getHeaderCollections());
+        config.displayHeaderCollections(config.getHeaderCollections());
 
         // Display config file location
         config.displayConfigFileLocation();

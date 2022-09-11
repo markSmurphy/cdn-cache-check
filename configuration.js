@@ -263,8 +263,8 @@ function getHeaderCollection(collectionName, settings) {
 	// Perhaps return something that will collect all headers - return (['*']);
 	console.log(
 		chalk.blue('WARNING: The requested header collection ') +
-			collectionName +
-			chalk.blue(' does not exist'),
+		collectionName +
+		chalk.blue(' does not exist'),
 	);
 	return [];
 }
@@ -279,14 +279,14 @@ function getHeaderCollections() {
 	return headersCollections;
 }
 
-function listHeaderCollections(headerCollections) {
-    debug('listHeaderCollections():: Entry');
+function displayHeaderCollections(headerCollections) {
+	debug('displayHeaderCollections():: Entry');
 
-    // Initialise prettyJson object, to format output
-    let prettyJson = require('prettyjson');
+	// Initialise prettyJson object, to format output
+	let prettyJson = require('prettyjson');
 
-    // Output the formatted json contained within each array element
-    headerCollections.forEach((element) => console.log(prettyJson.render(element)));
+	// Output the formatted json contained within each array element
+	headerCollections.forEach((element) => console.log(prettyJson.render(element)));
 }
 
 function getUserAgent() {
@@ -314,20 +314,20 @@ function getUserAgent() {
 }
 
 function displayConfigFileLocation() { // Display config file location
-    // Platform independent new line character and path separator
-    const EOL = require('os').EOL;
-    const pathSeparator = require('path').sep;
+	// Platform independent new line character and path separator
+	const EOL = require('os').EOL;
+	const pathSeparator = require('path').sep;
 
-    // Configuration file exists in the same directory as the main application __dirname
-    let configFilePath = `${__dirname}${pathSeparator}${configFile}`;
-    console.log(EOL + chalk.grey('Config file:') + chalk.yellowBright(configFilePath));
+	// Configuration file exists in the same directory as the main application __dirname
+	let configFilePath = `${__dirname}${pathSeparator}${configFile}`;
+	console.log(EOL + chalk.grey('Config file:') + chalk.yellowBright(configFilePath));
 }
 
 module.exports = {
-    displayConfigFileLocation,
+	displayConfigFileLocation,
 	getHeaderCollection,
-    getSettings,
+	getSettings,
 	getUserAgent,
 	getHeaderCollections,
-    listHeaderCollections
+	displayHeaderCollections
 };

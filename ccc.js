@@ -174,9 +174,8 @@ try {
     // We've got a list of URLs to check in the ${urls} array
     if (urls.length === 0) {
         console.log(chalk.red('Error: No URL(s) provided.'));
-        // Show help screen
-        let help = require('./help');
-        help.helpScreen(argv.verbose);
+        // Show some advice
+        console.log(chalk.grey(`Try ${chalk.grey.italic('ccc --help')} for syntax.`));
 
     } else {
         // The main work starts here

@@ -1,10 +1,6 @@
 const debug = require('debug')('cdn-cache-check-configuration');
 debug('Entry: [%s]', __filename);
 
-// Error formatting module
-const PrettyError = require('pretty-error');
-const pe = new PrettyError();
-
 // Command line options parser
 var argv = require('yargs')
     .help(false)
@@ -189,7 +185,8 @@ module.exports = {
             return settings;
 
         } catch (error) {
-            console.error(pe.render(error));
+            console.error(`An error occurred in getSettings() - ${error.message}`);
+            debug(error);
             return (settings);
         }
     },

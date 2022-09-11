@@ -61,10 +61,6 @@ const matcher = require('multimatch');
 // Import terminal spinner library
 const ora = require('ora');
 
-// Error formatting
-const PrettyError = require('pretty-error');
-const pe = new PrettyError();
-
 // Initialise configuration
 const config = require('./configuration');
 
@@ -157,8 +153,8 @@ try {
                             }
                         }
                     }
-                } catch (err) {
-                    debug('An error occurred when parsing the file [%s]: %O', currentArgument, err);
+                } catch (error) {
+                    debug('An error occurred when parsing the file [%s]: %O', currentArgument, error);
                 }
             } else if (validUrl.isWebUri(currentArgument)) {
                 // It's a valid URL.  Add it to the urls array
@@ -174,8 +170,9 @@ try {
                 // It doesn't pass any tests. Ignore it
                 debug('Ignoring [%s]', currentArgument);
             }
-        } catch (err) {
-            console.error(pe.render(err));
+        } catch (error) {
+            console.error(`An error occurred - ${error.message}`);
+            debug(error);
         }
     }
 
@@ -596,5 +593,6 @@ try {
         }
     }
 } catch (error) {
-    console.error(pe.render(error));
+    console.error(`An error occurred - ${error.message}`);
+    debug(error);
 }

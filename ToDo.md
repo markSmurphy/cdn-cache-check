@@ -57,7 +57,7 @@
 * [ ] Add GEO location lookup of IP address hosting each resource via [IP Who Is](https://ipwhois.io/documentation#tabs-format)
 * [ ] Add option to emulate `user-agent` of popular browsers or provide a custom user-agent string
 * [ ] Add an asynchronous update of AWS [ip-ranges.json](https://ip-ranges.amazonaws.com/ip-ranges.json) based on the `syncToken` property
-* [ ] Add DNS options to `defaults.json`
+* [ ] Add DNS options to `configuration.json`
   * [ ] Allow command line override for DNS options
 * [ ] Add a mechanism to provide advice - when a `read_timeout` occurs inform the user of the argument to increase it
 * [ ] Improve CDN Detection by examining telltale response headers (such as `server: cloudfront`)

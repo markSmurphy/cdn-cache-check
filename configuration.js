@@ -20,11 +20,11 @@ const utils = require('./utils');
 var defaultSettings = {};
 
 try {
-    defaultSettings = require('./defaults.json'); // Load the defaults
+    defaultSettings = require('./configuration.json'); // Load the defaults
 
 } catch (error) {
-    debug('An error occurred loading the defaults.json file: %O', error);
-    // The defaults.json didn't load.  Return a bare and very basic config
+    debug('An error occurred loading the configuration.json file: %O', error);
+    // The configuration.json didn't load.  Return a bare and very basic config
     defaultSettings = {
         method: 'get',
         iterations: 1,

@@ -108,7 +108,7 @@ try {
         collections.forEach((element) => console.log(prettyJson.render(element)));
 
         // Display config file location
-        let configFile = `${__dirname}${pathSeparator}defaults.json`;
+        let configFile = `${__dirname}${pathSeparator}configuration.json`;
 
         console.log(EOL + chalk.grey('Config file:') + chalk.yellowBright(configFile));
         // Exit to terminal

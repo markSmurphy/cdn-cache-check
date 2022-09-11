@@ -16,7 +16,7 @@
 * A much improved service detection engine which queries cloud providers' publish IP address ranges.
 * Added `Azure Service Detection`.
 * Added `--verbose` option which includes a descriptive reason for the service detection results.
-* Added reporting of **Application Path** to `--help --verbose` output to aid finding the `defaults.json` configuration file.
+* Added reporting of **Application Path** to `--help --verbose` output to aid finding the `configuration.json` configuration file.
 * Added `WordPress Hosting Engine` to CDN Detection
 
 ### Changed
@@ -231,7 +231,7 @@ You can then pass that `.har` file to `cdn-cache-check` and it will extract the 
 ### Fixed
 
 * Refactored `configuration.js` so that `getDefaults()` is called just once, rather than once per exported function. Not only is this now more efficient, but it cuts down on the `--debug` output making it more readable.
-* `--headers [collection]` is now case *insensitive*, so argument values that don't match the case in the `defaults.json` file no longer cause a warning.
+* `--headers [collection]` is now case *insensitive*, so argument values that don't match the case in the `configuration.json` file no longer cause a warning.
 
 ---
 

@@ -1,7 +1,5 @@
 {
     "method": "get",
-    "iterations": 1,
-    "interval": 5000,
     "headersCollection": "default",
     "serviceDetection": true,
     "IPScan": true,

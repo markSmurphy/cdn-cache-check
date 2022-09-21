@@ -4,22 +4,13 @@ debug('Entry: [%s]', __filename);
 // Initialise console colours
 const chalk = require('chalk');
 
-function displayRequestSummary(
-	urlCount,
-	domainCount,
-	requestCount,
-	iterations,
-) {
+
+// Function of notifies the user of how requests, across how many domains, are going to be make
+function displayRequestSummary(urlCount, domainCount) {
 	let notification = chalk.cyan(`Checking ${urlCount} URLs`);
 
 	if (domainCount > 1) {
 		notification += chalk.cyan(` across ${domainCount} domains`);
-	}
-
-	if (iterations > 1) {
-		notification += chalk.cyan(
-			` * ${iterations} times (totaling ${requestCount} requests)`,
-		);
 	}
 
 	console.log(notification);

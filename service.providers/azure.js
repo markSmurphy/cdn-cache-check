@@ -20,7 +20,6 @@ function lookupIpAddress(ipAddress, options = { verbose: false }) {
     // Initialise response object
     let response = global.CCC_SERVICE_DETECTION_DEFAULT_RESPONSE;
     response.ipAddress = ipAddress;
-    response.status = global.CCC_SERVICE_DETECTION_LABELS.UNKNOWN;
 
     // Loop through each service
     debug('Checking if the IP address [%s] matches one of %s known Azure services', ipAddress, services.values.length);
@@ -47,7 +46,7 @@ function lookupIpAddress(ipAddress, options = { verbose: false }) {
                     strMessage += ` (${services.values[i].properties.region})`;
                 }
                 response.messages.push(strMessage);
-                response.status = global.CCC_SERVICE_DETECTION_LABELS.AZURE;
+                response.status = global.CCC_SERVICE_DETECTION_STATUS_LABEL.AZURE;
 
                 if (options.verbose === false) { // Check if verbose mode is disabled, because we'll log everything if it's not
 

@@ -136,8 +136,8 @@ function determineCDN(hostname, settings, callback) {
         message: [],
         hostname: hostname,
         reason: '',
-        service: global.CCC_SERVICE_DETECTION_LABELS.UNKNOWN,
-        status: global.CCC_SERVICE_DETECTION_LABELS.UNKNOWN,
+        service: global.CCC_SERVICE_DETECTION_STATUS_LABEL.UNKNOWN,
+        status: global.CCC_SERVICE_DETECTION_STATUS_LABEL.UNKNOWN,
         ipAddress: null
     };
 
@@ -159,7 +159,7 @@ function determineCDN(hostname, settings, callback) {
             discoveryResponse.message.push('DNS Timeout');
             discoveryResponse.reason = 'DNS Timeout';
             discoveryResponse.error = `Timeout after ${req.timeout} milliseconds`;
-            discoveryResponse.status = global.CCC_SERVICE_DETECTION_LABELS.ERROR;
+            discoveryResponse.status = global.CCC_SERVICE_DETECTION_STATUS_LABEL.ERROR;
             callback(discoveryResponse);
         });
 
@@ -169,12 +169,12 @@ function determineCDN(hostname, settings, callback) {
                 discoveryResponse.message.push('DNS Error');
                 discoveryResponse.reason = 'DNS Error';
                 discoveryResponse.error = error;
-                discoveryResponse.status = global.CCC_SERVICE_DETECTION_LABELS.ERROR;
+                discoveryResponse.status = global.CCC_SERVICE_DETECTION_STATUS_LABEL.ERROR;
             } else {
                 debug('Received DNS answer lookup for [%s]: %O', hostname, answer);
 
                 // Expand the answer into an array of all nested addresses in the full recursion
-                discoveryResponse.dnsAnswer = module.exports.parseAnswer(answer.answer, { operation: 'getRecursion' });
+                discoveryResponse.dnsAnswer = parseAnswer(answer.answer, { operation: 'getRecursion' });
 
                 // Iterate through each nested address in the DNS answer to check if matches a known CDN
                 for (let i = 0; i < discoveryResponse.dnsAnswer.length; i++) {
@@ -189,16 +189,16 @@ function determineCDN(hostname, settings, callback) {
                             discoveryResponse.matchingDomains = matchingDomains[0];
                             discoveryResponse.service = settings.apexDomains[cdn].service.toUpperCase();
                             discoveryResponse.message.push(settings.apexDomains[cdn].title);
-                            discoveryResponse.status = global.CCC_SERVICE_DETECTION_LABELS.CDN;
+                            discoveryResponse.status = global.CCC_SERVICE_DETECTION_STATUS_LABEL.CDN;
                             if (settings.apexDomains[cdn].service.toUpperCase() !== 'CDN') {
-                                discoveryResponse.status = global.CCC_SERVICE_DETECTION_LABELS.OTHER;
+                                discoveryResponse.status = global.CCC_SERVICE_DETECTION_STATUS_LABEL.OTHER;
                             }
                         }
                     }
                 }
 
                 // Check if the DNS chain inspection didn't identify the service provider
-                if (discoveryResponse.status === global.CCC_SERVICE_DETECTION_LABELS.UNKNOWN) {
+                if (discoveryResponse.status === global.CCC_SERVICE_DETECTION_STATUS_LABEL.UNKNOWN) {
                     // DNS didn't yield a conclusive answer. Check the IP Address against each of the service providers' list
                     debug('%s\'s DNS recursion didn\'t match a known provider\'s domain (discoveryResponse.status: %s)', hostname, discoveryResponse.status);
 
@@ -216,7 +216,7 @@ function determineCDN(hostname, settings, callback) {
                     // Populate `discoveryResponse` object properties
                     discoveryResponse.message = azureResponse.message;
                     discoveryResponse.reason = azureResponse.reason;
-                    discoveryResponse.status = global.CCC_SERVICE_DETECTION_LABELS.AZURE;
+                    discoveryResponse.status = global.CCC_SERVICE_DETECTION_STATUS_LABEL.AZURE;
 
                     // AWS Service Detection
                     //let awsResponse = serviceDetectionAWS.lookupIpAddress(discoveryResponse.ipAddress);
@@ -228,7 +228,7 @@ function determineCDN(hostname, settings, callback) {
 
                 if (!discoveryResponse?.message?.length) { // Check if the message array is blank
                     // We didn't identify the service behind the domain name or IP address
-                    discoveryResponse.message = [global.CCC_SERVICE_DETECTION_LABELS.UNKNOWN]; // add the default message
+                    discoveryResponse.message = [global.CCC_SERVICE_DETECTION_STATUS_LABEL.UNKNOWN]; // add the default message
                 }
                 callback(discoveryResponse);
             }
@@ -242,9 +242,125 @@ function determineCDN(hostname, settings, callback) {
         discoveryResponse.message = 'Invalid DNS domain';
         discoveryResponse.reason = `The hostname "${hostname}" doesn't conform to DNS specifications`;
         discoveryResponse.service = 'None';
-        discoveryResponse.status = global.CCC_SERVICE_DETECTION_LABELS.ERROR;
-        // TO DO *** test if this is actually passed back in the callback if this condition is met
+        discoveryResponse.status = global.CCC_SERVICE_DETECTION_STATUS_LABEL.ERROR;
     }
 }
 
-module.exports = {getDNSResolver, getUniqueDomains, parseAnswer, determineCDN};
+let inspectDNS = (fqdn, settings) => {
+    debug('inspectDNS(%s)', fqdn);
+
+    return new Promise(function (resolve, reject) {
+
+        let response = global.CCC_SERVICE_DETECTION_DEFAULT_RESPONSE;           // Initialise response object
+        response.fqdn = fqdn;                                                   // Set the Fully Qualified Domain Name
+
+        if (typeof (fqdn) === 'string' && fqdn.trim().length > 0) {             // Check if the fqdn is a non-empty string
+
+            if (isValidDomain(fqdn, { subdomain: true, wildcard: false })) {    // Verify that the fqdn conforms to DNS specifications
+
+                let question = dns.Question({                                   // Create DNS Question object
+                    name: fqdn,
+                    type: global.CCC_DNS_REQUEST_RECORD_TYPE,
+                });
+
+                let req = dns.Request({                                         // Create DNS Request object
+                    question: question,
+                    server: { address: getDNSResolver(), port: 53, type: 'udp' },
+                    timeout: 5000
+                });
+
+                // DNS 'timeout' event
+                req.on('timeout', () => {                                       // Handle DNS timeout event
+                    debug('DNS timeout occurred resolving [%s]', fqdn);
+                    response.message = 'DNS Timeout';                           // Record Timeout message
+                    response.messages.push(response.message);                   // Add message to the messages array
+                    response.reason = `DNS timeout after ${req.timeout} ms`;
+                    response.status = global.CCC_SERVICE_DETECTION_STATUS_LABEL.ERROR;
+
+                    reject(response);                                           // reject the promise
+                });
+
+                // DNS 'message' event
+                req.on('message', (error, answer) => {                          // handle DNS message event
+                    if (error) {                                                // DNS returned an error
+                        debug('Received DNS error for %s: %O', fqdn, error);
+                        response.message = `DNS Error flagged in message event: ${error}`;
+                        response.messages.push(response.message);               // Add message to the messages array
+                        response.reason = 'DNS Error';
+                        response.status = global.CCC_SERVICE_DETECTION_STATUS_LABEL.ERROR;
+                        debug('inspectDNS() rejecting Promise with response: %O', response);
+                        reject(response);                                       // reject the promise
+
+                    } else {                                                    // Process DNS Answer
+                        debug('Received DNS answer to the lookup for [%s]: %O', fqdn, answer);
+
+                        // Expand the answer into an array of all nested addresses in the full DNS recursion
+                        response.dnsAnswer = parseAnswer(answer.answer, { operation: 'getRecursion' });
+
+                        // Get the IP address from the DNS answer
+                        debug('Extracting the IP address from the DNS answer');
+                        response.ipAddress = parseAnswer(answer.answer, {});
+
+                        // Iterate through each nested address in the DNS answer to check if matches a known service's domain
+                        for (let i = 0; i < response.dnsAnswer.length; i++) {
+                            for (let service in settings.apexDomains) {
+                                debug('Evaluating FQDN [%s] against the service [%s] which uses the domains: %O', response.dnsAnswer[i], service, settings.apexDomains[service].domains);
+
+                                // Generate an array of service apex domains which match the FQDN's CNAME chain entries
+                                let matchingDomains = matcher(response.dnsAnswer[i], settings.apexDomains[service].domains);
+
+                                if (matchingDomains.length > 0) {               // We've found a match.  Record the details
+                                    debug('%s is served by %s due to nested domain %s', fqdn, settings.apexDomains[service].title, matchingDomains[0]);
+
+                                    // Populate response object properties
+                                    response.reason = `${fqdn} resolves to ${matchingDomains[0]} which matches a ${service} domain pattern`;
+                                    response.matchingDomains = matchingDomains[0];
+                                    response.service = settings.apexDomains[service].service;
+                                    response.message = settings.apexDomains[service].title;
+                                    response.messages.push(response.message);
+
+                                    if (settings.apexDomains[service].service.toUpperCase() === 'CDN') {
+                                        response.status = global.CCC_SERVICE_DETECTION_STATUS_LABEL.CDN;
+
+                                    } else {
+                                        response.status = global.CCC_SERVICE_DETECTION_STATUS_LABEL.OTHER;
+                                    }
+                                }
+                            }
+                        }
+
+                        // Check if the DNS inspection didn't identify the service provider
+                        if (response.status === global.CCC_SERVICE_DETECTION_STATUS_LABEL.UNKNOWN) {
+                            // We didn't identify the service behind the domain name
+                            console.log('Just checking if it is worth setting response.status to UNKNOWN here as it is currently: %s'. response.status);
+                            response.message = [global.CCC_SERVICE_DETECTION_STATUS_LABEL.UNKNOWN]; // add the "Unknown" message
+                            debug('%s\'s DNS recursion didn\'t match a known provider\'s domain (response.status: %s)', fqdn, response.status);
+                        }
+
+                        debug('inspectDNS(%s) returning: %O', fqdn, response);
+
+                        resolve(response);                          // Return response object as we found a known service behind the fqdn
+                    }
+                });
+
+                debug('Sending DNS Request: %O', req);
+                req.send();                                         // Issue the DNS lookup request
+
+            } else {
+                response.message = `DNS Inspection failed. The "fqdn" [${fqdn}] did not pass DNS name validation.`
+                response.messages.push(response.message);                       // Add message to the messages array
+                debug('inspectDNS() rejecting Promise with response: %O', response);
+                reject(response);                                               // reject the promise
+            }
+
+
+        } else {
+            response.message = `DNS Inspection failed. The "fqdn" parameter [${fqdn}] is either empty or not a string.`
+            response.messages.push(response.message);                           // Add message to the messages array
+            debug('inspectDNS() rejecting Promise with response: %O', response);
+            reject(response);                                                   // reject the promise
+        }
+    });
+ };
+
+module.exports = { getDNSResolver, getUniqueDomains, determineCDN, inspectDNS };

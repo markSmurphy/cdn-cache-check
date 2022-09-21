@@ -10,9 +10,6 @@ var argv = require('yargs').help(false).argv;
 // Initialise console colours
 const chalk = require('chalk');
 
-// Initialise collection of Utilities
-const utils = require('./utils');
-
 // Initialise default settings
 var defaultSettings = {};
 
@@ -23,8 +20,6 @@ try {
 	// The configuration file didn't load.  Return a bare and very basic config
 	defaultSettings = {
 		method: 'get',
-		iterations: 1,
-		interval: 5000,
 		headersCollection: 'default',
 		serviceDetection: true,
 		IPScan: true,
@@ -120,44 +115,6 @@ function getSettings() {
 						argv.method.toUpperCase(),
 						settings.method.toUpperCase(),
 					),
-				);
-			}
-		}
-
-		// Number of iterations
-		if (argv.iterations) {
-			// Validate that an integer was specified
-			if (Number.isInteger(argv.iterations)) {
-				settings.iterations = argv.iterations;
-				debug('Iterations set to %s', settings.iterations);
-			} else {
-				console.log(
-					chalk.blue(
-						'Ignoring "--iterations %s" because iterations must be an integer. Using the default "%s" instead',
-					),
-					argv.iterations,
-					settings.iterations,
-				);
-			}
-		}
-
-		// Interval between requests
-		if (argv.interval) {
-			// Validate that an integer was specified
-			if (Number.isInteger(argv.interval)) {
-				settings.interval = argv.interval;
-				debug('The interval is set to %s ms', settings.interval);
-				console.log(
-					chalk.blue('The interval between iterations is set to %s'),
-					utils.millisecondsToHms(settings.interval),
-				);
-			} else {
-				console.log(
-					chalk.blue(
-						'Warning: Ignoring "--interval %s" because interval must be an integer. Using the default "%s" instead',
-					),
-					argv.interval,
-					settings.interval,
 				);
 			}
 		}

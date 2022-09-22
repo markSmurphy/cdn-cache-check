@@ -281,7 +281,7 @@ function displayConfigFileLocation() { // Display config file location
 }
 
 function initResponseObject() {
-   let defaultResponseObject =  {
+	let defaultResponseObject = {
 		error: false,
 		statusCode: 0,
 		request: {},
@@ -289,9 +289,9 @@ function initResponseObject() {
 		redirectCount: 0,
 		ipAddress: null,
 		ipFamily: null
-  };
+	};
 
-  return(defaultResponseObject);
+	return (defaultResponseObject);
 }
 
 module.exports = {

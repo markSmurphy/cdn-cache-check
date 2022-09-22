@@ -172,22 +172,22 @@ try {
         debug('Checking these %s URLs across %s domain(s): %O', urls.length, uniqueDomains.count, urls);
         if (urls.length > global.CCC_REQUEST.WARNING_THRESHOLD) {
             // Display how many requests we're about to make, but only if it's a *lot* (there's no point saying we're about to make 2 requests)
-            cccLibrary.displayRequestSummary(urls.length,uniqueDomains.count);
+            cccLibrary.displayRequestSummary(urls.length, uniqueDomains.count);
         }
 
         // Create and start the HTTP requests activity spinner
         const spinnerHTTPRequests = ora('Issuing HTTP requests ...').start();
 
-        cccHTTP.issueRequests(urls, settings).then( (responses) => {                                          // Issue HTTP requests for each URL
+        cccHTTP.issueRequests(urls, settings).then((responses) => {                                         // Issue HTTP requests for each URL
             debug('Received %i responses from %i URLs', responses.length, urls.length);
 
-            spinnerHTTPRequests.succeed(chalk.green(`Completed ${urls.length} HTTP requests`));     // Stop the HTTP Requests spinner
+            spinnerHTTPRequests.succeed(chalk.green(`Completed ${urls.length} HTTP requests`));             // Stop the HTTP Requests spinner
 
-            cccRender.renderHTTPResponses(responses, settings).then( (columns) => {                           // Format HTTP responses into tabulated output
-                console.log(columns);                                                               // Display HTTP response results in console
+            cccRender.renderHTTPResponses(responses, settings).then((columns) => {                          // Format HTTP responses into tabulated output
+                console.log(columns);                                                                       // Display HTTP response results in console
 
-                if (settings.listResponseHeaders) {                                                 // Check if switch to list unique response headers is enabled
-                    cccRender.renderHTTPResponseHeaders(responses).then( () => {                    // Display all unique HTTP response headers
+                if (settings.listResponseHeaders) {                                                         // Check if switch to list unique response headers is enabled
+                    cccRender.renderHTTPResponseHeaders(responses).then(() => {                             // Display all unique HTTP response headers
                         if (settings.serviceDetection) {
                             // Create and start the Service Detection activity spinner
                             let spinnerServiceDetection = ora(`Service detection being performed on ${uniqueDomains.domains.length} unique domains ...`).start();

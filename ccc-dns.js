@@ -361,6 +361,6 @@ let inspectDNS = (fqdn, settings) => {
             reject(response);                                                   // reject the promise
         }
     });
- };
+};
 
 module.exports = { getDNSResolver, getUniqueDomains, determineCDN, inspectDNS };

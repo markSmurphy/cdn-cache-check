@@ -183,7 +183,7 @@ try {
 
             spinnerHTTPRequests.succeed(chalk.green(`Completed ${urls.length} HTTP requests`));     // Stop the HTTP Requests spinner
 
-            cccRender.renderHTTPResponses(responses).then( (columns) => {                           // Format HTTP responses into tabulated output
+            cccRender.renderHTTPResponses(responses, settings).then( (columns) => {                           // Format HTTP responses into tabulated output
                 console.log(columns);                                                               // Display HTTP response results in console
 
                 if (settings.listResponseHeaders) {                                                 // Check if switch to list unique response headers is enabled

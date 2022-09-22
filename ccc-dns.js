@@ -332,7 +332,7 @@ let inspectDNS = (fqdn, settings) => {
                         // Check if the DNS inspection didn't identify the service provider
                         if (response.status === global.CCC_SERVICE_DETECTION_STATUS_LABEL.UNKNOWN) {
                             // We didn't identify the service behind the domain name
-                            console.log('Just checking if it is worth setting response.status to UNKNOWN here as it is currently: %s'. response.status);
+                            console.log('Just checking if it is worth setting response.status to UNKNOWN here as it is currently: %s', response.status);
                             response.message = [global.CCC_SERVICE_DETECTION_STATUS_LABEL.UNKNOWN]; // add the "Unknown" message
                             debug('%s\'s DNS recursion didn\'t match a known provider\'s domain (response.status: %s)', fqdn, response.status);
                         }

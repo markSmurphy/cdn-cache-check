@@ -11,7 +11,7 @@ module.exports = {
         const packageJSON = require('./package.json');
 
         // Display help screen
-        console.log(chalk.blueBright(packageJSON.name));
+        console.log(chalk.blueBright(packageJSON?.name));
         console.log(chalk.green('Read the docs: %s'), packageJSON?.homepage || '*not configured*');
         console.log(chalk.magenta('Support & bugs: %s'), packageJSON?.bugs?.url || '*not configured*');
         console.log(endOfLine);

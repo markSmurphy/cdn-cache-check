@@ -19,7 +19,7 @@ module.exports = {
         console.log(chalk.italic('   %s'), packageJSON?.description || '*not configured*');
         console.log(endOfLine);
         console.log(chalk.grey('VERSION:'));
-        console.log(`   ${packageJSON?.version}` || '*not configured*');
+        console.log(`   ${packageJSON?.version}`);
         console.log(endOfLine);
         console.log(chalk.grey('USAGE:'));
         console.log('   ' + 'node ccc.js [<url> | <filename> [<url> | <filename>] […] ] [options]');

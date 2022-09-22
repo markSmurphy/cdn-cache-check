@@ -178,7 +178,7 @@ try {
         // Create and start the HTTP requests activity spinner
         const spinnerHTTPRequests = ora('Issuing HTTP requests ...').start();
 
-        cccHTTP.issueRequests(urls).then( (responses) => {                                          // Issue HTTP requests for each URL
+        cccHTTP.issueRequests(urls, settings).then( (responses) => {                                          // Issue HTTP requests for each URL
             debug('Received %i responses from %i URLs', responses.length, urls.length);
 
             spinnerHTTPRequests.succeed(chalk.green(`Completed ${urls.length} HTTP requests`));     // Stop the HTTP Requests spinner

@@ -1,12 +1,6 @@
 #!/usr/bin/env node
 
 const debug = require('debug');//('cdn-cache-check');
-debug('Entry: [%s]', __filename);
-debug('Command line arguments: %O', process.argv);
-
-// Global Constants
-const constants = require('./ccc-constants');
-constants.init();
 
 // Command line options parser
 const argv = require('yargs')
@@ -17,6 +11,20 @@ const argv = require('yargs')
 if (argv.debug) {
     debug.enable('*');
 }
+
+debug('Entry: [%s]', __filename);
+debug('Command line arguments: %O', process.argv);
+
+// Global Constants
+const constants = require('./ccc-constants');
+constants.init();
+
+// Initialise configuration
+const config = require('./ccc-configuration');
+
+// Populate the settings object
+const settings = config.getSettings();
+debug('Using settings: %O', settings);
 
 // cdn-cache-check's DNS library
 const cccDNS = require('./ccc-dns');
@@ -54,12 +62,6 @@ const isValidDomain = require('is-valid-domain');
 // Import terminal spinner library
 const ora = require('ora');
 
-// Initialise configuration
-const config = require('./ccc-configuration');
-
-// Populate the settings object
-const settings = config.getSettings();
-
 try {
     // Check for '--help' command line parameters
     if (argv.help) {
@@ -90,6 +92,7 @@ try {
     }
 
     debug('Looking for URLs to check...');
+    console.info('Looking for URLs to check...');
     // Initialise array of URLs to check
     var urls = [];
 
@@ -154,7 +157,7 @@ try {
         }
     }
 
-    // We've got a list of URLs to check in the ${urls} array
+    // We've parsed the URLs into an array
     if (urls.length === 0) {
         console.log(chalk.red('Error: No URL(s) provided.'));
         // Show some advice
@@ -162,7 +165,6 @@ try {
 
     } else {
         // The main work starts here
-        debug('Using settings: %O', settings);
 
         // Extract a list of each distinct FQDN from the list of URLs
         var uniqueDomains = cccDNS.getUniqueDomains(urls);

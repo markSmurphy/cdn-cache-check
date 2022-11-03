@@ -125,7 +125,7 @@ ccc example.com --method head
 
 ### --headers *collection*
 
-By default the listed response headers are limited to `x-cache`, `cache-control`, `server`, `content-encoding`, `vary`, `age`; but this is just the **default** headers collection. You can use the `--headers` switch to specify and alternate collection of headers, and can use ``list-header-collections` to view all collections as described [here].(#list-header-collections).
+By default the listed response headers are limited to `x-cache`, `cache-control`, `server`, `content-encoding`, `vary`, `age`; but this is just the **default** headers collection. You can use the `--headers` switch to specify and alternate collection of headers, and can use ``list-header-collections` to view all collections.
 
 For example, there's a collection that lists **security** related response headers:
 

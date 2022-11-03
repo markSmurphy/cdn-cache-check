@@ -18,7 +18,7 @@ let issueRequests = (urls, settings) => {
          // Initialise variable to keep track of progress
          let requestCounter = 0;
 
-         for (let i in urls) { // Loop through each URL
+         for (let i = 0; i < urls.length; i++) { // Loop through each URL
 
             requestCounter++; // Increment the request counter
 

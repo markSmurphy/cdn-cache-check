@@ -226,7 +226,7 @@ function determineCDN(hostname, settings, callback) {
 
                 debug('determineCDN(%s) returning: %O', hostname, discoveryResponse);
 
-                if (!discoveryResponse?.message?.length) { // Check if the message array is blank
+                if (!discoveryResponse.message?.length) { // Check if the message array is blank
                     // We didn't identify the service behind the domain name or IP address
                     discoveryResponse.message = [global.CCC_SERVICE_DETECTION_STATUS_LABEL.UNKNOWN]; // add the default message
                 }

@@ -8,21 +8,24 @@ const config = require('./ccc-configuration');
 const needle = require('needle');
 
 let issueRequests = (urls, settings) => {
+   debug('issueRequests() :: Entry');
 
    return new Promise(function (resolve, reject) {
 
-      if ((Array.isArray(urls) && urls.length)) { // Process urls array
+      if ((Array.isArray(urls) && urls.length)) { // Process urls[] array
          // Keep array of request/response headers
          let responses = [];
 
          // Initialise variable to keep track of progress
          let requestCounter = 0;
 
+         debug(`The urls[] array has ${urls.length} entries`);
+
          for (let i = 0; i < urls.length; i++) { // Loop through each URL
 
             requestCounter++; // Increment the request counter
 
-            debug('(%s of %s) Issuing HTTP %s request to [%s]...', requestCounter, urls.length, settings.method.toUpperCase(), urls[i]);
+            debug(`(${requestCounter} of ${urls.length}) - Issuing HTTP ${settings.method.toUpperCase()} request to [${urls[i]}]...`);
 
             // Initialise result object
             let result = config.initResponseObject();
@@ -85,9 +88,11 @@ let issueRequests = (urls, settings) => {
 
                debug('Completed request %s of %s', responses.length, urls.length);
 
+               if (responses.length === urls.length){
+                  debug(`About to resolve the issueRequests() Promise after ${responses.length} responses out of ${urls.length} requests`);
+                  resolve(responses);
+               }
 
-               // Return responses array
-               resolve(responses);
             });
 
             resp.on('redirect', (url) => {
@@ -95,10 +100,9 @@ let issueRequests = (urls, settings) => {
                debug('redirectCount incremented to %s by redirect event to [%s] ', result.redirectCount, url);
             });
          }
-
       } else {
-         // urls array does not exist, is not an array, or is empty ⇒ do not attempt to process url array
-         reject(new Error('issueRequests() :: [urls] array either does not exist, is not an array, or is empty.'));
+         // urls[] array does not exist, is not an array, or is empty ⇒ do not attempt to process url array
+         reject(new Error('issueRequests() :: urls[]] array either does not exist, is not an array, or is empty.'));
       }
    });
 };

@@ -59,7 +59,7 @@ let renderHTTPResponses = (responses, settings) => {
       const matcher = require('multimatch');              // Initialise wildcard string parser
       const columnify = require('columnify');             // Console output formatting into columns
 
-      if ((Array.isArray(responses) && responses.length)) { // Process responses array
+      if ((Array.isArray(responses) && responses.length)) { // Process responses[] array
          debug('Parsing %s responses', responses.length);
 
          // We'll collate the parsed results into an output array
@@ -68,7 +68,7 @@ let renderHTTPResponses = (responses, settings) => {
          // We'll also collect the raw (unformatted for console output) which we'll use in exportToCSV;
          let outputTableRaw = [];
 
-         // Iterate through Responses array
+         // Iterate through responses[] array
          for (let i = 0; i < responses.length; i++) {
             // Each request/response will constitute a row in each of the output tables (formatted & raw)
             let row = {};
@@ -208,8 +208,7 @@ let renderHTTPResponses = (responses, settings) => {
          resolve(columns);
 
       } else {
-         // urls array does not exist, is not an array, or is empty ⇒ do not attempt to process url array
-         reject(new Error('renderHTTPResponses() :: [responses] array either does not exist, is not an array, or is empty.'));
+         reject(new Error('renderHTTPResponses() :: responses[] array either does not exist, is not an array, or is empty.'));
       }
    });
 };
@@ -218,7 +217,7 @@ let renderHTTPResponses = (responses, settings) => {
 let renderHTTPResponseHeaders = (responses) => {
    return new Promise(function (resolve, reject) {
 
-      if ((Array.isArray(responses) && responses.length)) { // Process responses array
+      if ((Array.isArray(responses) && responses.length)) { // Process responses[] array
          // Import packages
          const EOL = require('os').EOL;                     // Platform independent new line character and path separator
          debug('Parsing %s responses for unique HTTP headers', responses.length);
@@ -241,8 +240,7 @@ let renderHTTPResponseHeaders = (responses) => {
          resolve(true);
 
       } else {
-         // responses array does not exist, is not an array, or is empty ⇒ do not attempt to process url array
-         reject(new Error('renderHTTPResponseHeaders() :: [responses] array either does not exist, is not an array, or is empty.'));
+         reject(new Error('renderHTTPResponseHeaders() :: responses[]] array either does not exist, is not an array, or is empty.'));
       }
    });
 };

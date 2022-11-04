@@ -19,8 +19,7 @@ let serviceDetection = (domains) => {                       // Function to attem
          resolve(true);                                     // Return response
 
       } else {
-         // urls array does not exist, is not an array, or is empty ⇒ do not attempt to process url array
-         reject(new Error('serviceDetection() :: [domains] array either does not exist, is not an array, or is empty.'));
+         reject(new Error('serviceDetection() :: domains[] array either does not exist, is not an array, or is empty.'));
       }
    });
 };

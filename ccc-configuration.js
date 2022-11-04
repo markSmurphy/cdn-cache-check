@@ -64,7 +64,7 @@ function getSettings() {
 
 	try {
 		// Check command line parameters for overrides...
-		debug('Looking for overrides to default settings');
+		debug('Looking for command line switches that override default settings');
 
 		// Header Collection
 		if (argv.headers) {
@@ -81,20 +81,15 @@ function getSettings() {
 			);
 		}
 
-		// Load the headers collections
-		let headerCollection = this.getHeaderCollection(
+		// Load the headers collections into the Settings object
+		settings.headerCollection = this.getHeaderCollection(
 			settings.headersCollection,
 			settings,
 		);
-		// Add it into the Settings object
-		settings.headerCollection = headerCollection;
-		debug(
-			'Will collect response header matching any of: %O',
-			settings.headerCollection,
-		);
 
-		// HTTP Method
+		// Extract HTTP Method
 		if (argv.method) {
+			// Create array of supported HTTP methods
 			const HTTPMethods = [
 				'get',
 				'head',
@@ -189,30 +184,26 @@ function getSettings() {
 
 		return settings;
 	} catch (error) {
-		console.error(`An error occurred in getSettings() - ${error.message}`);
+		console.error(`${chalk.redBright('An error occurred in getSettings()')} - ${error.message}`);
 		debug(error);
 		return settings;
 	}
 }
 
 function getHeaderCollection(collectionName, settings) {
-	debug('getHeaderCollection(%s)', collectionName);
+	debug('getHeaderCollection() is retrieving a collection named [%s]', collectionName);
 	// Iterate through each header collection definition
 	for (let i = 0; i < settings.headersCollections.length; i++) {
+
+		// Get the current (i) collection name, which will be the first (index 0) key name in the array
 		let currentCollection = Object.keys(settings.headersCollections[i])[0];
-		debug(
-			'comparing %s with %s',
-			collectionName.toLowerCase(),
-			currentCollection.toLowerCase(),
-		);
+
 		// Check if its name matches the supplied one
 		if (collectionName.toLowerCase() === currentCollection.toLowerCase()) {
 			// Return the array of headers
-			debug(
-				'getHeaderCollection() returning: %O',
-				settings.headersCollections[i][currentCollection],
-			);
-			return settings.headersCollections[i][currentCollection];
+			let headerCollection = settings.headersCollections[i][currentCollection];
+			debug('Returning header collection [%s]: %O', collectionName, headerCollection);
+			return (headerCollection);
 		}
 	}
 

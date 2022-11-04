@@ -89,7 +89,7 @@ function parseAnswer(answer, options) {
         // Initialise the array we're going to return
         var response = [];
 
-        // Add the hostname that was resolved to the response array (so we have a complete end-to-end chain in the recursive response)
+        // Add the hostname that was resolved to the response[] array (so we have a complete end-to-end chain in the recursive response)
         if (Object.prototype.hasOwnProperty.call(answer[0], 'name')) {
             response.push(answer[0].name);
         }
@@ -273,7 +273,7 @@ let inspectDNS = (fqdn, settings) => {
                 req.on('timeout', () => {                                       // Handle DNS timeout event
                     debug('DNS timeout occurred resolving [%s]', fqdn);
                     response.message = 'DNS Timeout';                           // Record Timeout message
-                    response.messages.push(response.message);                   // Add message to the messages array
+                    response.messages.push(response.message);                   // Add message to the messages[] array
                     response.reason = `DNS timeout after ${req.timeout} ms`;
                     response.status = global.CCC_SERVICE_DETECTION_STATUS_LABEL.ERROR;
 
@@ -285,7 +285,7 @@ let inspectDNS = (fqdn, settings) => {
                     if (error) {                                                // DNS returned an error
                         debug('Received DNS error for %s: %O', fqdn, error);
                         response.message = `DNS Error flagged in message event: ${error}`;
-                        response.messages.push(response.message);               // Add message to the messages array
+                        response.messages.push(response.message);               // Add message to the messages[] array
                         response.reason = 'DNS Error';
                         response.status = global.CCC_SERVICE_DETECTION_STATUS_LABEL.ERROR;
                         debug('inspectDNS() rejecting Promise with response: %O', response);
@@ -348,7 +348,7 @@ let inspectDNS = (fqdn, settings) => {
 
             } else {
                 response.message = `DNS Inspection failed. The "fqdn" [${fqdn}] did not pass DNS name validation.`
-                response.messages.push(response.message);                       // Add message to the messages array
+                response.messages.push(response.message);                       // Add message to the messages[] array
                 debug('inspectDNS() rejecting Promise with response: %O', response);
                 reject(response);                                               // reject the promise
             }
@@ -356,7 +356,7 @@ let inspectDNS = (fqdn, settings) => {
 
         } else {
             response.message = `DNS Inspection failed. The "fqdn" parameter [${fqdn}] is either empty or not a string.`
-            response.messages.push(response.message);                           // Add message to the messages array
+            response.messages.push(response.message);                           // Add message to the messages[] array
             debug('inspectDNS() rejecting Promise with response: %O', response);
             reject(response);                                                   // reject the promise
         }

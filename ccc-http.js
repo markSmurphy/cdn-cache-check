@@ -88,7 +88,7 @@ let issueRequests = (urls, settings) => {
 
                debug('Completed request %s of %s', responses.length, urls.length);
 
-               if (responses.length === urls.length){
+               if (responses.length === urls.length) {
                   debug(`About to resolve the issueRequests() Promise after ${responses.length} responses out of ${urls.length} requests`);
                   resolve(responses);
                }

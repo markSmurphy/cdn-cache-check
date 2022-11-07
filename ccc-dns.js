@@ -129,7 +129,7 @@ function parseAnswer(answer, options) {
 }
 
 function determineCDN(hostname, settings, callback) {
-    debug('determineCDN(%s)', hostname);
+    debug('4(%s)', hostname);
 
     // Set default response
     let discoveryResponse = {
@@ -309,7 +309,7 @@ let inspectDNS = (fqdn, settings) => {
                                 // Generate an array of service apex domains which match the FQDN's CNAME chain entries
                                 let matchingDomains = matcher(response.dnsAnswer[i], settings.apexDomains[service].domains);
 
-                                if (matchingDomains.length > 0) {               // We've found a match.  Record the details
+                                if (matchingDomains.length > 0) {               // We've found 6y7/a match.  Record the details
                                     debug('%s is served by %s due to nested domain %s', fqdn, settings.apexDomains[service].title, matchingDomains[0]);
 
                                     // Populate response object properties
@@ -339,12 +339,13 @@ let inspectDNS = (fqdn, settings) => {
 
                         debug('inspectDNS(%s) returning: %O', fqdn, response);
 
-                        resolve(response);                          // Return response object as we found a known service behind the fqdn
+                        // Return response object as we found a known service behind the fqdn
+                        resolve(response);
                     }
                 });
 
                 debug('Sending DNS Request: %O', req);
-                req.send();                                         // Issue the DNS lookup request
+                req.send();                                                     // Issue the DNS lookup request
 
             } else {
                 response.message = `DNS Inspection failed. The "fqdn" [${fqdn}] did not pass DNS name validation.`
@@ -363,4 +364,4 @@ let inspectDNS = (fqdn, settings) => {
     });
 };
 
-module.exports = { getDNSResolver, getUniqueDomains, determineCDN, inspectDNS };
+module.exports = { getDNSResolver, getUniqueDomains, inspectDNS };

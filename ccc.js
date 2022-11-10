@@ -36,7 +36,7 @@ const cccHTTP = require('./ccc-http');
 const cccRender = require('./ccc-render-results');
 
 // cdn-cache-check's library
-const cccLibrary = require('./ccc-lib');
+const cdn_cache_check = require('./ccc-lib');
 
 // HTTP Archive Parsers
 const harParser = require('./harparser');
@@ -61,7 +61,7 @@ const isValidDomain = require('is-valid-domain');
 
 // Import terminal spinner library
 const ora = require('ora');
-const { serviceDetection } = require('./ccc-service-detection');
+const cloudServices = require('./ccc-service-detection');
 
 try {
     // Check for '--help' command line parameters
@@ -175,7 +175,7 @@ try {
         debug('Checking these %s URLs across %s domain(s): %O', urls.length, uniqueDomains.count, urls);
         if (urls.length > global.CCC_REQUEST.WARNING_THRESHOLD) {
             // Display how many requests we're about to make, but only if it's a *lot* (there's no point saying we're about to make 2 requests)
-            cccLibrary.displayRequestSummary(urls.length, uniqueDomains.count);
+            cdn_cache_check.displayRequestSummary(urls.length, uniqueDomains.count);
         }
 
         // Create and start the HTTP requests activity spinner
@@ -195,7 +195,7 @@ try {
                             // Create and start the Service Detection activity spinner
                             let spinnerServiceDetection = ora(`Service detection being performed on ${uniqueDomains.domains.length} unique domains ...`).start();
 
-                            serviceDetection.serviceDetection(uniqueDomains, settings).then(() => {
+                            cloudServices.serviceDetection(uniqueDomains, settings).then(() => {
                                 // Stop the Service Detection spinner
                                 spinnerServiceDetection.succeed(chalk.green(`Service inspection complete on ${uniqueDomains.domains.length} unique domains`));
                             }).catch((error) => {

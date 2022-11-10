@@ -10,11 +10,6 @@ const isValidDomain = require('is-valid-domain');
 // Import DNS library
 const dns = require('native-dns-multisocket');
 
-// Initialise Service Provider Detection Libraries
-const serviceDetectionAzure = require('./service.providers/azure');
-//const serviceDetectionAWS = require('./service.providers/aws');
-
-
 function getDNSResolver() {
     debug('getDNSResolver()::entry');
     try {
@@ -125,124 +120,6 @@ function parseAnswer(answer, options) {
         }
 
         return (response);
-    }
-}
-
-function determineCDN(hostname, settings, callback) {
-    debug('4(%s)', hostname);
-
-    // Set default response
-    let discoveryResponse = {
-        message: [],
-        hostname: hostname,
-        reason: '',
-        service: global.CCC_SERVICE_DETECTION_STATUS_LABEL.UNKNOWN,
-        status: global.CCC_SERVICE_DETECTION_STATUS_LABEL.UNKNOWN,
-        ipAddress: null
-    };
-
-    if (isValidDomain(hostname, { subdomain: true, wildcard: false })) { // Validate that the hostname conforms to DNS specifications
-
-        let question = dns.Question({
-            name: hostname,
-            type: global.CCC_DNS_REQUEST_RECORD_TYPE,
-        });
-
-        let req = dns.Request({
-            question: question,
-            server: { address: module.exports.getDNSResolver(), port: 53, type: 'udp' },
-            timeout: 5000
-        });
-
-        req.on('timeout', () => { // DNS timeout
-            debug('DNS timeout occurred resolving [%s]', hostname);
-            discoveryResponse.message.push('DNS Timeout');
-            discoveryResponse.reason = 'DNS Timeout';
-            discoveryResponse.error = `Timeout after ${req.timeout} milliseconds`;
-            discoveryResponse.status = global.CCC_SERVICE_DETECTION_STATUS_LABEL.ERROR;
-            callback(discoveryResponse);
-        });
-
-        req.on('message', (error, answer) => { // DNS message received
-            if (error) { // DNS returned an error
-                debug('Received DNS error for %s: %O', hostname, error);
-                discoveryResponse.message.push('DNS Error');
-                discoveryResponse.reason = 'DNS Error';
-                discoveryResponse.error = error;
-                discoveryResponse.status = global.CCC_SERVICE_DETECTION_STATUS_LABEL.ERROR;
-            } else {
-                debug('Received DNS answer lookup for [%s]: %O', hostname, answer);
-
-                // Expand the answer into an array of all nested addresses in the full recursion
-                discoveryResponse.dnsAnswer = parseAnswer(answer.answer, { operation: 'getRecursion' });
-
-                // Iterate through each nested address in the DNS answer to check if matches a known CDN
-                for (let i = 0; i < discoveryResponse.dnsAnswer.length; i++) {
-                    for (let cdn in settings.apexDomains) {
-                        debug('Evaluating [%s] against [%s]: %O', discoveryResponse.dnsAnswer[i], cdn, settings.apexDomains[cdn].domains);
-                        let matchingDomains = matcher(discoveryResponse.dnsAnswer[i], settings.apexDomains[cdn].domains);
-                        if (matchingDomains.length > 0) {
-                            // We've found a match.  Record the details
-                            debug('%s is served by %s due to nested domain %s', hostname, settings.apexDomains[cdn].title, matchingDomains[0]);
-
-                            discoveryResponse.reason = `${hostname} resolves to ${matchingDomains[0]} which matches a ${cdn} domain pattern`;
-                            discoveryResponse.matchingDomains = matchingDomains[0];
-                            discoveryResponse.service = settings.apexDomains[cdn].service.toUpperCase();
-                            discoveryResponse.message.push(settings.apexDomains[cdn].title);
-                            discoveryResponse.status = global.CCC_SERVICE_DETECTION_STATUS_LABEL.CDN;
-                            if (settings.apexDomains[cdn].service.toUpperCase() !== 'CDN') {
-                                discoveryResponse.status = global.CCC_SERVICE_DETECTION_STATUS_LABEL.OTHER;
-                            }
-                        }
-                    }
-                }
-
-                // Check if the DNS chain inspection didn't identify the service provider
-                if (discoveryResponse.status === global.CCC_SERVICE_DETECTION_STATUS_LABEL.UNKNOWN) {
-                    // DNS didn't yield a conclusive answer. Check the IP Address against each of the service providers' list
-                    debug('%s\'s DNS recursion didn\'t match a known provider\'s domain (discoveryResponse.status: %s)', hostname, discoveryResponse.status);
-
-                    // We might want to have a switch to disable the IP address scan
-                    //if (settings.IPScan === true)
-
-                    // Get the IP address from the DNS answer first
-                    debug('Extracting the IP address from the DNS answer');
-                    discoveryResponse.ipAddress = module.exports.parseAnswer(answer.answer, {});
-
-                    // Azure Service Detection
-                    let azureResponse = serviceDetectionAzure.lookupIpAddress(discoveryResponse.ipAddress);
-                    debug('AZURE SERVICE DETECTION for %s: %O', discoveryResponse.ipAddress, azureResponse);
-
-                    // Populate `discoveryResponse` object properties
-                    discoveryResponse.message = azureResponse.message;
-                    discoveryResponse.reason = azureResponse.reason;
-                    discoveryResponse.status = global.CCC_SERVICE_DETECTION_STATUS_LABEL.AZURE;
-
-                    // AWS Service Detection
-                    //let awsResponse = serviceDetectionAWS.lookupIpAddress(discoveryResponse.ipAddress);
-                    /* console.log('AWS SERVICE DETECTION for %s: %O', discoveryResponse.ipAddress, awsResponse);
-                    console.log('AWS SERVICE DETECTION: %s', awsResponse.reason); */
-                }
-
-                debug('determineCDN(%s) returning: %O', hostname, discoveryResponse);
-
-                if (!discoveryResponse.message?.length) { // Check if the message array is blank
-                    // We didn't identify the service behind the domain name or IP address
-                    discoveryResponse.message = [global.CCC_SERVICE_DETECTION_STATUS_LABEL.UNKNOWN]; // add the default message
-                }
-                callback(discoveryResponse);
-            }
-        });
-
-        debug('Sending DNS Request: %O', req);
-
-        req.send();
-
-    } else { // hostname didn't pass the validate-domain check
-        discoveryResponse.message = 'Invalid DNS domain';
-        discoveryResponse.reason = `The hostname "${hostname}" doesn't conform to DNS specifications`;
-        discoveryResponse.service = 'None';
-        discoveryResponse.status = global.CCC_SERVICE_DETECTION_STATUS_LABEL.ERROR;
     }
 }
 

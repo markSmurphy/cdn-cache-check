@@ -78,6 +78,6 @@
     "yargs": "^16.2.0"
   },
   "devDependencies": {
-    "rome": "^0.9.2-next"
+    "rome": "^10.0.1"
   }
 }

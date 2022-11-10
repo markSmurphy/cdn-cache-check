@@ -95,7 +95,7 @@ try {
     debug('Looking for URLs to check...');
     console.info('Looking for URLs to check...');
     // Initialise array of URLs to check
-    var urls = [];
+    let urls = [];
 
     // Iterate through all parameters looking for ones that are URLs or files
     for (let i = 2; i < process.argv.length; ++i) {
@@ -168,7 +168,7 @@ try {
         // The main work starts here
 
         // Extract a list of each distinct FQDN from the list of URLs
-        var uniqueDomains = cccDNS.getUniqueDomains(urls);
+        let uniqueDomains = cccDNS.getUniqueDomains(urls);
         debug('Unique Domains: %O', uniqueDomains);
 
         // Calculate how many requests we're going to make and display a notification if it exceeds the threshold

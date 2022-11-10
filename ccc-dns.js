@@ -87,7 +87,7 @@ function parseAnswer(answer, options) {
         return ('no_address');
     } else {
         // Initialise the array we're going to return
-        var response = [];
+        let response = [];
 
         // Add the hostname that was resolved to the response[] array (so we have a complete end-to-end chain in the recursive response)
         if (Object.prototype.hasOwnProperty.call(answer[0], 'name')) {

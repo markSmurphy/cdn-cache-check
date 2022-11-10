@@ -26,9 +26,9 @@ function secondsToHms(seconds) {
         try {
             seconds = Number(seconds);
 
-            var h = Math.floor(seconds / 3600);
-            var m = Math.floor(seconds % 3600 / 60);
-            var s = Math.floor(seconds % 3600 % 60);
+            let h = Math.floor(seconds / 3600);
+            let m = Math.floor(seconds % 3600 / 60);
+            let s = Math.floor(seconds % 3600 % 60);
 
             return `${(`0${h}`).slice(-2)} hours, ${(`0${m}`).slice(-2)} minutes, ${(`0${s}`).slice(-2)} seconds`;
         } catch (error) {
@@ -84,7 +84,7 @@ function getColourLevelDesc() {
 
     // Use chalk to detect colour level support
     const chalk = require('chalk');
-    var level = chalk.supportsColor.level;
+    let level = chalk.supportsColor.level;
 
     if (level === null) {
         level = 0;
@@ -132,9 +132,10 @@ function IsTLD(testString) {
 function generateUniqueFilename(extension) {
     debug('generateUniqueFilename(%s)', extension);
     const defaultExtension = '.csv';
-    var prefix = 'ccc-';
     const os = require('os');
     const path = require('path');
+
+    let prefix = 'ccc-';
 
     try {
         const uniqueFilename = require('unique-filename');

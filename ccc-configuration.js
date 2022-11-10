@@ -5,13 +5,13 @@ debug('Entry: [%s]', __filename);
 const configFile = 'configuration.json'
 
 // Command line options parser
-var argv = require('yargs').help(false).argv;
+const argv = require('yargs').help(false).argv;
 
 // Initialise console colours
 const chalk = require('chalk');
 
 // Initialise default settings
-var defaultSettings = {};
+let defaultSettings = {};
 
 try {
 	defaultSettings = require('./configuration.json'); // Load the defaults

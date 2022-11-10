@@ -61,6 +61,7 @@ const isValidDomain = require('is-valid-domain');
 
 // Import terminal spinner library
 const ora = require('ora');
+const { serviceDetection } = require('./ccc-service-detection');
 
 try {
     // Check for '--help' command line parameters
@@ -194,11 +195,20 @@ try {
                             // Create and start the Service Detection activity spinner
                             let spinnerServiceDetection = ora(`Service detection being performed on ${uniqueDomains.domains.length} unique domains ...`).start();
 
+                            serviceDetection.serviceDetection(uniqueDomains, settings).then(() => {
+                                // Stop the Service Detection spinner
+                                spinnerServiceDetection.succeed(chalk.green(`Service inspection complete on ${uniqueDomains.domains.length} unique domains`));
+                            }).catch((error) => {
+                                // Stop the Service Detection spinner and report the error
+                                spinnerServiceDetection.succeed(chalk.green(`Service inspection completed, albeit with errors, on ${uniqueDomains.domains.length} unique domains`));
 
-                            // Stop the CDN Detection spinner
-                            spinnerServiceDetection.succeed(chalk.green(`Service inspection complete on ${uniqueDomains.domains.length} unique domains`))
+                                if (settings.verbose) { // Report the error if --verbose is supplied
+                                    console.error(`${chalk.bgRed.whiteBright('Service Detection error')}: ${error}`);
+                                } else {
+                                    console.log(`${chalk.grey('Use')} ${chalk.grey.bold('--verbose')} ${chalk.grey('to show the error')}`);
+                                }
+                            });
                         }
-
                     });
                 }
             });

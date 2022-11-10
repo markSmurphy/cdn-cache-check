@@ -246,20 +246,20 @@ function determineCDN(hostname, settings, callback) {
     }
 }
 
-let inspectDNS = (fqdn, settings) => {
-    debug('inspectDNS(%s)', fqdn);
+let inspectDNS = (domain, settings) => {
+    debug('inspectDNS(%s)', domain);
 
     return new Promise(function (resolve, reject) {
 
         let response = global.CCC_SERVICE_DETECTION_DEFAULT_RESPONSE;           // Initialise response object
-        response.fqdn = fqdn;                                                   // Set the Fully Qualified Domain Name
+        response.fqdn = domain;                                                   // Set the Fully Qualified Domain Name
 
-        if (typeof (fqdn) === 'string' && fqdn.trim().length > 0) {             // Check if the fqdn is a non-empty string
+        if (typeof (domain) === 'string' && domain.trim().length > 0) {             // Check if the fqdn is a non-empty string
 
-            if (isValidDomain(fqdn, { subdomain: true, wildcard: false })) {    // Verify that the fqdn conforms to DNS specifications
+            if (isValidDomain(domain, { subdomain: true, wildcard: false })) {    // Verify that the fqdn conforms to DNS specifications
 
                 let question = dns.Question({                                   // Create DNS Question object
-                    name: fqdn,
+                    name: domain,
                     type: global.CCC_DNS_REQUEST_RECORD_TYPE,
                 });
 
@@ -271,7 +271,7 @@ let inspectDNS = (fqdn, settings) => {
 
                 // DNS 'timeout' event
                 req.on('timeout', () => {                                       // Handle DNS timeout event
-                    debug('DNS timeout occurred resolving [%s]', fqdn);
+                    debug('DNS timeout occurred resolving [%s]', domain);
                     response.message = 'DNS Timeout';                           // Record Timeout message
                     response.messages.push(response.message);                   // Add message to the messages[] array
                     response.reason = `DNS timeout after ${req.timeout} ms`;
@@ -283,7 +283,7 @@ let inspectDNS = (fqdn, settings) => {
                 // DNS 'message' event
                 req.on('message', (error, answer) => {                          // handle DNS message event
                     if (error) {                                                // DNS returned an error
-                        debug('Received DNS error for %s: %O', fqdn, error);
+                        debug('Received DNS error for %s: %O', domain, error);
                         response.message = `DNS Error flagged in message event: ${error}`;
                         response.messages.push(response.message);               // Add message to the messages[] array
                         response.reason = 'DNS Error';
@@ -292,7 +292,7 @@ let inspectDNS = (fqdn, settings) => {
                         reject(response);                                       // reject the promise
 
                     } else {                                                    // Process DNS Answer
-                        debug('Received DNS answer to the lookup for [%s]: %O', fqdn, answer);
+                        debug('Received DNS answer to the lookup for [%s]: %O', domain, answer);
 
                         // Expand the answer into an array of all nested addresses in the full DNS recursion
                         response.dnsAnswer = parseAnswer(answer.answer, { operation: 'getRecursion' });
@@ -310,10 +310,10 @@ let inspectDNS = (fqdn, settings) => {
                                 let matchingDomains = matcher(response.dnsAnswer[i], settings.apexDomains[service].domains);
 
                                 if (matchingDomains.length > 0) {               // We've found 6y7/a match.  Record the details
-                                    debug('%s is served by %s due to nested domain %s', fqdn, settings.apexDomains[service].title, matchingDomains[0]);
+                                    debug('%s is served by %s due to nested domain %s', domain, settings.apexDomains[service].title, matchingDomains[0]);
 
                                     // Populate response object properties
-                                    response.reason = `${fqdn} resolves to ${matchingDomains[0]} which matches a ${service} domain pattern`;
+                                    response.reason = `${domain} resolves to ${matchingDomains[0]} which matches a ${service} domain pattern`;
                                     response.matchingDomains = matchingDomains[0];
                                     response.service = settings.apexDomains[service].service;
                                     response.message = settings.apexDomains[service].title;
@@ -334,10 +334,10 @@ let inspectDNS = (fqdn, settings) => {
                             // We didn't identify the service behind the domain name
                             console.log('Just checking if it is worth setting response.status to UNKNOWN here as it is currently: %s', response.status);
                             response.message = [global.CCC_SERVICE_DETECTION_STATUS_LABEL.UNKNOWN]; // add the "Unknown" message
-                            debug('%s\'s DNS recursion didn\'t match a known provider\'s domain (response.status: %s)', fqdn, response.status);
+                            debug('%s\'s DNS recursion didn\'t match a known provider\'s domain (response.status: %s)', domain, response.status);
                         }
 
-                        debug('inspectDNS(%s) returning: %O', fqdn, response);
+                        debug('inspectDNS(%s) returning: %O', domain, response);
 
                         // Return response object as we found a known service behind the fqdn
                         resolve(response);
@@ -348,7 +348,7 @@ let inspectDNS = (fqdn, settings) => {
                 req.send();                                                     // Issue the DNS lookup request
 
             } else {
-                response.message = `DNS Inspection failed. The "fqdn" [${fqdn}] did not pass DNS name validation.`
+                response.message = `DNS Inspection failed. The "fqdn" [${domain}] did not pass DNS name validation.`
                 response.messages.push(response.message);                       // Add message to the messages[] array
                 debug('inspectDNS() rejecting Promise with response: %O', response);
                 reject(response);                                               // reject the promise
@@ -356,7 +356,7 @@ let inspectDNS = (fqdn, settings) => {
 
 
         } else {
-            response.message = `DNS Inspection failed. The "fqdn" parameter [${fqdn}] is either empty or not a string.`
+            response.message = `DNS Inspection failed. The "fqdn" parameter [${domain}] is either empty or not a string.`
             response.messages.push(response.message);                           // Add message to the messages[] array
             debug('inspectDNS() rejecting Promise with response: %O', response);
             reject(response);                                                   // reject the promise

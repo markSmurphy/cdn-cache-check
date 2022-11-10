@@ -285,6 +285,16 @@ function initResponseObject() {
 	return (defaultResponseObject);
 }
 
+function serviceDetectionResponseObject() {
+	let defaultResponseObject = {
+		serviceDetected: false,
+		serviceName: null,
+		reason: null
+	};
+
+	return (defaultResponseObject);
+}
+
 module.exports = {
 	displayConfigFileLocation,
 	displayHeaderCollections,
@@ -292,5 +302,6 @@ module.exports = {
 	getSettings,
 	getUserAgent,
 	getHeaderCollections,
-	initResponseObject
+	initResponseObject,
+	serviceDetectionResponseObject
 };

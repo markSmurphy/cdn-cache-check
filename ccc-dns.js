@@ -251,47 +251,47 @@ let inspectDNS = (domain, settings) => {
 
     return new Promise(function (resolve, reject) {
 
-        let response = global.CCC_SERVICE_DETECTION_DEFAULT_RESPONSE;           // Initialise response object
-        response.fqdn = domain;                                                   // Set the Fully Qualified Domain Name
+        let response = global.CCC_SERVICE_DETECTION_DEFAULT_RESPONSE;               // Initialise response object
+        response.fqdn = domain;                                                     // Set the Fully Qualified Domain Name
 
         if (typeof (domain) === 'string' && domain.trim().length > 0) {             // Check if the fqdn is a non-empty string
 
-            if (isValidDomain(domain, { subdomain: true, wildcard: false })) {    // Verify that the fqdn conforms to DNS specifications
+            if (isValidDomain(domain, { subdomain: true, wildcard: false })) {      // Verify that the fqdn conforms to DNS specifications
 
-                let question = dns.Question({                                   // Create DNS Question object
+                let question = dns.Question({                                       // Create DNS Question object
                     name: domain,
                     type: global.CCC_DNS_REQUEST_RECORD_TYPE,
                 });
 
-                let req = dns.Request({                                         // Create DNS Request object
+                let req = dns.Request({                                             // Create DNS Request object
                     question: question,
                     server: { address: getDNSResolver(), port: 53, type: 'udp' },
                     timeout: 5000
                 });
 
                 // DNS 'timeout' event
-                req.on('timeout', () => {                                       // Handle DNS timeout event
+                req.on('timeout', () => {                                           // Handle DNS timeout event
                     debug('DNS timeout occurred resolving [%s]', domain);
-                    response.message = 'DNS Timeout';                           // Record Timeout message
-                    response.messages.push(response.message);                   // Add message to the messages[] array
+                    response.message = 'DNS Timeout';                               // Record Timeout message
+                    response.messages.push(response.message);                       // Add message to the messages[] array
                     response.reason = `DNS timeout after ${req.timeout} ms`;
                     response.status = global.CCC_SERVICE_DETECTION_STATUS_LABEL.ERROR;
 
-                    reject(response);                                           // reject the promise
+                    reject(response);                                               // reject the promise
                 });
 
                 // DNS 'message' event
-                req.on('message', (error, answer) => {                          // handle DNS message event
-                    if (error) {                                                // DNS returned an error
+                req.on('message', (error, answer) => {                              // handle DNS message event
+                    if (error) {                                                    // DNS returned an error
                         debug('Received DNS error for %s: %O', domain, error);
                         response.message = `DNS Error flagged in message event: ${error}`;
-                        response.messages.push(response.message);               // Add message to the messages[] array
+                        response.messages.push(response.message);                   // Add message to the messages[] array
                         response.reason = 'DNS Error';
                         response.status = global.CCC_SERVICE_DETECTION_STATUS_LABEL.ERROR;
                         debug('inspectDNS() rejecting Promise with response: %O', response);
-                        reject(response);                                       // reject the promise
+                        reject(response);                                           // reject the promise
 
-                    } else {                                                    // Process DNS Answer
+                    } else {                                                        // Process DNS Answer
                         debug('Received DNS answer to the lookup for [%s]: %O', domain, answer);
 
                         // Expand the answer into an array of all nested addresses in the full DNS recursion

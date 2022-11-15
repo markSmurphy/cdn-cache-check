@@ -1,6 +1,6 @@
 # Changelog
 
-## v1.8.0 - MMM DD<sup>th</sup> 2022
+## v2.0.0 - MMM DD<sup>th</sup> 2022
 
 ### Breaking Change
 
@@ -9,7 +9,6 @@
 ### Security
 
 * Updated `minimist` to version `1.2.6` to address [CVE-2021-44906](https://nvd.nist.gov/vuln/detail/CVE-2021-44906) (introduced via `prettyjson@1.2.5` --> `minimist@1.2.5`).
-* Update `ip-cidr` to version `3.0.10`.
 
 ### Added
 
@@ -25,7 +24,7 @@
 * Updated [Azure IP Ranges](https://www.microsoft.com/en-us/download/details.aspx?id=56519) to `"2022-03-14"` (changeNumber: `193`).
 * Updated dependency `debug` to version `4.3.4`.
 * Updated dependency `TLDS` to version `1.233.0`.
-* Updated dependency `ip-cidr` to version `3.0.9`.
+* Updated dependency `ip-cidr` to version `3.0.11`.
 
 ---
 

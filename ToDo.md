@@ -8,7 +8,8 @@
   * DNS inspection
   * Service Scans
 * Improve constants and general response object property names
-* WTF is previousAWS
+* WTF is previousAWS?
+* Improve description & synopsis for v2.0.0 service detection capabilities
 
 ---
 

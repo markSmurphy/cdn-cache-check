@@ -46,38 +46,39 @@
 
 ## Features
 
-* Move DNS timeout (5000 - ccc-dnc.js:150) into configuration and give it a command line override
-* [ ] Add Azure IP ranges `json` to `service.providers`
+* [ ] Add ability to extract URLs from the base HTML returned, and add them to the URLs array - perhaps using [extract-urls](https://www.npmjs.com/package/extract-urls)
+* [ ] Move DNS timeout (5000 - ccc-dnc.js:150) into configuration and give it a command line override.
+* [ ] Add Azure IP ranges `json` to `service.providers`.
   * [specific json file](https://download.microsoft.com/download/7/1/D/71D86715-5596-4529-9B13-DA13A5DE5B63/ServiceTags_Public_20210524.json)
   * [download page](https://www.microsoft.com/en-us/download/details.aspx?id=56519)
-* [ ] Add CloudFlare IP ranges to `service.providers`
+* [ ] Add CloudFlare IP ranges to `service.providers`.
   * [ ] [https://www.cloudflare.com/en-gb/ips/](https://www.cloudflare.com/en-gb/ips/)
-* [ ] Add Fastly IP ranges to `service.providers`
+* [ ] Add Fastly IP ranges to `service.providers`.
   * [ ] [https://api.fastly.com/public-ip-list](https://api.fastly.com/public-ip-list)
 * [ ] Add GEO location lookup of IP address hosting each resource via [IP Who Is](https://ipwhois.io/documentation#tabs-format)
-* [ ] Add option to emulate `user-agent` of popular browsers or provide a custom user-agent string
-* [ ] Add an asynchronous update of AWS [ip-ranges.json](https://ip-ranges.amazonaws.com/ip-ranges.json) based on the `syncToken` property
-* [ ] Add DNS options to `configuration.json`
-  * [ ] Allow command line override for DNS options
-* [ ] Add a mechanism to provide advice - when a `read_timeout` occurs inform the user of the argument to increase it
-* [ ] Improve CDN Detection by examining telltale response headers (such as `server: cloudfront`)
-* [ ] Detect if `--list-header-collections` is being piped to a file and output raw `json` (i.e. only use `prettyjson` for console output)
+* [ ] Add option to emulate `user-agent` of popular browsers or provide a custom user-agent string.
+* [ ] Add an asynchronous update of AWS [ip-ranges.json](https://ip-ranges.amazonaws.com/ip-ranges.json) based on the `syncToken` property.
+* [ ] Add DNS options to `configuration.json`.
+  * [ ] Allow command line override for DNS options.
+* [ ] Add a mechanism to provide advice - when a `read_timeout` occurs inform the user of the argument to increase it.
+* [ ] Improve CDN Detection by examining telltale response headers (such as `server: cloudfront`).
+* [ ] Detect if `--list-header-collections` is being piped to a file and output raw `json` (i.e. only use `prettyjson` for console output).
 * [ ] Add colour indicators for the response headers:
-  * [ ] `vary` - where `*`, `user-agent`, `cookie` are all anti-patterns for CDN caching
-  * [ ] `content-encoding` - where not being `gzip`, `br`, et al is sub-optimal
-* [ ] HTTP/2 Support (or reporting support against each unique domain)
-* [ ] Change the `exportToCSV()` function to save files to a `ccc` specific subfolder
-* [ ] Add a modifier to `--open` which opens the folder
-* [ ] Add support for input file type Lighthouse `.json` to extract resource URLs from
+  * [ ] `vary` - where `*`, `user-agent`, `cookie` are all anti-patterns for CDN caching.
+  * [ ] `content-encoding` - where not being `gzip`, `br`, et al is sub-optimal.
+* [ ] HTTP/2 Support (or reporting support against each unique domain).
+* [ ] Change the `exportToCSV()` function to save files to a `ccc` specific subfolder.
+* [ ] Add a modifier to `--open` which opens the folder.
+* [ ] Add support for input file type Lighthouse `.json` to extract resource URLs from.
 * [ ] Allow modification of DNS question (`resolver` etc) and move defaults to config file.
-* [ ] Report on CNAME TTL for each unique domain
-* [ ] eTag support - Allow conditional `GET` requests such as `If-None-Match` to analyse Entity Tags
-* [ ] Allow request headers to be injected
-  * [ ] Automatically inject request headers array as part of header collection
-    * [ ] i.e. Add `fastly-debug:1` to all requests when the Fastly header collection is used
-* [ ] Add console width warning if it's too narrow (`process.stdout.columns`)
+* [ ] Report on CNAME TTL for each unique domain.
+* [ ] eTag support - Allow conditional `GET` requests such as `If-None-Match` to analyse Entity Tags.
+* [ ] Allow request headers to be injected.
+  * [ ] Automatically inject request headers array as part of header collection.
+    * [ ] i.e. Add `fastly-debug:1` to all requests when the Fastly header collection is used.
+* [ ] Add console width warning if it's too narrow (`process.stdout.columns`).
 * [ ] Some sites (such as `www.etsy.com` & `www.amazon.co.uk`) use multiple CDNs for the domain depending where the client is. Mention this in a *README* section, but fix it by turning `ddig` into a library and querying multiple resolvers for the full `CNAME` chain before performing CDN detection.
-* [X] Add a **reason** to `cdnDetection()` output when `--verbose` is enabled
+* [X] Add a **reason** to `cdnDetection()` output when `--verbose` is enabled.
 * [ ] Command line arguments for `needle` http options:
   * [ ] `timeout`
   * [ ] `response_timeout`
@@ -85,11 +86,11 @@
   * [X] `follow`
   * [ ] `compress`
   * [ ] et al
-* [ ] Implement full debug request/response logging
-  * [ ] Perhaps to a `.har` file
-  * [ ] Export all response headers to separate `csv` file when `debug` || `verbose` is enabled
-* [ ] Provide a friendly interpretation of caching based on CDN's x-cache documentation
-  * [ ] Perhaps workout a score based upon `x-cache`, `cache-control`, `eTag`, et al
+* [ ] Implement full debug request/response logging:
+  * [ ] Perhaps to a `.har` file.
+  * [ ] Export all response headers to separate `csv` file when `debug` || `verbose` is enabled.
+* [ ] Provide a friendly interpretation of caching based on CDN's x-cache documentation.
+  * [ ] Perhaps workout a score based upon `x-cache`, `cache-control`, `eTag`, et al.
 * [ ] Investigate merits of implementing a custom [http_agent](https://nodejs.org/api/http.html#http_class_http_agent)
 
 ---

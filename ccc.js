@@ -190,28 +190,28 @@ try {
                 console.log(columns);                                                                       // Display HTTP response results in console
 
                 if (settings.listResponseHeaders) {                                                         // Check if switch to list unique response headers is enabled
-                    cccRender.renderHTTPResponseHeaders(responses).then(() => {                             // Display all unique HTTP response headers
-                        if (settings.serviceDetection) {
-                            // Create and start the Service Detection activity spinner
-                            let spinnerServiceDetection = ora(`Service detection being performed on ${uniqueDomains.domains.length} unique domains ...`).start();
-
-                            cloudServices.serviceDetection(uniqueDomains, settings).then(() => {
-                                // Stop the Service Detection spinner
-                                spinnerServiceDetection.succeed(chalk.green(`Service inspection complete on ${uniqueDomains.domains.length} unique domains`));
-                            }).catch((error) => {
-                                // Stop the Service Detection spinner and report the error
-                                spinnerServiceDetection.succeed(chalk.green(`Service inspection completed, albeit with errors, on ${uniqueDomains.domains.length} unique domains`));
-
-                                if (settings.verbose) { // Report the error if --verbose is supplied
-                                    console.error(`${chalk.bgRed.whiteBright('Service Detection error')}: ${error}`);
-                                } else {
-                                    console.log(`${chalk.grey('Use')} ${chalk.grey.bold('--verbose')} ${chalk.grey('to show the error')}`);
-                                }
-                            });
-                        }
-                    });
+                    cccRender.renderHTTPResponseHeaders(responses);                                         // Display all unique HTTP response headers
                 }
             });
+
+            if (settings.serviceDetection) {                                                                // Check if Service Detection is enabled
+                // Create and start the Service Detection activity spinner
+                let spinnerServiceDetection = ora(`Service detection being performed on ${uniqueDomains.domains.length} unique domains ...`).start();
+
+                cloudServices.serviceDetection(uniqueDomains, settings).then(() => {
+                    // Stop the Service Detection spinner
+                    spinnerServiceDetection.succeed(chalk.green(`Service inspection complete on ${uniqueDomains.domains.length} unique domains`));
+                }).catch((error) => {
+                    // Stop the Service Detection spinner and report the error
+                    spinnerServiceDetection.succeed(chalk.green(`Service inspection completed, albeit with errors, on ${uniqueDomains.domains.length} unique domains`));
+
+                    if (settings.verbose) { // Report the error if --verbose is supplied
+                        console.error(`${chalk.bgRed.whiteBright('Service Detection error')}: ${error}`);
+                    } else {
+                        console.log(`${chalk.grey('Use')} ${chalk.grey.bold('--verbose')} ${chalk.grey('to show the error')}`);
+                    }
+                });
+            }
         });
     }
 } catch (error) {

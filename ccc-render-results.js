@@ -50,8 +50,7 @@ function exportToCSV(outputTableRaw, settings) {
    }
 }
 
-
-let renderHTTPResponses = (responses, settings) => {
+function renderHTTPResponses(responses, settings) {
    return new Promise(function (resolve, reject) {
 
       // Import packages
@@ -211,10 +210,9 @@ let renderHTTPResponses = (responses, settings) => {
          reject(new Error('renderHTTPResponses() :: responses[] array either does not exist, is not an array, or is empty.'));
       }
    });
-};
+}
 
-
-let renderHTTPResponseHeaders = (responses) => {
+function renderHTTPResponseHeaders(responses) {
    return new Promise(function (resolve, reject) {
 
       if ((Array.isArray(responses) && responses.length)) { // Process responses[] array
@@ -243,6 +241,6 @@ let renderHTTPResponseHeaders = (responses) => {
          reject(new Error('renderHTTPResponseHeaders() :: responses[]] array either does not exist, is not an array, or is empty.'));
       }
    });
-};
+}
 
 module.exports = { renderHTTPResponses, renderHTTPResponseHeaders };

@@ -1,6 +1,6 @@
 # Changelog
 
-## v2.0.0 - MMM DD<sup>th</sup> 2022
+## v1.8.0 - MMM DD<sup>th</sup> 2022
 
 ### Breaking Change
 

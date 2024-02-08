@@ -72,12 +72,12 @@ let issueRequests = (urls, settings) => {
                   result.request.path = response.req.path;
                   result.response.headers = response.headers;
                   // Get IP Address from response if it exists
-                  if (typeof (response.socket.remoteAddress) === 'string') {
+                  if (typeof (response.socket?.remoteAddress) === 'string') {
                      result.ipAddress = response.socket.remoteAddress;
                   }
 
                   // Get the IP Family (IPv4 or IPv6) from the response if it exists
-                  if (typeof (response.socket.remoteFamily) === 'string') {
+                  if (typeof (response.socket?.remoteFamily) === 'string') {
                      result.ipFamily = response.socket.remoteFamily;
                   }
 

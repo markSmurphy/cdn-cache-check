@@ -1,6 +1,6 @@
 # Changelog
 
-## v1.8.0 - February 9<sup>th</sup> 2024
+## v2.0.0 - February 9<sup>th</sup> 2024
 
 ### Breaking Change
 

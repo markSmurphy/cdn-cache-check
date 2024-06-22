@@ -61,7 +61,7 @@
     "@tusbar/cache-control": "^0.6.1",
     "chalk": "^4.1.2",
     "columnify": "^1.6.0",
-    "debug": "^4.3.4",
+    "debug": "^4.3.5",
     "ip-cidr": "^3.0.11",
     "is-valid-domain": "^0.1.6",
     "jsonexport": "^3.2.0",

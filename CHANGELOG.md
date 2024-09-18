@@ -1,5 +1,16 @@
 # Changelog
 
+## v2.0.1 - September 18<sup>th</sup> 2024
+
+### Fixed
+
+* Fixed parsing error in DNS service detection function.
+
+### Changed
+
+* Updated dependency `debug` to version `4.3.7`.
+* Updated dependency `TLDS` to version `1.254.0`.
+
 ## v2.0.0 - February 9<sup>th</sup> 2024
 
 ### Breaking Change

@@ -5,7 +5,7 @@ debug('Entry: [%s]', __filename);
 const chalk = require('chalk');
 
 
-// Function of notifies the user of how requests, across how many domains, are going to be make
+// Function that notifies the user of how requests, across how many domains, are going to be made
 function displayRequestSummary(urlCount, domainCount) {
 	let notification = chalk.cyan(`Checking ${urlCount} URLs`);
 

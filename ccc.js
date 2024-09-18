@@ -205,8 +205,8 @@ try {
                     // Stop the Service Detection spinner and report the error
                     spinnerServiceDetection.succeed(chalk.green(`Service inspection completed, albeit with errors, on ${uniqueDomains.domains.length} unique domains`));
 
-                    if (settings.verbose) { // Report the error if --verbose is supplied
-                        console.error(`${chalk.bgRed.whiteBright('Service Detection error')}: ${error}`);
+                    if (settings.options.verbose) { // Report the error if --verbose is supplied
+                        console.error(`${chalk.bgRed.whiteBright('Service Detection error')}: ${error.message}`);
                     } else {
                         console.log(`${chalk.grey('Use')} ${chalk.grey.bold('--verbose')} ${chalk.grey('to show the error')}`);
                     }

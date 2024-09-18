@@ -6,25 +6,31 @@ const dns = require('./ccc-dns');
 //const AwsScan = require('./service.providers/aws');
 //const AzureScan = require('./service.providers/azure');
 
-function serviceDetection(domains, settings) {                                            // Function to attempt to identify the services behind an array of FQDNs
+// Function to attempt to identify the services behind an array of FQDNs
+function serviceDetection(uniqueDomains, settings) {
    debug('serviceDetection() Entry');
    return new Promise(function (resolve, reject) {
 
-      if ((Array.isArray(domains) && domains.length)) {                                   // Ensure the domains[] array is populated
-         debug(`Service Detection running across ${domains.length} domain(s)`);
+      // Ensure the uniqueDomains set has a populated domains[] array
+      if ((Array.isArray(uniqueDomains.domains) && uniqueDomains.domains.length)) {
+         debug(`Service Detection running across ${uniqueDomains.length} domain(s)`);
 
-         let serviceDetectionResponse = global.CCC_SERVICE_DETECTION_DEFAULT_RESPONSE;    // Initialise response object
+         // Initialise the response object
+         let serviceDetectionResponse = global.CCC_SERVICE_DETECTION_DEFAULT_RESPONSE;
 
-         domains.forEach((domain) => {                                                    // Iterate through each domain
+         // Iterate through each domain
+         uniqueDomains.domains.forEach((domain) => {
             debug(`Service Detection is processing [${domain}]`);
 
-            dns.inspectDNS(domain, settings).then((response) => {                         // Invoke DNS Inspection on current domain
-               console.log('Response from inspectDNS(): %O', response);
+            // Invoke DNS Inspection on current domain
+            dns.inspectDNS(domain, settings).then((response) => {
+               //console.log('Response from inspectDNS(): %O', response); **Need to parse this object for domain level service detection
             }
             );
          });
 
-         resolve(serviceDetectionResponse);                                               // Resolve the Promise and return the response
+         // Resolve the Promise and return the response
+         resolve(serviceDetectionResponse);
 
       } else {
          reject(new Error('serviceDetection() :: domains[] array either does not exist, is not an array, or is empty.'));

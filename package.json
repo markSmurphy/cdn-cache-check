@@ -76,8 +76,5 @@
     "unique-filename": "^1.1.1",
     "valid-url": "^1.0.9",
     "yargs": "^16.2.0"
-  },
-  "devDependencies": {
-    "rome": "^10.0.1"
   }
 }

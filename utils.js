@@ -152,7 +152,7 @@ function generateUniqueFilename(extension) {
         }
 
         // Incorporate today's date into the prefix
-        prefix = prefix + (today.getFullYear()).toString() + (today.getMonth() + 1).toString() + (today.getDay() + 1).toString();
+        prefix = prefix + (today.getFullYear()).toString() + (today.getMonth() + 1).toString() + (today.getDate()).toString();
 
         // Generate full filename with path
         let filename = uniqueFilename(os.tmpdir(), prefix) + extension;

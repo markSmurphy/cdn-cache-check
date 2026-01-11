@@ -13,9 +13,13 @@ function init() {
         'DEFAULT_RESOLVER': '8.8.8.8'
     };
 
+    global.CCC_DNS_REQUEST_RECORD_TYPE = global.CCC_DNS.REQUEST_RECORD_TYPE;
+
     global.CCC_REQUEST = {
         'WARNING_THRESHOLD': 5
     };
+
+    global.CCC_HTTP_CONCURRENCY_LIMIT = 10;                                 // Maximum number of concurrent HTTP requests
 
     global.CCC_OUTPUT = {
         'REDIRECT_INDICATOR': '\u00AE',

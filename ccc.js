@@ -29,10 +29,10 @@ debug('Using settings: %O', settings);
 // cdn-cache-check's DNS library
 const cccDNS = require('./ccc-dns');
 
-// cdn-cache-check's DNS library
+// cdn-cache-check's HTTP library
 const cccHTTP = require('./ccc-http');
 
-// cdn-cache-check's DNS library
+// cdn-cache-check's rendering library
 const cccRender = require('./ccc-render-results');
 
 // cdn-cache-check's library
@@ -109,7 +109,17 @@ try {
                         debug('It\'s a HTTP Archive (.har) file. Reading its contents ...');
                         let harURLs = harParser.getURLs(currentArgument); // Parse HAR file for a list of URLs
                         debug('The HAR file referenced %s URLs', harURLs.length);
-                        urls.push(...harURLs); // Append the HAR's URLs to the global URL array
+
+                        // Sanitize HAR URLs
+                        for (let harUrl of harURLs) {
+                            try {
+                                let sanitizedUrl = cdn_cache_check.sanitizeUrl(harUrl);
+                                urls.push(sanitizedUrl);
+                            } catch (error) {
+                                console.warn(chalk.yellow(`Warning: Skipping invalid URL from HAR [${harUrl}] - ${error.message}`));
+                                debug('URL validation error: %O', error);
+                            }
+                        }
                     } else {
                         // Read the text file
                         debug('It\'s a text file. Reading its contents ...');
@@ -122,8 +132,14 @@ try {
                         debug('Examining %i lines looking for URLs...', lines.length);
                         for (let i = 0; i < lines.length; ++i) {
                             if (validUrl.isWebUri(lines[i])) {
-                                debug('Found a URL [%s]', lines[i]);
-                                urls.push(lines[i]);
+                                try {
+                                    let sanitizedUrl = cdn_cache_check.sanitizeUrl(lines[i]);
+                                    debug('Found a URL [%s]', sanitizedUrl);
+                                    urls.push(sanitizedUrl);
+                                } catch (error) {
+                                    console.warn(chalk.yellow(`Warning: Skipping invalid URL [${lines[i]}] - ${error.message}`));
+                                    debug('URL validation error: %O', error);
+                                }
 
                             } else if (isValidDomain(lines[i], { subdomain: true, wildcard: false })) {
                                 debug('Found a bare domain [%s]', lines[i]);
@@ -140,8 +156,14 @@ try {
                 }
             } else if (validUrl.isWebUri(currentArgument)) {
                 // It's a valid URL.  Add it to the urls array
-                debug('It\'s a valid URL');
-                urls.push(currentArgument);
+                try {
+                    let sanitizedUrl = cdn_cache_check.sanitizeUrl(currentArgument);
+                    debug('It\'s a valid URL');
+                    urls.push(sanitizedUrl);
+                } catch (error) {
+                    console.warn(chalk.yellow(`Warning: Skipping invalid URL [${currentArgument}] - ${error.message}`));
+                    debug('URL validation error: %O', error);
+                }
 
             } else if (isValidDomain(currentArgument, { subdomain: true, wildcard: false })) {
                 // It's a bare domain (i.e. there's no protocol)
@@ -192,6 +214,11 @@ try {
                 if (settings.listResponseHeaders) {                                                         // Check if switch to list unique response headers is enabled
                     cccRender.renderHTTPResponseHeaders(responses);                                         // Display all unique HTTP response headers
                 }
+            }).catch((error) => {
+                console.error(chalk.red(`Error rendering HTTP responses: ${error.message}`));
+                if (settings.options.verbose) {
+                    debug('Render error: %O', error);
+                }
             });
 
             if (settings.serviceDetection) {                                                                // Check if Service Detection is enabled
@@ -212,6 +239,13 @@ try {
                     }
                 });
             }
+        }).catch((error) => {
+            spinnerHTTPRequests.fail(chalk.red('HTTP requests failed'));
+            console.error(chalk.red(`Error issuing HTTP requests: ${error.message}`));
+            if (settings.options.verbose) {
+                debug('HTTP request error: %O', error);
+            }
+            process.exit(1);
         });
     }
 } catch (error) {

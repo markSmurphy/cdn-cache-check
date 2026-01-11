@@ -163,7 +163,7 @@ function getSettings() {
 				if (argv.export.toLowerCase() === 'false') {
 					settings.options.exportToCSV = false;
 					// Switch off openAfterExport because we're not exporting anything
-					settings.options.openAfterExport = true;
+					settings.options.openAfterExport = false;
 				}
 			}
 		}

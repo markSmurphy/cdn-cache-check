@@ -10,10 +10,9 @@
         "SharedArrayBuffer": "readonly"
     },
     "parserOptions": {
-        "ecmaVersion": 2020
+        "ecmaVersion": 2022
     },
     "rules": {
-        "quotes": [2, "single", { "avoidEscape": true }],
-        "no-unsafe-finally": "off"
+        "quotes": [2, "single", { "avoidEscape": true }]
     }
 }

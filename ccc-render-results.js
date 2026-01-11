@@ -4,6 +4,9 @@ debug('Entry: [%s]', __filename);
 // Initialise console colours
 const chalk = require('chalk');
 
+// Load error handling
+const { CccError, CccErrorTypes } = require('./ccc-lib');
+
 function exportToCSV(outputTableRaw, settings) {
    if (settings.options.exportToCSV) {          // Check if `export to CSV` is enabled
       // Import packages
@@ -207,7 +210,11 @@ function renderHTTPResponses(responses, settings) {
          resolve(columns);
 
       } else {
-         reject(new Error('renderHTTPResponses() :: responses[] array either does not exist, is not an array, or is empty.'));
+         reject(new CccError(
+            'Responses array either does not exist, is not an array, or is empty',
+            CccErrorTypes.VALIDATION,
+            { responses }
+         ));
       }
    });
 }
@@ -238,7 +245,11 @@ function renderHTTPResponseHeaders(responses) {
          resolve(true);
 
       } else {
-         reject(new Error('renderHTTPResponseHeaders() :: responses[]] array either does not exist, is not an array, or is empty.'));
+         reject(new CccError(
+            'Responses array either does not exist, is not an array, or is empty',
+            CccErrorTypes.VALIDATION,
+            { responses }
+         ));
       }
    });
 }

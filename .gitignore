@@ -1,3 +1,6 @@
+# Claude Code
+.claude/*
+
 # Verbose debugging output & logs
 debug/
 debug*
